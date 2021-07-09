@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Einstellungen für die TOPOBOX - Teams Tool Konsole -->
+<ConsoleAppSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <!-- Einstellungen zum Client und zum gewünschten Tenant (Die Berechtigungen müssen auf Applikationsebene im Azure Portal eingetragen sein...) -->
+    <!-- Client ID from Azure Portal -->
+    <ClientId>[ClientID]</ClientId>
+    <ClientSecret>[Secret]</ClientSecret>
+    <!-- Tenant ID -->
+    <TenantId>[TenantID]</TenantId>
+</ConsoleAppSettings>

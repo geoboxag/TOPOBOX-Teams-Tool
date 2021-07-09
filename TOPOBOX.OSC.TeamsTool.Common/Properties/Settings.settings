@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TOPOBOX.OSC.TeamsTool.Common.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="TeamsToolConfigRootPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Temp\GEOBOX_ERP_Daten\MS_Teams\</Value>
+    </Setting>
+    <Setting Name="RelFilePathTeamsJson" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Organisation\Teams.json</Value>
+    </Setting>
+    <Setting Name="RelFilePathUsersJson" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Organisation\Users.json</Value>
+    </Setting>
+    <Setting Name="RelFilePathChannelJson" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Channel\Channels.json</Value>
+    </Setting>
+    <Setting Name="RelPathPlannerFolders" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Planner\</Value>
+    </Setting>
+    <Setting Name="ConfigFileName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">_config.json</Value>
+    </Setting>
+    <Setting Name="SearchPatternForPredefinedTaskFiles" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">*Tasks*</Value>
+    </Setting>
+    <Setting Name="DefaultSelectedTeamName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">GEOBOX AG</Value>
+    </Setting>
+    <Setting Name="ChatMessageFileName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ChatMessages.json</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

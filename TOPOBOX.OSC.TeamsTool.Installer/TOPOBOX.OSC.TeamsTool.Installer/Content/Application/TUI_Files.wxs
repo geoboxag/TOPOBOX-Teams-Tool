@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?include ..\..\config.wxi ?>
+<?include TUI_config.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="DIR_TeamsTool">
+      <!-- Products Assemblys -->
+      <Component Id="CMP_TUI_TeamsTool_exe" Guid="1A0C74D1-F1B9-40B9-9FED-CE3F59B5DC2D" Win64="yes">
+        <File Id="FILE_TUI_TeamsTool_exe" Name="$(var.TUI_TeamsTool_exe)" Source="$(var.Source_Assembly)\$(var.TUI_TeamsTool_exe)" KeyPath="yes" />
+        <Shortcut Id="FILE_TUI_TeamsTool_exe_Shortcut" Directory="PMF_ProductName" Name="!(loc.ProgramMenuEntryName)" WorkingDirectory="DIR_TeamsTool" Icon="ProductIcon.ico" Advertise="yes" />
+      </Component>
+      <Component Id="CMP_TUI_TeamsTool_exe_config" Guid="4D87E6A2-944E-4ED1-853F-5471FB277EEB" Win64="yes">
+        <File Id="FILE_TUI_TeamsTool_exe_config" Name="$(var.TUI_TeamsTool_exe_config)" Source="$(var.Source_Assembly)\$(var.TUI_TeamsTool_exe_config)" KeyPath="yes" />
+      </Component>
+      <Component Id="CMP_TUI_SystemSecurity_dll" Guid="15C0F039-ABCD-49C7-AC0F-37A6838B664A" Win64="yes">
+        <File Id="FILE_TUI_SystemSecurity_dll" Name="$(var.TUI_SystemSecurity_dll)" Source="$(var.Source_Assembly)\$(var.TUI_SystemSecurity_dll)" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+	<!-- Program Data Folder -->
+	<DirectoryRef Id="PDF_TOPOBOX">
+	  <Component Id="CMP_TUI_ApplicationConfig_xml" Guid="0A7730B6-7802-48BD-B4FA-6127DC9DB731" Win64="yes">
+        <File Id="FILE_TUI_ApplicationConfig_xml" Name="$(var.TUI_ApplicationConfig_xml)" Source="$(var.SettingsSample_Folder)\$(var.TUI_ApplicationConfig_xml)" KeyPath="yes" />
+      </Component>
+	</DirectoryRef>
+	  
+    <!-- ************************************************************************************************************************************* -->
+    <!-- Component Groups -->
+    <ComponentGroup Id="CG_TUI_Assembly">
+      <!-- Products Assemblys -->
+      <ComponentRef Id="CMP_TUI_TeamsTool_exe" />
+      <ComponentRef Id="CMP_TUI_TeamsTool_exe_config" />
+	  <ComponentRef Id="CMP_TUI_SystemSecurity_dll" />
+	  <ComponentRef Id="CMP_TUI_ApplicationConfig_xml" />
+    </ComponentGroup>
+	  
+  	<ComponentGroup Id="CG_TUI_Config">
+	  <!-- Products Config -->
+	  <ComponentRef Id="CMP_TUI_ApplicationConfig_xml" />
+	</ComponentGroup>
+  
+  </Fragment>
+</Wix>

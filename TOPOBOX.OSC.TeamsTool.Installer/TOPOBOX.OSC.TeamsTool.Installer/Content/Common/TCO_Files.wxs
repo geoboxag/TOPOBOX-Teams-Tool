@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?include ..\..\config.wxi ?>
+<?include TCO_config.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="DIR_TeamsTool">
+      <!-- Products Assemblys -->
+	  <Component Id="CMP_TCO_TOPOBOXOSCTeamsToolCommon_dll" Guid="B47603AD-8B71-4FED-8A23-310FCA57AB27" Win64="yes">
+		<File Id="FILE_TCO_TOPOBOXOSCTeamsToolCommon_dll" Name="$(var.TCO_TOPOBOXOSCTeamsToolCommon_dll)" Source="$(var.Source_Assembly)\$(var.TCO_TOPOBOXOSCTeamsToolCommon_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_TOPOBOXOSCTeamsToolCommon_config" Guid="9281431D-2A26-4491-AEBA-15CFBED11C58" Win64="yes">
+		<File Id="FILE_TCO_TOPOBOXOSCTeamsToolCommon_config" Name="$(var.TCO_TOPOBOXOSCTeamsToolCommon_config)" Source="$(var.Source_Assembly)\$(var.TCO_TOPOBOXOSCTeamsToolCommon_config)" KeyPath="yes" />
+	  </Component>
+		
+      <Component Id="CMP_TCO_AzureCore_dll" Guid="0D38E8B9-F34F-475B-A075-9386D64FCD60" Win64="yes">
+        <File Id="FILE_TCO_AzureCore_dll" Name="$(var.TCO_AzureCore_dll)" Source="$(var.Source_Assembly)\$(var.TCO_AzureCore_dll)" KeyPath="yes" />
+      </Component>
+		
+	  <Component Id="CMP_TCO_BouncyCastleCrypto_dll" Guid="3C4DD4A2-690D-494E-B16B-2224279D78D4" Win64="yes">
+		<File Id="FILE_TCO_BouncyCastleCrypto_dll" Name="$(var.TCO_BouncyCastleCrypto_dll)" Source="$(var.Source_Assembly)\$(var.TCO_BouncyCastleCrypto_dll)" KeyPath="yes" />
+	  </Component>
+      <Component Id="CMP_TCO_CommonLoggingCore_dll" Guid="CB110FF0-40B8-472F-86C0-5463032C7F9B" Win64="yes">
+	    <File Id="FILE_TCO_CommonLoggingCore_dll" Name="$(var.TCO_CommonLoggingCore_dll)" Source="$(var.Source_Assembly)\$(var.TCO_CommonLoggingCore_dll)" KeyPath="yes" />
+      </Component>
+      <Component Id="CMP_TCO_CommonLogging_dll" Guid="3678BC75-FA25-413F-9148-FA3996338FAF" Win64="yes">
+	    <File Id="FILE_TCO_CommonLogging_dll" Name="$(var.TCO_CommonLogging_dll)" Source="$(var.Source_Assembly)\$(var.TCO_CommonLogging_dll)" KeyPath="yes" />
+      </Component>
+		
+	  <Component Id="CMP_TCO_ITextBarcodes_dll" Guid="96423C68-3AD0-4A6D-9A7F-113E6B4F879D" Win64="yes">
+		<File Id="FILE_TCO_ITextBarcodes_dll" Name="$(var.TCO_ITextBarcodes_dll)" Source="$(var.Source_Assembly)\$(var.TCO_ITextBarcodes_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_ITextForms_dll" Guid="1E8AECB2-EFE4-4C15-AD04-4DDF899FBE58" Win64="yes">
+		<File Id="FILE_TCO_ITextForms_dll" Name="$(var.TCO_ITextForms_dll)" Source="$(var.Source_Assembly)\$(var.TCO_ITextForms_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_ITextHtml2pdf_dll" Guid="173F4947-D40B-44B5-AC2D-C9EA865B07C6" Win64="yes">
+		<File Id="FILE_TCO_ITextHtml2pdf_dll" Name="$(var.TCO_ITextHtml2pdf_dll)" Source="$(var.Source_Assembly)\$(var.TCO_ITextHtml2pdf_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_ITextIo_dll" Guid="44FFBE77-6249-455E-AE75-2EFF69DC9414" Win64="yes">
+		<File Id="FILE_TCO_ITextIo_dll" Name="$(var.TCO_ITextIo_dll)" Source="$(var.Source_Assembly)\$(var.TCO_ITextIo_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_ITextKernel_dll" Guid="B288757E-6BBA-4CB6-8481-4EBFCDDD3753" Win64="yes">
+		<File Id="FILE_TCO_ITextKernel_dll" Name="$(var.TCO_ITextKernel_dll)" Source="$(var.Source_Assembly)\$(var.TCO_ITextKernel_dll)" KeyPath="yes" />
+   	  </Component>
+	  <Component Id="CMP_TCO_ITextLayout_dll" Guid="B9A6ACD4-3458-4213-9AE6-3B23726E6816" Win64="yes">
+		<File Id="FILE_TCO_ITextLayout_dll" Name="$(var.TCO_ITextLayout_dll)" Source="$(var.Source_Assembly)\$(var.TCO_ITextLayout_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_ITextPdfa_dll" Guid="CED97DEA-29AC-4813-8969-BBA992ADAB4F" Win64="yes">
+		<File Id="FILE_TCO_ITextPdfa_dll" Name="$(var.TCO_ITextPdfa_dll)" Source="$(var.Source_Assembly)\$(var.TCO_ITextPdfa_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_ITextSign_dll" Guid="BABEAEAD-DD3F-4916-ABE8-F1F3C217D9AA" Win64="yes">
+		<File Id="FILE_TCO_ITextSign_dll" Name="$(var.TCO_ITextSign_dll)" Source="$(var.Source_Assembly)\$(var.TCO_ITextSign_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_ITextStyledXmlParser_dll" Guid="6EA78D02-574B-478D-A3A8-57955236955C" Win64="yes">
+		<File Id="FILE_TCO_ITextStyledXmlParser_dll" Name="$(var.TCO_ITextStyledXmlParser_dll)" Source="$(var.Source_Assembly)\$(var.TCO_ITextStyledXmlParser_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_ITextSvg_dll" Guid="3809DAD1-D245-4A5D-9198-5468C5A7D138" Win64="yes">
+		<File Id="FILE_TCO_ITextSvg_dll" Name="$(var.TCO_ITextSvg_dll)" Source="$(var.Source_Assembly)\$(var.TCO_ITextSvg_dll)" KeyPath="yes" />
+	  </Component>
+		
+	  <Component Id="CMP_TCO_MicrosoftBclAsyncInterfaces_dll" Guid="3782C3D0-58AB-4842-93E6-6A2F0F0740E1" Win64="yes">
+		<File Id="FILE_TCO_MicrosoftBclAsyncInterfaces_dll" Name="$(var.TCO_MicrosoftBclAsyncInterfaces_dll)" Source="$(var.Source_Assembly)\$(var.TCO_MicrosoftBclAsyncInterfaces_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_MicrosoftGraphAuth_dll" Guid="2CC333A3-B15E-4384-B496-0C9173436DC1" Win64="yes">
+		<File Id="FILE_TCO_MicrosoftGraphAuth_dll" Name="$(var.TCO_MicrosoftGraphAuth_dll)" Source="$(var.Source_Assembly)\$(var.TCO_MicrosoftGraphAuth_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_MicrosoftGraphCore_dll" Guid="835641F9-468D-4538-9AE2-97DD3FB67260" Win64="yes">
+		<File Id="FILE_TCO_MicrosoftGraphCore_dll" Name="$(var.TCO_MicrosoftGraphCore_dll)" Source="$(var.Source_Assembly)\$(var.TCO_MicrosoftGraphCore_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_MicrosoftGraph_dll" Guid="2832DBD4-17C4-49C4-88FC-C307F549C100" Win64="yes">
+		<File Id="FILE_TCO_MicrosoftGraph_dll" Name="$(var.TCO_MicrosoftGraph_dll)" Source="$(var.Source_Assembly)\$(var.TCO_MicrosoftGraph_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_MicrosoftIdentityClient_dll" Guid="BE688460-8872-4888-8E35-CCA3DA99A2D6" Win64="yes">
+		<File Id="FILE_TCO_MicrosoftIdentityClient_dll" Name="$(var.TCO_MicrosoftIdentityClient_dll)" Source="$(var.Source_Assembly)\$(var.TCO_MicrosoftIdentityClient_dll)" KeyPath="yes" />
+	  </Component>
+		
+	  <Component Id="CMP_TCO_NewtonsoftJson_dll" Guid="0A0477EA-7DFB-4FDF-BA71-06E7B3E5BE56" Win64="yes">
+		<File Id="FILE_TCO_NewtonsoftJson_dll" Name="$(var.TCO_NewtonsoftJson_dll)" Source="$(var.Source_Assembly)\$(var.TCO_NewtonsoftJson_dll)" KeyPath="yes" />
+	  </Component>
+		
+	  <Component Id="CMP_TCO_SystemBuffers_dll" Guid="00F2792C-A65A-49B5-83DD-281A2571802F" Win64="yes">
+		<File Id="FILE_TCO_SystemBuffers_dll" Name="$(var.TCO_SystemBuffers_dll)" Source="$(var.Source_Assembly)\$(var.TCO_SystemBuffers_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_SystemDiagnosticsDiagnosticSource_dll" Guid="B0953DB2-298C-47DC-8E98-B87741FEF960" Win64="yes">
+		<File Id="FILE_TCO_SystemDiagnosticsDiagnosticSource_dll" Name="$(var.TCO_SystemDiagnosticsDiagnosticSource_dll)" Source="$(var.Source_Assembly)\$(var.TCO_SystemDiagnosticsDiagnosticSource_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_SystemMemory_dll" Guid="1E7B835E-3888-4D48-876B-F1692BC7CB3D" Win64="yes">
+		<File Id="FILE_TCO_SystemMemory_dll" Name="$(var.TCO_SystemMemory_dll)" Source="$(var.Source_Assembly)\$(var.TCO_SystemMemory_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_SystemNumericsVectors_dll" Guid="BF60DFC9-A564-49C5-8A40-9656F4A20AE3" Win64="yes">
+		<File Id="FILE_TCO_SystemNumericsVectors_dll" Name="$(var.TCO_SystemNumericsVectors_dll)" Source="$(var.Source_Assembly)\$(var.TCO_SystemNumericsVectors_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_SystemRuntimeCompilerServicesUnsafe_dll" Guid="2FB79D70-C605-46DB-8459-7381E7386474" Win64="yes">
+		<File Id="FILE_TCO_SystemRuntimeCompilerServicesUnsafe_dll" Name="$(var.TCO_SystemRuntimeCompilerServicesUnsafe_dll)" Source="$(var.Source_Assembly)\$(var.TCO_SystemRuntimeCompilerServicesUnsafe_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_SystemTextEncodingsWeb_dll" Guid="563CB3C6-9039-405D-BBFA-DD82B5E9FE84" Win64="yes">
+		<File Id="FILE_TCO_SystemTextEncodingsWeb_dll" Name="$(var.TCO_SystemTextEncodingsWeb_dll)" Source="$(var.Source_Assembly)\$(var.TCO_SystemTextEncodingsWeb_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_SystemTextJson_dll" Guid="5530BDB9-30A1-49E4-8A59-B2FD79DF868D" Win64="yes">
+		<File Id="FILE_TCO_SystemTextJson_dll" Name="$(var.TCO_SystemTextJson_dll)" Source="$(var.Source_Assembly)\$(var.TCO_SystemTextJson_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_SystemThreadingTasksExtensions_dll" Guid="3417A8F4-ECF9-4BCD-8F12-B789E29C5EDF" Win64="yes">
+		<File Id="FILE_TCO_SystemThreadingTasksExtensions_dll" Name="$(var.TCO_SystemThreadingTasksExtensions_dll)" Source="$(var.Source_Assembly)\$(var.TCO_SystemThreadingTasksExtensions_dll)" KeyPath="yes" />
+	  </Component>
+	  <Component Id="CMP_TCO_SystemValueTuple_dll" Guid="898EE535-F582-4645-9726-81DA50C02F9F" Win64="yes">
+		<File Id="FILE_TCO_SystemValueTuple_dll" Name="$(var.TCO_SystemValueTuple_dll)" Source="$(var.Source_Assembly)\$(var.TCO_SystemValueTuple_dll)" KeyPath="yes" />
+	  </Component>
+    </DirectoryRef>
+    <!-- ************************************************************************************************************************************* -->
+    <!-- Component Groups -->
+    <ComponentGroup Id="CG_TCO_Assembly">
+      <!-- Products Assemblys -->
+      <ComponentRef Id="CMP_TCO_TOPOBOXOSCTeamsToolCommon_dll" />
+      <ComponentRef Id="CMP_TCO_TOPOBOXOSCTeamsToolCommon_config" />
+		
+	  <ComponentRef Id="CMP_TCO_AzureCore_dll" />
+		
+	  <ComponentRef Id="CMP_TCO_BouncyCastleCrypto_dll" />
+  	  <ComponentRef Id="CMP_TCO_CommonLoggingCore_dll" />
+	  <ComponentRef Id="CMP_TCO_CommonLogging_dll" />
+		
+	  <ComponentRef Id="CMP_TCO_ITextBarcodes_dll" />
+	  <ComponentRef Id="CMP_TCO_ITextForms_dll" />
+	  <ComponentRef Id="CMP_TCO_ITextHtml2pdf_dll" />
+	  <ComponentRef Id="CMP_TCO_ITextIo_dll" />
+	  <ComponentRef Id="CMP_TCO_ITextKernel_dll" />
+	  <ComponentRef Id="CMP_TCO_ITextLayout_dll" />
+	  <ComponentRef Id="CMP_TCO_ITextPdfa_dll" />
+	  <ComponentRef Id="CMP_TCO_ITextSign_dll" />
+	  <ComponentRef Id="CMP_TCO_ITextStyledXmlParser_dll" />
+	  <ComponentRef Id="CMP_TCO_ITextSvg_dll" />
+		
+	  <ComponentRef Id="CMP_TCO_MicrosoftBclAsyncInterfaces_dll" />
+	  <ComponentRef Id="CMP_TCO_MicrosoftGraphAuth_dll" />
+	  <ComponentRef Id="CMP_TCO_MicrosoftGraphCore_dll" />
+	  <ComponentRef Id="CMP_TCO_MicrosoftGraph_dll" />
+	  <ComponentRef Id="CMP_TCO_MicrosoftIdentityClient_dll" />
+		
+	  <ComponentRef Id="CMP_TCO_NewtonsoftJson_dll" />
+		
+	  <ComponentRef Id="CMP_TCO_SystemBuffers_dll" />
+	  <ComponentRef Id="CMP_TCO_SystemDiagnosticsDiagnosticSource_dll" />
+	  <ComponentRef Id="CMP_TCO_SystemMemory_dll" />
+	  <ComponentRef Id="CMP_TCO_SystemNumericsVectors_dll" />
+  	  <ComponentRef Id="CMP_TCO_SystemRuntimeCompilerServicesUnsafe_dll" />
+	  <ComponentRef Id="CMP_TCO_SystemTextEncodingsWeb_dll" />
+	  <ComponentRef Id="CMP_TCO_SystemTextJson_dll" />
+	  <ComponentRef Id="CMP_TCO_SystemThreadingTasksExtensions_dll" />
+	  <ComponentRef Id="CMP_TCO_SystemValueTuple_dll" />
+		
+	  <ComponentRef Id="CMP_TCO_TOPOBOXOSCTeamsToolCommon_dll" />
+	  <ComponentRef Id="CMP_TCO_TOPOBOXOSCTeamsToolCommon_config" />	
+    </ComponentGroup>
+  </Fragment>
+</Wix>

@@ -1,0 +1,69 @@
+﻿<Window x:Class="TOPOBOX.OSC.TeamsTool.Views.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TOPOBOX.OSC.TeamsTool.Views"
+        mc:Ignorable="d"
+        Style="{StaticResource GEOBOX.SplashScreenStyle}"
+        Title="TOPOBOX TeamsTool Infos" 
+        Height="450" 
+        Width="800" 
+        WindowStyle="None"
+        AllowDrop="True"
+        AllowsTransparency="True">
+    <Grid x:Name="MainSplashScreenGrid" Style="{StaticResource GEOBOX.SplashScreenGrid}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="310"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36" />
+            <RowDefinition Height="75"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="HeaderGrid" MouseLeftButtonDown="MainWindow_Drag" Style="{StaticResource GEOBOX.SplashScreenHeaderGrid}" Grid.ColumnSpan="2">
+            <StackPanel x:Name="TitleBarStackPanel"
+                Orientation="Horizontal"
+                WindowChrome.IsHitTestVisibleInChrome="True" HorizontalAlignment="Right"
+                   Style="{StaticResource GEOBOX.SplashScreenTitleStackPanel}" Height="36" VerticalAlignment="Top">
+                <Button x:Name="MinimizeButton"
+                Click="MainWindow_Minimize"
+                ToolTip="Verkleinern">
+                    <Grid Width="30" Height="24">
+                        <TextBlock HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Padding="3.5,0,0,3"
+                            Text="0"/>
+                    </Grid>
+                </Button>
+                <Button x:Name="CloseButton"
+                Click="MainWindow_Close"
+                ToolTip="Schliessen">
+                    <Grid Width="30" Height="25">
+                        <TextBlock HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Padding="0,0,0,1"
+                            Text="r"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Image x:Name="GEOBOXLogoImage" Source="/Includes/Logo65_200_RGB.png" HorizontalAlignment="Right" VerticalAlignment="Top" Stretch="None" Grid.Column="1" Margin="0,0,17,0" Grid.Row="1"/>
+        <Image x:Name="GEOBOXSplashImage" Source="/Includes/GEOBOXCuboBackground.png" HorizontalAlignment="Right" Stretch="None" Grid.Row="2" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+        <Label x:Name="GEOBOXSplashTitle"
+                   Style="{DynamicResource GEOBOX.TitleLabel}"
+                   Content="{Binding ContentTitle}" Grid.Row="1" Margin="10,0,0,0"/>
+        <Border x:Name="ContentBorder" Style="{DynamicResource GEOBOX.SplashScreenContentBorder}" Grid.Row="2">
+            <Grid x:Name="ContentGrid" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
+

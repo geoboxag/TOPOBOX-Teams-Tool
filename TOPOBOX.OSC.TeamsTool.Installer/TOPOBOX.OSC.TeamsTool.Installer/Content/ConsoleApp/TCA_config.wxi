@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!-- Source-Folders in root config.wix -->
+  <?define TCA_CommandLine_dll = "CommandLine.dll"?>
+  <?define TCA_TeamsToolConsole_exe = "TOPOBOX.TeamsTool.Console.exe"?>
+  <?define TCA_TeamsToolConsole_exe_config = "TOPOBOX.TeamsTool.Console.exe.config"?>
+
+  <?define TCA_ConsoleConfig_xml = "consoleapp.config.xml"?>
+  
+</Include>

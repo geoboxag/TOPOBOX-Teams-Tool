@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?include ..\..\config.wxi ?>
+<?include TCA_config.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="DIR_TeamsTool">
+      <!-- Products Assemblys -->
+      <Component Id="CMP_TCA_TeamsToolConsole_exe" Guid="C97DED48-4C95-4E89-92F4-2F259BA39D01" Win64="yes">
+        <File Id="FILE_TCA_TeamsToolConsole_exe" Name="$(var.TCA_TeamsToolConsole_exe)" Source="$(var.Source_Assembly)\$(var.TCA_TeamsToolConsole_exe)" KeyPath="yes" />
+      </Component>
+      <Component Id="CMP_TCA_TeamsToolConsole_exe_config" Guid="40135D64-225E-4286-AC34-4E6116C373B0" Win64="yes">
+        <File Id="FILE_TCA_TeamsToolConsole_exe_config" Name="$(var.TCA_TeamsToolConsole_exe_config)" Source="$(var.Source_Assembly)\$(var.TCA_TeamsToolConsole_exe_config)" KeyPath="yes" />
+      </Component>
+	  <Component Id="CMP_TCA_CommandLine_dll" Guid="7E6E6134-A92E-466B-8B3A-F8D0EEDADCEA" Win64="yes">
+		  <File Id="FILE_TCA_CommandLine_dll" Name="$(var.TCA_CommandLine_dll)" Source="$(var.Source_Assembly)\$(var.TCA_CommandLine_dll)" KeyPath="yes" />
+	  </Component>
+    </DirectoryRef>
+
+	<!-- Program Data Folder -->
+	<DirectoryRef Id="PDF_TOPOBOX">
+	  <Component Id="CMP_TCA_ConsoleConfig_xml" Guid="D69F3C6E-31F5-465A-8865-8022BDE2E134" Win64="yes">
+		<File Id="FILE_TCA_ConsoleConfig_xml" Name="$(var.TCA_ConsoleConfig_xml)" Source="$(var.SettingsSample_Folder)\$(var.TCA_ConsoleConfig_xml)" KeyPath="yes" />
+	  </Component>
+	</DirectoryRef>
+	  
+    <!-- ************************************************************************************************************************************* -->
+    <!-- Component Groups -->
+    <ComponentGroup Id="CG_TCA_Assembly">
+      <!-- Products Assemblys -->
+      <ComponentRef Id="CMP_TCA_TeamsToolConsole_exe" />
+      <ComponentRef Id="CMP_TCA_TeamsToolConsole_exe_config" />
+	  <ComponentRef Id="CMP_TCA_CommandLine_dll" />
+    </ComponentGroup>
+
+	<ComponentGroup Id="CG_TCA_Config">
+	  <!-- Products Config -->
+	  <ComponentRef Id="CMP_TCA_ConsoleConfig_xml" />
+	</ComponentGroup>
+  </Fragment>
+</Wix>

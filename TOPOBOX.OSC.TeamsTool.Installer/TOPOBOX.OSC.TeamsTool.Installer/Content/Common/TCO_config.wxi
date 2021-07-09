@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!-- Source-Folders in root config.wix -->
+  <?define TCO_AzureCore_dll="Azure.Core.dll"?>
+	
+  <?define TCO_BouncyCastleCrypto_dll="BouncyCastle.Crypto.dll"?>
+  <?define TCO_CommonLoggingCore_dll="Common.Logging.Core.dll"?>
+  <?define TCO_CommonLogging_dll="Common.Logging.dll"?>
+	
+  <?define TCO_ITextBarcodes_dll="itext.barcodes.dll"?>
+  <?define TCO_ITextForms_dll="itext.forms.dll"?>
+  <?define TCO_ITextHtml2pdf_dll="itext.html2pdf.dll"?>
+  <?define TCO_ITextIo_dll="itext.io.dll"?>
+  <?define TCO_ITextKernel_dll="itext.kernel.dll"?>
+  <?define TCO_ITextLayout_dll="itext.layout.dll"?>
+  <?define TCO_ITextPdfa_dll="itext.pdfa.dll"?>
+  <?define TCO_ITextSign_dll="itext.sign.dll"?>
+  <?define TCO_ITextStyledXmlParser_dll="itext.styledxmlparser.dll"?>
+  <?define TCO_ITextSvg_dll="itext.svg.dll"?>
+	
+  <?define TCO_MicrosoftBclAsyncInterfaces_dll="Microsoft.Bcl.AsyncInterfaces.dll"?>
+  <?define TCO_MicrosoftGraphAuth_dll="Microsoft.Graph.Auth.dll"?>
+  <?define TCO_MicrosoftGraphCore_dll="Microsoft.Graph.Core.dll"?>
+  <?define TCO_MicrosoftGraph_dll="Microsoft.Graph.dll"?>
+  <?define TCO_MicrosoftIdentityClient_dll="Microsoft.Identity.Client.dll"?>
+	
+  <?define TCO_NewtonsoftJson_dll="Newtonsoft.Json.dll"?>
+	
+  <?define TCO_SystemBuffers_dll="System.Buffers.dll"?>
+  <?define TCO_SystemDiagnosticsDiagnosticSource_dll="System.Diagnostics.DiagnosticSource.dll"?>
+  <?define TCO_SystemMemory_dll="System.Memory.dll"?>
+  <?define TCO_SystemNumericsVectors_dll="System.Numerics.Vectors.dll"?>
+  <?define TCO_SystemRuntimeCompilerServicesUnsafe_dll="System.Runtime.CompilerServices.Unsafe.dll"?>
+  <?define TCO_SystemTextEncodingsWeb_dll="System.Text.Encodings.Web.dll"?>
+  <?define TCO_SystemTextJson_dll="System.Text.Json.dll"?>
+  <?define TCO_SystemThreadingTasksExtensions_dll="System.Threading.Tasks.Extensions.dll"?>
+  <?define TCO_SystemValueTuple_dll="System.ValueTuple.dll"?>
+	
+  <?define TCO_TOPOBOXOSCTeamsToolCommon_dll="TOPOBOX.OSC.TeamsTool.Common.dll"?>
+  <?define TCO_TOPOBOXOSCTeamsToolCommon_config="TOPOBOX.OSC.TeamsTool.Common.dll.config"?>
+  
+</Include>

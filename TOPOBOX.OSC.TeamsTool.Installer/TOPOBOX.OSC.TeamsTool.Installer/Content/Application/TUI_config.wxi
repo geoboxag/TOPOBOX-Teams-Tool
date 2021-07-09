@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!-- Source-Folders in root config.wix -->
+  <?define TUI_SystemSecurity_dll = "System.Security.dll"?>
+  <?define TUI_TeamsTool_exe = "TOPOBOX.TeamsTool.exe"?>
+  <?define TUI_TeamsTool_exe_config = "TOPOBOX.TeamsTool.exe.config"?>
+	
+  <?define TUI_ApplicationConfig_xml = "application.config.xml"?>
+  
+</Include>

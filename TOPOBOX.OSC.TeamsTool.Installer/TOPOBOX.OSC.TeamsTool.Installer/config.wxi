@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!--Header-Infos for Installer: do not Change this section -->
+  <?define Manufactor = "geotopo ag / GEOBOX AG" ?>
+  <?define Contact = "geotopo ag / GEOBOX AG - Engineering"?>
+  <?define www = "www.geobox.ch"?>
+  <?define DescriptionInstaller = "Installer" ?>
+  <?define CommentsInstaller = "(c) by GEOBOX AG - Engineering" ?>
+  <!--Image for Installer UI -->
+  <?define Source_Image="..\..\_images\Background.jpg"?>
+  <?define Source_Banner="..\..\_images\Banner.jpg"?>
+  <!--Angaben zum Installer -->
+  <?define Version="!(bind.FileVersion.FILE_TUI_TeamsTool_exe)"?>
+  <?define year="2022"?>
+  <?define MinDotNetVersion="4.8"?>
+  <?define ProductGUID="470BF746-455B-4875-87AA-C2DBB8A697C4"?>
+  <?define UpgradeGUID="79194F4E-B35E-4786-A817-D8095BBC3FC4"?>
+  <!--Icon-->
+  <?define Product_Icon="geobox.ico"?>
+  <?define Source_Icon="..\..\TOPOBOX.OSC.TeamsTool"?>
+  <!-- Source - OUTPUT Folder -->
+  <?define Source_Assembly="..\..\output"?>
+  <?define SettingsSample_Folder="..\..\Settings.Sample"?>
+</Include>

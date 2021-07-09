@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="TOPOBOX.OSC.TeamsTool.Views.MigrateForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TOPOBOX.OSC.TeamsTool.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <StackPanel>
+            <Label Content="Team *" />
+            <ComboBox x:Name="TeamCmb" 
+                      Margin="5,0,5,0" Height="30" 
+                      ItemsSource="{Binding Teams, UpdateSourceTrigger=PropertyChanged}" 
+                      DisplayMemberPath="Team.Name"
+                      SelectedValue="{Binding SelectedTeam, Mode=TwoWay}"
+                      DropDownOpened="TeamCmb_OnDropDownOpened"
+                      DropDownClosed="TeamCmb_OnDropDownClosed"
+                      VerticalContentAlignment="Center"/>
+
+            <Label Content="Kanal *" />
+            <ComboBox x:Name="Channel" 
+                      Margin="5,0,5,0" 
+                      Height="30" 
+                      ItemsSource="{Binding Channels, UpdateSourceTrigger=PropertyChanged}" 
+                      DisplayMemberPath="DisplayName"
+                      SelectedValue="{Binding SelectedChannel, Mode=TwoWay}"
+                      VerticalContentAlignment="Center" />
+            <Label Content="Verzeichnis-Pfad *" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="SourcePathTxtBox" 
+                         Margin="5,0,5,0" 
+                         Height="30" 
+                         Text="{Binding SourcePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         VerticalContentAlignment="Center" />
+                <Button x:Name="SearchDirBtn" Grid.Column="1" 
+                        Margin="5 5 5 5" 
+                        Click="SearchDirBtn_OnClick">Durchsuchen</Button>
+            </Grid>
+
+            <Button x:Name="MigrateChannelButton" 
+                    Content="Kanal migrieren" 
+                    Click="MigrateChannelButton_Click" 
+                    Margin="5" 
+                    Height="30" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="Status:" />
+                <Label x:Name="StatusMessageLbl" Grid.Column="1" HorizontalAlignment="Left" Content="" />
+            </Grid>
+            <ListView x:Name="LogEntriesListView"  Height="200" Margin="5 5 5 5"
+                      ItemsSource="{Binding LogMessages, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      IsEnabled="False"></ListView>
+
+        </StackPanel>
+    </Grid>
+</UserControl>
