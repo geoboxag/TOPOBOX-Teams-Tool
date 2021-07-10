@@ -18,10 +18,14 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller
         {
             var availableControllers = new Dictionary<string, Type>();
 
+            // Teams
             availableControllers.Add(JSONExportTeamsOverviewController.GetCommandName(), typeof(JSONExportTeamsOverviewController));
             availableControllers.Add(HTMLExportTeamsOverviewController.GetCommandName(), typeof(HTMLExportTeamsOverviewController));
+            // Users
             availableControllers.Add(PDFExportUsersOverviewController.GetCommandName(), typeof(PDFExportUsersOverviewController));
+            // Planners
             availableControllers.Add(JSONExportPlannersOverviewController.GetCommandName(), typeof(JSONExportPlannersOverviewController));
+            availableControllers.Add(HTMLExportPlannersOverviewController.GetCommandName(), typeof(HTMLExportPlannersOverviewController));
 
             return availableControllers;
         }

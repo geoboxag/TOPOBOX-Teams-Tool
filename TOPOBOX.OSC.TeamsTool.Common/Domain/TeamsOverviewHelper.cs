@@ -58,7 +58,9 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         public bool SaveAsHTMLFile(string saveFilePath)
         {
             var teamOverviews = CollectData();
-            var htmlContent = GetAsHtmlContent(teamOverviews);
+
+            var htmlGenerator = new TeamOverviewHTMLGenerator();
+            var htmlContent = htmlGenerator.GenerateHTMLContent(teamOverviews);
 
             try
             {
@@ -73,17 +75,6 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
                 // ToDo Exception and Logger
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Returns the TeamOverviews as HTML
-        /// </summary>
-        /// <param name="teamOverviews"></param>
-        /// <returns></returns>
-        private string GetAsHtmlContent(List<TeamOverview> teamOverviews)
-        {
-            var teamOverviewHtmlWriter = new TeamOverviewHtmlWriter();
-            return teamOverviewHtmlWriter.Write(teamOverviews);
         }
 
         /// <summary>

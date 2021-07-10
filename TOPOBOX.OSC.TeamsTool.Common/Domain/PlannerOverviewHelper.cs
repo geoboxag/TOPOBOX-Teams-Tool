@@ -57,7 +57,9 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         public bool SaveAsHTMLFile(string saveFilePath)
         {
             var plannerOverview = CollectData();
-            var htmlContent = GetAsHtmlContent(plannerOverview);
+
+            var htmlGenerator = new PlannerOverviewHTMLGenerator();
+            var htmlContent = htmlGenerator.GenerateHTMLContent(plannerOverview);
 
             try
             {
@@ -72,17 +74,6 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
                 // ToDo Exception and Logger
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Returns the PlannerOverviews as HTML
-        /// </summary>
-        /// <param name="plannerOverview"></param>
-        /// <returns></returns>
-        private string GetAsHtmlContent(List<PlannerConfiguration> plannerOverview)
-        {
-            var plannerOverviewHtmlWriter = new PlannerOverviewHtmlWriter();
-            return plannerOverviewHtmlWriter.Write(plannerOverview);
         }
 
         /// <summary>

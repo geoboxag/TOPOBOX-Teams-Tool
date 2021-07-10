@@ -57,7 +57,9 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         public bool SaveAsHTMLFile(string saveFilePath)
         {
             var usersOverviews = CollectData();
-            var htmlContent = GetAsHtmlContent(usersOverviews);
+
+            var htmlGenerator = new UserOverviewHTMLGenerator();
+            var htmlContent = htmlGenerator.GenerateHTMLContent(usersOverviews);
 
             try
             {
@@ -73,17 +75,6 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
                 return false;
             }
 
-        }
-
-        /// <summary>
-        /// Returns the UsersOverviews as HTML
-        /// </summary>
-        /// <param name="usersOverviews"></param>
-        /// <returns></returns>
-        private string GetAsHtmlContent(List<UserOverview> usersOverviews)
-        {
-            var userOverviewHtmlWriter = new UserOverviewHtmlWriter();
-            return userOverviewHtmlWriter.Write(usersOverviews);
         }
 
         /// <summary>

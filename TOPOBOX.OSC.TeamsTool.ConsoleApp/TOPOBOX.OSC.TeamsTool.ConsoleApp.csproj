@@ -55,6 +55,7 @@
     <Compile Include="Batch\CommandLineOptions.cs" />
     <Compile Include="Batch\ExitCode.cs" />
     <Compile Include="Controller\AvailableControllers.cs" />
+    <Compile Include="Controller\PlannersOverview\HTMLExportPlannersOverviewController.cs" />
     <Compile Include="Controller\PlannersOverview\JSONExportPlannersOverviewController.cs" />
     <Compile Include="Controller\TeamsOverview\JSONExportTeamsOverviewController.cs" />
     <Compile Include="Controller\TeamsOverview\HTMLExportTeamsOverviewController.cs" />

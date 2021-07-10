@@ -76,17 +76,17 @@
     <Compile Include="GraphHelper\GraphTeamsHelper.cs" />
     <Compile Include="GraphHelper\GraphPlannerPlanHelper.cs" />
     <Compile Include="GraphHelper\GraphUserHelper.cs" />
-    <Compile Include="Html\HtmlWriter.cs" />
+    <Compile Include="Html\BaseHTMLGenerator.cs" />
     <Compile Include="Html\HtmlWriterReplacements.cs" />
     <Compile Include="Html\Paragraph.cs" />
-    <Compile Include="Html\PlannerOverview\PlannerOverviewHtmlWriter.cs" />
+    <Compile Include="Html\PlannerOverview\PlannerOverviewHTMLGenerator.cs" />
     <Compile Include="Html\Table.cs" />
     <Compile Include="Html\StringTemplateReplacer.cs" />
     <Compile Include="Html\InformationBase.cs" />
     <Compile Include="Html\InformationList.cs" />
     <Compile Include="Html\InformationTable.cs" />
-    <Compile Include="Html\UserOverview\UserOverviewHtmlWriter.cs" />
-    <Compile Include="Html\TeamOverview\TeamOverviewHtmlWriter.cs" />
+    <Compile Include="Html\UserOverview\UserOverviewHTMLGenerator.cs" />
+    <Compile Include="Html\TeamOverview\TeamOverviewHTMLGenerator.cs" />
     <Compile Include="IO\JSONSerializer.cs" />
     <Compile Include="Mapper\BaseObjectMapper.cs" />
     <Compile Include="Mapper\GraphItemMapping.cs" />
@@ -115,11 +115,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Graph">
+      <Version>4.0.0-preview.7</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Graph.Auth">
       <Version>1.0.0-preview.7</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Graph.Beta">
-      <Version>4.5.0-preview</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Identity.Client">
       <Version>4.31.0</Version>

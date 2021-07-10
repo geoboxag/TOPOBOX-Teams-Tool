@@ -1,42 +1,74 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Web.UI;
+using TOPOBOX.OSC.TeamsTool.Common.DAL;
 using TOPOBOX.OSC.TeamsTool.Common.Properties;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Html.TeamOverview
 {
-    internal sealed class TeamOverviewHtmlWriter
+    internal sealed class TeamOverviewHTMLGenerator : BaseHTMLGenerator
     {
+        private const string PAGETITLE = "Teams-Übersicht";
 
-        public string Write(List<DAL.TeamOverview> teamOverviews)
+        public TeamOverviewHTMLGenerator() : base(PAGETITLE)
         {
-            var result = StringTemplateReplacer.Replace
-                (
-                    Resources.htmlTemplate,
-                    CreateReplacements(teamOverviews)
-                );
 
-            return result;
         }
 
-        private IEnumerable<KeyValuePair<string, string>> CreateReplacements(List<DAL.TeamOverview> teamOverviews)
+        public string GenerateHTMLContent(List<DAL.TeamOverview> teamOverviews)
         {
-            var replacements = HtmlWriterReplacements.DefaultReplacements("Teams-Übersicht");
-            replacements.Add("[CONTENT]", CreateTables(teamOverviews));
-            return replacements;
+            AddContentAsReplacement(CreateContent(teamOverviews));
+            return GetHTMLfromReplacement();
         }
 
-        private string CreateTables(List<DAL.TeamOverview> teamOverviews)
+        private string CreateContent(List<DAL.TeamOverview> teamOverviews)
         {
             var stringBuilder = new StringBuilder();
             using (var stringWriter = new StringWriter(stringBuilder))
             using (var textWriter = new HtmlTextWriter(stringWriter))
             {
-                new HtmlWriter().Write(textWriter, CreateTeamTables(teamOverviews));
+
+                var list = teamOverviews.OrderBy(t => t.Team.Name);
+
+                foreach (var teamOverview in list)
+                {
+                    var userDiv = GetInformationsDIV(teamOverview.Team.Name);
+
+                    userDiv.Controls.Add(GetSpan($"ID: {teamOverview.Team.Id}", true));
+                    userDiv.Controls.Add(GetLineBreack());
+                    // ToDO check is empty
+                    userDiv.Controls.Add(GetSpan($"Beschrieb: {teamOverview.Team.Description}", true));
+                    
+                    AddUsers(userDiv, "Besitzer (Owners):", teamOverview.Owners);
+                    AddUsers(userDiv,"Mitglieder (Members):", teamOverview.Members);
+                    AddUsers(userDiv, "Gäste (Guests):", teamOverview.Guests);
+
+                    userDiv.RenderControl(textWriter);
+                }
+
                 textWriter.Flush();
             }
             return stringBuilder.ToString();
+        }
+
+        private void AddUsers(Control divControl,string title, List<User> users)
+        {
+            divControl.Controls.Add(GetH3Title(title));
+
+            if (users != null && users.Count > 0)
+            {
+                foreach(var user in users)
+                {
+                    // ToDo display name or last and firstname
+                    divControl.Controls.Add(GetParagraphAndDescription($"{user.Name} ({user.Email})", $"(ID: {user.Id}"));
+                }
+            }
+            else
+            {
+                divControl.Controls.Add(GetSpan($"- keine Benutzer gefunden", true));
+            }
         }
 
         private IEnumerable<InformationTable> CreateTeamTables(List<DAL.TeamOverview> teamOverviews)
