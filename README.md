@@ -1,10 +1,10 @@
-# TOPOBOX - Tool Set für Microsft Teams
+# TOPOBOX - Tool Set für Microsoft Teams
 Dieses Projekt umfasst einige Tools als Erleichterung für das Microsoft Teams.
 Die Tools und Anforderungen sind auf die Bedürfnisse der Unternehmen geotopo AG und GEOBOX AG zugeschnitten.
 
 ## Tools
 
-### Konsle App - ConsoleApp
+### Konsole App - ConsoleApp
 
 - ToDo kurze Beschreibung
 - ToDo 1 Befehl als Beispiel
@@ -23,7 +23,7 @@ Die Tools und Anforderungen sind auf die Bedürfnisse der Unternehmen geotopo AG
 - Link zum Wiki für die Beschreibung
 
 
-## Third Party Licneses - Runtime
+## Third Party Licenses - Runtime
 
 Das Tool verwendet diverse Komponenten aus verschiedenen Quellen mit verschiedenen Lizenzen die zu Beachten sind.
 
@@ -31,7 +31,7 @@ Das Tool verwendet diverse Komponenten aus verschiedenen Quellen mit verschieden
 
 ## Beiträge zur Weiterentwicklung
 
-Diese Projekt ist als OpenSource-Projekt gestalltet. Feedback zum Quellcode nehmen wir gerne entgegen. Bugs oder Probleme sollten als GitHub issues gemeldet werden.
+Diese Projekt ist als OpenSource-Projekt gestaltet. Feedback zum Quellcode nehmen wir gerne entgegen. Bugs oder Probleme sollten als GitHub issues gemeldet werden.
 
 ## Lizenz
 
