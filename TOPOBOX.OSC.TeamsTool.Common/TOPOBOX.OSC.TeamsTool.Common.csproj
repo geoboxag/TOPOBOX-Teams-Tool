@@ -59,7 +59,7 @@
     <Compile Include="DAL\FileInfo.cs" />
     <Compile Include="DAL\Folder.cs" />
     <Compile Include="DAL\Mention.cs" />
-    <Compile Include="DAL\MessageBody.cs" />
+    <Compile Include="DAL\ItemBody.cs" />
     <Compile Include="DAL\Planner.cs" />
     <Compile Include="DAL\PlannerTask.cs" />
     <Compile Include="DAL\Team.cs" />

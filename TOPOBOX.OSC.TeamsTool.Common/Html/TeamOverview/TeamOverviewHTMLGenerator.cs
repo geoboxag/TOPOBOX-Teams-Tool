@@ -62,7 +62,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html.TeamOverview
                 foreach(var user in users)
                 {
                     // ToDo display name or last and firstname
-                    divControl.Controls.Add(GetParagraphAndDescription($"{user.Name} ({user.Email})", $"(ID: {user.Id}"));
+                    divControl.Controls.Add(GetParagraphAndDescription($"{user.DisplayName} ({user.Email})", $"(ID: {user.Id}"));
                 }
             }
             else
@@ -130,7 +130,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html.TeamOverview
 
             foreach (var member in members)
             {
-                rows.Add(new[] { member.Name , member.Email });
+                rows.Add(new[] { member.DisplayName , member.Email });
             }
           
             return rows;
@@ -142,7 +142,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html.TeamOverview
 
             foreach (var member in members)
             {
-                paragraphs.Add($"{member.Name} ({member.Email})");
+                paragraphs.Add($"{member.DisplayName} ({member.Email})");
             }
 
             return paragraphs;

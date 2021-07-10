@@ -30,7 +30,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html.UserOverview
             using (var textWriter = new HtmlTextWriter(stringWriter))
             {
                 // ToDo order by last and first name
-                var list = userOverviews.OrderBy(u => u.User.Name);
+                var list = userOverviews.OrderBy(u => u.User.DisplayName);
 
                 foreach(var userOverview in list)
                 {
@@ -52,7 +52,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html.UserOverview
         {
             // ToDo Check Email is not empty (is empty write only user.Name)
             // ToDo Display: lastname and firstname
-            return $"{user.Name} ({user.Email})";
+            return $"{user.DisplayName} ({user.Email})";
         }
 
         private void AddTeams(Control divControl, List<Team> teams)

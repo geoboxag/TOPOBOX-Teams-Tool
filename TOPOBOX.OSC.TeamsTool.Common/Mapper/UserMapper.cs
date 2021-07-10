@@ -13,7 +13,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
         {
             var user = new User();
             user.Id = graphUser.Id;
-            user.Name = graphUser.DisplayName;
+            user.DisplayName = graphUser.DisplayName;
             user.Email = graphUser.Mail;
             // ToDo Make Mapping save
             user.BusinessPhone = graphUser.BusinessPhones.FirstOrDefault();
@@ -33,7 +33,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             {
                 Id = graphIdentitySet.User.Id,
                 IdentityType = userIdentityType.ToString(),
-                Name = graphIdentitySet.User.DisplayName
+                DisplayName = graphIdentitySet.User.DisplayName
             };
         }
     }

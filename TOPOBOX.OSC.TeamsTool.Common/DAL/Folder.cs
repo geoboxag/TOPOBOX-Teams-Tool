@@ -3,7 +3,7 @@
 namespace TOPOBOX.OSC.TeamsTool.Common.DAL
 {
     /// <summary>
-    /// Folder
+    /// Representing one folder
     /// </summary>
     public class Folder
     {
