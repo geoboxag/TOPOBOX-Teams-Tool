@@ -11,6 +11,11 @@
         public string DisplayName { get; set; }
 
         /// <summary>
+        /// FullName ([Firstname] [Surname]
+        /// </summary>
+        public string FullName { get; set; }
+
+        /// <summary>
         /// Surname <see cref="Microsoft.Graph.User.Surname"/>
         /// </summary>
         public string Surname { get; set; }
@@ -29,6 +34,11 @@
         /// IdentityType <see cref="Microsoft.Graph.IdentitySet.AdditionalData"/>
         /// </summary>
         public string IdentityType { get; set; }
+
+        /// <summary>
+        /// CompanyName <see cref="Microsoft.Graph.User.CompanyName"/>
+        /// </summary>
+        public string CompanyName { get; set; }
 
         /// <summary>
         /// BusinessPhone <see cref="Microsoft.Graph.User.BusinessPhones"/>
