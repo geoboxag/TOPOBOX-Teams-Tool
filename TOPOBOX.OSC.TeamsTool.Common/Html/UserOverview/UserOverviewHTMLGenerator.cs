@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Web.UI;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
-using TOPOBOX.OSC.TeamsTool.Common.Properties;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Html.UserOverview
 {
@@ -29,10 +28,9 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html.UserOverview
             using (var stringWriter = new StringWriter(stringBuilder))
             using (var textWriter = new HtmlTextWriter(stringWriter))
             {
-                // ToDo order by last and first name
-                var list = userOverviews.OrderBy(u => u.User.DisplayName);
+                var orderedList = userOverviews.OrderBy(u => u.User.Surname).ThenBy(u => u.User.Firstname);
 
-                foreach(var userOverview in list)
+                foreach (var userOverview in orderedList)
                 {
                     var userDiv = GetInformationsDIV(CreateUserTitle(userOverview.User));
 
@@ -50,17 +48,33 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html.UserOverview
 
         private string CreateUserTitle(User user)
         {
-            // ToDo Check Email is not empty (is empty write only user.Name)
-            // ToDo Display: lastname and firstname
-            return $"{user.DisplayName} ({user.Email})";
+            string resultUserTitle = string.Empty;
+
+            if (string.IsNullOrEmpty(user.Surname) || string.IsNullOrEmpty(user.Firstname))
+            {
+                resultUserTitle += $"{user.DisplayName}";
+            }
+            else
+            {
+                resultUserTitle += $"{user.Surname} {user.Firstname}";
+            }
+
+            if (string.IsNullOrEmpty(user.Email))
+            {
+                return resultUserTitle;
+            }
+
+            resultUserTitle += $" ({user.Email})";
+
+            return resultUserTitle;
         }
 
         private void AddTeams(Control divControl, List<Team> teams)
         {
-            // ToDo order teams by name
             if (teams != null && teams.Count > 0)
             {
-                foreach(var team in teams)
+                var sortedTeams = teams.OrderBy(t => t.Name);
+                foreach (var team in sortedTeams)
                 {
                     if (string.IsNullOrEmpty(team.Description))
                     {

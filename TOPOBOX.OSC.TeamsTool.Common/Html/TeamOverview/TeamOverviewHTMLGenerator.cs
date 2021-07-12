@@ -61,8 +61,14 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html.TeamOverview
             {
                 foreach(var user in users)
                 {
-                    // ToDo display name or last and firstname
-                    divControl.Controls.Add(GetParagraphAndDescription($"{user.DisplayName} ({user.Email})", $"(ID: {user.Id}"));
+                    if (string.IsNullOrEmpty(user.Surname) || string.IsNullOrEmpty(user.Firstname))
+                    {
+                        divControl.Controls.Add(GetParagraphAndDescription($"{user.DisplayName} ({user.Email})", $"(ID: {user.Id})"));
+                    }
+                    else
+                    {
+                        divControl.Controls.Add(GetParagraphAndDescription($"{user.Surname} {user.Firstname} ({user.Email})", $"(ID: {user.Id})"));
+                    }                   
                 }
             }
             else

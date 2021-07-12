@@ -4,7 +4,7 @@ using Graph = Microsoft.Graph;
 namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
 {
     /// <summary>
-    /// PlannerMapper
+    /// BucketMapper
     /// </summary>
     public sealed class BucketMapper : BaseObjectMapper
     {

@@ -1,4 +1,6 @@
-﻿namespace TOPOBOX.OSC.TeamsTool.Common.DAL
+﻿using System.Collections.Generic;
+
+namespace TOPOBOX.OSC.TeamsTool.Common.DAL
 {
     /// <summary>
     /// Internal object User, which partially corresponds to the object <see cref="Microsoft.Graph.User"/> / <see cref="Microsoft.Graph.AadUserConversationMember"/>
@@ -41,8 +43,8 @@
         public string CompanyName { get; set; }
 
         /// <summary>
-        /// BusinessPhone <see cref="Microsoft.Graph.User.BusinessPhones"/>
+        /// BusinessPhones <see cref="Microsoft.Graph.User.BusinessPhones"/>
         /// </summary>
-        public string BusinessPhone { get; set; }
+        public IEnumerable<string> BusinessPhones { get; set; }
     }
 }
