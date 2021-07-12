@@ -15,14 +15,16 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
     public class PlannerOverviewHelper
     {
         private GraphConnectorHelper connectorHelper;
+        private Logger.Logger Logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="graphConnectorHelper"></param>
-        public PlannerOverviewHelper(GraphConnectorHelper graphConnectorHelper)
+        public PlannerOverviewHelper(GraphConnectorHelper graphConnectorHelper, Logger.Logger logger)
         {
             connectorHelper = graphConnectorHelper;
+            Logger = logger;
         }
 
         /// <summary>

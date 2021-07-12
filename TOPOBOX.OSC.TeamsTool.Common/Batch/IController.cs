@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Batch
 {
@@ -22,9 +21,9 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Batch
         bool Execute();
 
         /// <summary>
-        /// List with all Messages from execute
+        /// Logger with all Messages from execute
         /// </summary>
-        List<string> LoggerMessages { get; }
+        Logger.Logger Logger { get; }
 
         // ToDo after refactoring
         /// <summary>

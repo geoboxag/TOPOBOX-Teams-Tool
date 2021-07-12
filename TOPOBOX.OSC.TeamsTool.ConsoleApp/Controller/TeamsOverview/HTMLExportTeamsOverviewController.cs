@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using TOPOBOX.OSC.TeamsTool.Common.Batch;
 using TOPOBOX.OSC.TeamsTool.Common.Controller;
+using TOPOBOX.OSC.TeamsTool.Common.Logger;
 using TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain;
 
 namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.TeamsOverview
@@ -38,7 +38,7 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.TeamsOverview
         }
         #endregion
 
-        public List<string> LoggerMessages { get; private set; } = new List<string>();
+        public Logger Logger { get; set; } = new Logger();
 
         /// <summary>
         /// Run Command
@@ -46,14 +46,26 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.TeamsOverview
         /// <returns></returns>
         public bool Execute()
         {
-            LoggerMessages.Clear();
+            if (!runtimeSettings.CheckSettings(Logger))
+            {
+                return false;
+            }
 
-            // ToDo Check runtime settings
-            // ToDo Check return an messages
-            TeamsOverviewHelper teamsOverviewHelper = new TeamsOverviewHelper(runtimeSettings.GraphConnectorHelper);
-            teamsOverviewHelper.SaveAsHTMLFile(runtimeSettings.GetHTMLOutputFilePath());
+            TeamsOverviewHelper teamsOverviewHelper = new TeamsOverviewHelper(runtimeSettings.GraphConnectorHelper, Logger);
+            var htmlFilePath = runtimeSettings.GetHTMLOutputFilePath();
+            if (teamsOverviewHelper.SaveAsHTMLFile(htmlFilePath))
+            {
+                Logger.WriteInformation($"Datei erstellt: {htmlFilePath}");
+            }
+
+            if (Logger.WriteLogFile(runtimeSettings.LogFilePath))
+            {
+                Console.WriteLine($"Log-Datei erstellt: {runtimeSettings.LogFilePath}");
+            }
+            Logger.Dispose();
 
             return true;
         }
+
     }
 }

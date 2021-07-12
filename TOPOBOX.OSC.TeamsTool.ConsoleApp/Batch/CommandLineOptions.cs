@@ -12,5 +12,8 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Batch
 
         [Option("filename", HelpText = "Angabe des Datei-Namens (ohne Dateiendung)", Required = false)]
         public string FileName { get; set; }
+
+        [Option("logfilepath", HelpText = "Angabe des Verzeichnisses mit Datei-Namen (ohne Dateiendung)", Required = false)]
+        public string LogFilePath { get; set; }
     }
 }

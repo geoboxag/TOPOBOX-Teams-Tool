@@ -88,6 +88,7 @@
     <Compile Include="Html\UserOverview\UserOverviewHTMLGenerator.cs" />
     <Compile Include="Html\TeamOverview\TeamOverviewHTMLGenerator.cs" />
     <Compile Include="IO\JSONSerializer.cs" />
+    <Compile Include="Logger\Logger.cs" />
     <Compile Include="Mapper\BaseObjectMapper.cs" />
     <Compile Include="Mapper\GraphItemMapping.cs" />
     <Compile Include="Mapper\IObjectMapper.cs" />

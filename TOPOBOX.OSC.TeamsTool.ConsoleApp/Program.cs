@@ -74,7 +74,8 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
                     settingsController.ConsoleAppSettings.TenantId)
                 {
                     OutputDirectory = commandLineOptions.FolderPath,
-                    OutputFileName = commandLineOptions.FileName
+                    OutputFileName = commandLineOptions.FileName,
+                    LogFilePath = commandLineOptions.LogFilePath
                 };
 
                 using (IController controller = (IController)Activator.CreateInstance(availableControllers[commandLineOptions.FunctionType], new[] { batchRuntimeSettings }))
@@ -89,11 +90,7 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
                         Console.WriteLine($"Funktion fehlgeschlagen: {commandLineOptions.FunctionType}");
                         exitCode = ExitCode.Error;
                     }
-                    // ToDo - gut so? besser möglichkeit? - Runtime Settings
-                    string tempPath = Path.GetTempPath();
-                    string fileName = $"{tempPath}TeamsTool_{DateTime.Now.ToString("yyyyMMddhhmmss")}.txt";
-                    System.IO.File.AppendAllLines(fileName, controller.LoggerMessages);
-                    Console.WriteLine($"Log-Datei erstellt: {fileName}");
+
                     return;
                 }
             }
