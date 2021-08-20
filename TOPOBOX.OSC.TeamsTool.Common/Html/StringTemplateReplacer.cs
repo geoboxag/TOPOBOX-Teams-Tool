@@ -10,6 +10,13 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html
     /// </summary>
     public static class StringTemplateReplacer
     {
+        /// <summary>
+        /// Replaces strings in the template that match the replacements
+        /// </summary>
+        /// <param name="template"></param>
+        /// <param name="replacements"></param>
+        /// <param name="regexOptions"></param>
+        /// <returns></returns>
         public static string Replace(string template, IEnumerable<KeyValuePair<string, string>> replacements,
                                         RegexOptions regexOptions = RegexOptions.ExplicitCapture
                                                                     | RegexOptions.IgnoreCase
@@ -51,7 +58,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html
             return replacementsDictionary[matchEval.Groups["key"].Value];
         }
 
-        public static string GenerateReplacementRegEx(IEnumerable<string> keys)
+        private static string GenerateReplacementRegEx(IEnumerable<string> keys)
         {
             var keysList = ToList(keys);
             if (keys == null || keysList.Count == 0)

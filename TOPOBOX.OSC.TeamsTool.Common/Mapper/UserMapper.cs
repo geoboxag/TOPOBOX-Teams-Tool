@@ -9,6 +9,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
     /// </summary>
     public sealed class UserMapper : BaseObjectMapper
     {
+# pragma warning disable CS1591
         public static User MapFrom(Graph.User graphUser)
         {
             var user = new User();
@@ -41,5 +42,6 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
                 DisplayName = graphIdentitySet.User.DisplayName               
             };
         }
+# pragma warning restore CS1591
     }
 }

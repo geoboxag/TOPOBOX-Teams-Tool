@@ -8,6 +8,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
     /// </summary>
     public sealed class BucketMapper : BaseObjectMapper
     {
+# pragma warning disable CS1591
         public static Bucket MapFrom(Graph.PlannerBucket plannerBucket)
         {
             var bucket = new Bucket();
@@ -16,6 +17,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
 
             return bucket;
         }
+# pragma warning restore CS1591
 
     }
 }

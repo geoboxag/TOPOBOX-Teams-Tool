@@ -5,6 +5,9 @@
     /// </summary>
     public class FileInfo : BaseData
     {
+        /// <summary>
+        /// FileName
+        /// </summary>
         public string Name { get; set; }
     }
 }

@@ -12,6 +12,10 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
     {
         private GraphServiceClient graphClient;
 
+        /// <summary>
+        /// Construtcor
+        /// </summary>
+        /// <param name="graphServiceClient"></param>
         public GraphUserHelper(GraphServiceClient graphServiceClient)
         {
             graphClient = graphServiceClient;

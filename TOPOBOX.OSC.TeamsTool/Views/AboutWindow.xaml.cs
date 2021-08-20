@@ -28,10 +28,10 @@ namespace TOPOBOX.OSC.TeamsTool.Views
         {
             InitializeComponent();
 
-            RemoveWindowTitelBarButtons();
+            RemoveWindowTitleBarButtons();
         }
 
-        private void RemoveWindowTitelBarButtons()
+        private void RemoveWindowTitleBarButtons()
         {
             if (withoutWindowTitelBarButtons)
             {

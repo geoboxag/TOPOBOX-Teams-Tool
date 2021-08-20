@@ -22,6 +22,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         /// Constructor
         /// </summary>
         /// <param name="graphConnectorHelper"></param>
+        /// <param name="logger"></param>
         public PlannerOverviewHelper(GraphConnectorHelper graphConnectorHelper, Logger logger)
         {
             connectorHelper = graphConnectorHelper;

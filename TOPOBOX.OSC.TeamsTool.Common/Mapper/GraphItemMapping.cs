@@ -2,9 +2,13 @@
 using System.Linq;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
 using Microsoft.Graph;
+using System;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
 {
+    /// <summary>
+    /// Obsolete, to Remove when all Mappers work
+    /// </summary>
     public class GraphItemMapping
     {
 

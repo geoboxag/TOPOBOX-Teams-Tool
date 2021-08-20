@@ -26,12 +26,13 @@ namespace TOPOBOX.OSC.TeamsTool.Helpers
         /// </summary>
         public bool IsInitOK = false;
 
+
         /// <summary>
         /// Initialize a UserClient
         /// </summary>
-        /// <param name="clientID"></param>
-        /// <param name="tenantID"></param>
-        /// /// <param name="silentOnly">Do not promt for the user login</param>
+        /// <param name="clientApplication"></param>
+        /// <param name="scopes"></param>
+        /// <param name="silentOnly">Do not promt for the user login</param>
         /// <returns></returns>
         public async Task<bool> InitUserClientAsync(IPublicClientApplication clientApplication, string[] scopes, bool silentOnly = false)
         {

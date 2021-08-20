@@ -12,6 +12,10 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
     {
         private GraphServiceClient graphClient;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="graphServiceClient"></param>
         public GraphBucketHelper(GraphServiceClient graphServiceClient)
         {
             graphClient = graphServiceClient;

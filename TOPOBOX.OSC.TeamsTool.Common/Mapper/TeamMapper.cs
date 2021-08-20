@@ -8,6 +8,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
     /// </summary>
     public sealed class TeamMapper : BaseObjectMapper
     {
+# pragma warning disable CS1591
         public static Team MapFrom(Graph.Team graphTeam)
         {
             var team = new Team();
@@ -27,5 +28,6 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
 
             return team;
         }
+# pragma warning restore CS1591
     }
 }

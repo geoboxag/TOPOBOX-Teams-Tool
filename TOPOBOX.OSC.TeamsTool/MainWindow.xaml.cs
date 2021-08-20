@@ -23,6 +23,9 @@ namespace TOPOBOX.OSC.TeamsTool
         private UserControl tasksForm;
         private UserControl archiveForm;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();

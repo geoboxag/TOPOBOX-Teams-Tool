@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TOPOBOX.OSC.TeamsTool.Settings
 {
-    public class SettingsController
+    internal class SettingsController
     {
         private const string DEFAULTAPPLICATIONTITLE = "TOPOBOX TeamsTool - Application";
         internal bool ConfigIsOk = false;

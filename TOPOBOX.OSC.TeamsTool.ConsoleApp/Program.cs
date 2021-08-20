@@ -1,7 +1,6 @@
 ﻿using CommandLine;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using TOPOBOX.OSC.TeamsTool.Common.Batch;
 using TOPOBOX.OSC.TeamsTool.ConsoleApp.Batch;
 using TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller;
@@ -11,6 +10,9 @@ using TOPOBOX.OSC.TeamsTool.ConsoleApp.Settings;
 
 namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
 {
+    /// <summary>
+    /// Program
+    /// </summary>
     public static class Program
     {
         /// <summary>
@@ -40,7 +42,7 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
         /// <summary>
         /// Run Console Application with parsed Command Line Options
         /// </summary>
-        /// <param name="CommandLineOptions">Options from Command Line Input</param>
+        /// <param name="commandLineOptions">Options from Command Line Input</param>
         static void RunOptions(CommandLineOptions commandLineOptions)
         { 
             // Check is type available

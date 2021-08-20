@@ -2,17 +2,23 @@
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 using TOPOBOX.OSC.TeamsTool.Common.Properties;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Html
 {
+    /// <summary>
+    /// Class with default-values and functions to create a Html-File
+    /// </summary>
     public class BaseHTMLGenerator
     {
         private const string DEFAULTPAGETITLEH1 = "General Report";
 
         private Dictionary<string /*replacement key*/, string /*replacement content*/> replacements;
 
+        /// <summary>
+        /// Construtcor
+        /// </summary>
+        /// <param name="pageTitle"></param>
         public BaseHTMLGenerator(string pageTitle)
         {
             CreateDefaultReplacements(pageTitle);

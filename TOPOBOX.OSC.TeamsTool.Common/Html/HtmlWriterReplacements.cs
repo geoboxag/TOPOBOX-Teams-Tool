@@ -4,8 +4,16 @@ using System.Reflection;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Html
 {
+    /// <summary>
+    /// Class with Replacements for the Html
+    /// </summary>
     public static class HtmlWriterReplacements
     {
+        /// <summary>
+        /// Returns the default-Replacements for the Html-Template
+        /// </summary>
+        /// <param name="reportTitle"></param>
+        /// <returns></returns>
         public static Dictionary<string, string> DefaultReplacements(string reportTitle)
         {
             var replacements = new Dictionary<string, string>();

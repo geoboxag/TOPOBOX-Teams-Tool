@@ -35,8 +35,8 @@ namespace TOPOBOX.OSC.TeamsTool
         // TODO: maybe Tenant ID move to AppSettings
         private static string Tenant = "tenantHASE";
         //private static string Instance = "https://login.microsoftonline.com/";
+        
         private static IPublicClientApplication publicClientApplication;
-
-        public static IPublicClientApplication PublicClientApp { get { return publicClientApplication; } }
+        internal static IPublicClientApplication PublicClientApp { get { return publicClientApplication; } }
     }
 }

@@ -5,6 +5,9 @@ using System.Xml.Serialization;
 
 namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Settings
 {
+    /// <summary>
+    /// Controller for Serialize the Settings
+    /// </summary>
     public class SettingsController
     {
         private const string DEFAULTAPPLICATIONTITLE = "TOPOBOX TeamsTool - Console";
