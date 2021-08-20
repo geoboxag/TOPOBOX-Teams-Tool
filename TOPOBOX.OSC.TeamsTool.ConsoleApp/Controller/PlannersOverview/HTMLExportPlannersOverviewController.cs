@@ -1,8 +1,8 @@
 ﻿using System;
 using TOPOBOX.OSC.TeamsTool.Common.Batch;
 using TOPOBOX.OSC.TeamsTool.Common.Controller;
-using TOPOBOX.OSC.TeamsTool.Common.Logger;
 using TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain;
+using Logger = TOPOBOX.OSC.TeamsTool.Common.Logging.Logger;
 
 namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.PlannersOverview
 {

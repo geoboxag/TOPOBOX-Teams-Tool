@@ -23,7 +23,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Batch
         /// <summary>
         /// Logger with all Messages from execute
         /// </summary>
-        Logger.Logger Logger { get; }
+        Logging.Logger Logger { get; }
 
         // ToDo after refactoring
         /// <summary>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace TOPOBOX.OSC.TeamsTool.Common.Logger
+namespace TOPOBOX.OSC.TeamsTool.Common.Logging
 {
     public class Logger
     {

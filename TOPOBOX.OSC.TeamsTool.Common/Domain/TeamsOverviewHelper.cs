@@ -7,6 +7,7 @@ using TOPOBOX.OSC.TeamsTool.Common.Html.TeamOverview;
 using TOPOBOX.OSC.TeamsTool.Common.IO;
 using TOPOBOX.OSC.TeamsTool.Common.Mapper;
 using Graph = Microsoft.Graph;
+using Logger = TOPOBOX.OSC.TeamsTool.Common.Logging.Logger;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Controller
 {
@@ -16,13 +17,13 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
     public class TeamsOverviewHelper
     {
         private GraphConnectorHelper connectorHelper;
-        private Logger.Logger Logger;
+        private Logger Logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="graphConnectorHelper"></param>
-        public TeamsOverviewHelper(GraphConnectorHelper graphConnectorHelper, Logger.Logger logger)
+        public TeamsOverviewHelper(GraphConnectorHelper graphConnectorHelper, Logger logger)
         {
             connectorHelper = graphConnectorHelper;
             Logger = logger;
@@ -137,10 +138,26 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
 
                 }
 
+                // TODO: maybe Order By Surname and firstname?
+                if (teamOverview.Owners != null && teamOverview.Owners.Any())
+                {
+                    teamOverview.Owners = teamOverview.Owners.OrderBy(p => $"{p.Surname} {p.Firstname}").ToList();
+                }
+
+                if (teamOverview.Members != null && teamOverview.Members.Any())
+                {
+                    teamOverview.Members = teamOverview.Members.OrderBy(p => $"{p.Surname} {p.Firstname}").ToList();
+                }
+
+                if (teamOverview.Guests != null && teamOverview.Guests.Any())
+                {
+                    teamOverview.Guests = teamOverview.Guests.OrderBy(p => $"{p.Surname} {p.Firstname}").ToList();
+                }
+
                 teamOverviews.Add(teamOverview);
             }
 
-            return teamOverviews;
+            return teamOverviews.OrderBy(to => to.Team.Name).ToList();
         }
 
         /// <summary>

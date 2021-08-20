@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
-using TOPOBOX.OSC.TeamsTool.Common.Logger;
+using TOPOBOX.OSC.TeamsTool.Common.Logging;
 
 namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain
 {
