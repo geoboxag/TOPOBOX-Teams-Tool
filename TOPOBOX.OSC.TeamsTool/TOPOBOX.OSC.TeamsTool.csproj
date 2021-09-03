@@ -84,8 +84,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="Settings\SettingsController.cs" />
     <Compile Include="Helpers\TokenCacheHelper.cs" />
+    <Compile Include="ViewModels\TasksViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>

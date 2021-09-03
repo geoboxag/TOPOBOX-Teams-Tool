@@ -1,11 +1,6 @@
-﻿using Microsoft.Graph.Auth;
-using Microsoft.Identity.Client;
-using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
-using TOPOBOX.OSC.TeamsTool;
 using TOPOBOX.OSC.TeamsTool.ViewModels;
 using TOPOBOX.OSC.TeamsTool.Views;
 

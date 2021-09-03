@@ -6,14 +6,14 @@ using Logger = TOPOBOX.OSC.TeamsTool.Common.Logging.Logger;
 
 namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.TeamsOverview
 {
-    internal sealed class HTMLExportUsersOverviewController : IController
+    internal sealed class JSONExportUsersOverviewController : IController
     {
-        // DEBUG Command: --functiontype exportUsersOverviewHTML --folderpath "C:\Temp\TeamsTool" --filename "UsersOverview"
+        // DEBUG Command: --functiontype exportUsersOverviewJSON --folderpath "C:\Temp\TeamsTool" --filename "UsersOverview"
         /// <summary>
         /// Name of FunctionType
         /// Key: must be unique
         /// </summary>
-        private const string FUNCTIONTYPE = "exportUsersOverviewHTML";
+        private const string FUNCTIONTYPE = "exportUsersOverviewJSON";
 
         /// <summary>
         /// Get the name
@@ -27,7 +27,7 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.TeamsOverview
         private BatchRuntimeSettings runtimeSettings;
 
         #region Constructor and Dispose
-        public HTMLExportUsersOverviewController(BatchRuntimeSettings batchRuntimeSettings)
+        public JSONExportUsersOverviewController(BatchRuntimeSettings batchRuntimeSettings)
         {
             runtimeSettings = batchRuntimeSettings;
         }
@@ -52,10 +52,10 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.TeamsOverview
             }
 
             UsersOverviewHelper usersOverviewHelper = new UsersOverviewHelper(runtimeSettings.GraphConnectorHelper, Logger);
-            var htmlFilePath = runtimeSettings.GetHTMLOutputFilePath();
-            if (usersOverviewHelper.SaveAsHTMLFile(htmlFilePath))
+            var jsonFilePath = runtimeSettings.GetJSONOutputFilePath();
+            if (usersOverviewHelper.SaveAsJsonFile(jsonFilePath))
             {
-                Logger.WriteInformation($"Datei erstellt: {htmlFilePath}");
+                Logger.WriteInformation($"Datei erstellt: {jsonFilePath}");
             }
 
             if (Logger.WriteLogFile(runtimeSettings.LogFilePath))

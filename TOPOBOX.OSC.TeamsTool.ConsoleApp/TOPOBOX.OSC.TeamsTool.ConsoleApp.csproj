@@ -62,6 +62,7 @@
     <Compile Include="Controller\PlannersOverview\JSONExportPlannersOverviewController.cs" />
     <Compile Include="Controller\TeamsOverview\JSONExportTeamsOverviewController.cs" />
     <Compile Include="Controller\TeamsOverview\HTMLExportTeamsOverviewController.cs" />
+    <Compile Include="Controller\UsersOverview\JSONExportUsersOverviewController.cs" />
     <Compile Include="Controller\UsersOverview\HTMLExportUsersOverviewController.cs" />
     <Compile Include="Domain\BatchRuntimeSettings.cs" />
     <Compile Include="Program.cs" />

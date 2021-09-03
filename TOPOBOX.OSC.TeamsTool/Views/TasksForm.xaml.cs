@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TOPOBOX.OSC.TeamsTool.Common.IO;
+using System.IO;
 
 namespace TOPOBOX.OSC.TeamsTool.Views
 {
@@ -13,7 +15,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
     /// </summary>
     public partial class TasksForm : UserControl, INotifyPropertyChanged
     {
-        private MainViewModel mainViewModel;
+        private TasksViewModel tasksViewModel;
 
         private IList<PlannerConfiguration> plannerConfigurations;
         public IList<PlannerConfiguration> PlannerConfigurations
@@ -197,12 +199,14 @@ namespace TOPOBOX.OSC.TeamsTool.Views
         internal TasksForm(MainViewModel mainViewModel)
         {
             InitializeComponent();
-            this.mainViewModel = mainViewModel;
+            this.tasksViewModel = new TasksViewModel(mainViewModel.AuthenticationProvider);
+            this.DataContext = tasksViewModel;
+
         }
         
         internal void CreateTaskButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (!mainViewModel.IsAuthTokenSet() || 
+            if (tasksViewModel.AuthenticationProvider != null || 
                 !IsPlannerConfigurationSelected() || 
                 !IsBucketSelected() ||
                 !IsTasksFormValid()) 
@@ -237,46 +241,45 @@ namespace TOPOBOX.OSC.TeamsTool.Views
 
         private void Planner_DropDownOpened(object sender, System.EventArgs e)
         {
-            //if (!mainViewModel.IsTeamSelected())
-            //{
-            //    return;
-            //}
-            //var jsonSerialization = new JsonSerialization();
-            //var rootPath = $@"{Common.Properties.Settings.Default.TeamsToolConfigRootPath}
-            //    {Common.Properties.Settings.Default.RelPathPlannerFolders}";
-            //PlannerConfigurations = jsonSerialization.GetPlannerConfigurations(rootPath, 
-            //    Common.Properties.Settings.Default.ConfigFileName);
+            if (!tasksViewModel.IsTeamSelected())
+            {
+                return;
+            }
+
+            var rootPath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath, Common.Properties.Settings.Default.RelPathPlannerFolders);
+            PlannerConfigurations = JSONSerializer.ReadJson<List<PlannerConfiguration>>(
+                Path.Combine(rootPath, Common.Properties.Settings.Default.ConfigFileName));
         }
 
         private void PredefinedTasks_DropDownOpened(object sender, System.EventArgs e)
         {
-            //if (!IsPlannerConfigurationSelected())
-            //{
-            //    return;
-            //}
-            //var jsonSerialization = new JsonSerialization();
-            //PredefinedTasks = jsonSerialization.GetPredefinedTasks(
-            //    SelectedPlannerConfiguration.GbxPlanner.ConfigPath);
+            if (!IsPlannerConfigurationSelected())
+            {
+                return;
+            }
+
+            PredefinedTasks = JSONSerializer.ReadJson<Dictionary<string, List<Task>>>(SelectedPlannerConfiguration.Planner.ConfigPath);  
+
         }
 
         private void Bucket_DropDownOpened(object sender, System.EventArgs e)
         {
-           //if (!IsPlannerConfigurationSelected())
-           //{
-           //    return;
-           //}
-           //Buckets = new List<GbxBucket>(SelectedPlannerConfiguration.GbxBuckets);
+            if (!IsPlannerConfigurationSelected())
+            {
+                return;
+            }
+            Buckets = new List<Bucket>(SelectedPlannerConfiguration.Buckets);
         }
 
         private void ResetFieldsButton_Click(object sender, RoutedEventArgs e)
         {
-            //SelectedPlannerConfiguration = null;
-            //SelectedBucket = null;
-            //Title = string.Empty;
-            //ProductName = string.Empty;
-            //SelectedPredefinedTask = new KeyValuePair<string, List<GbxTask>>();
-            //IsPredefinedTaskSelected = false;
-            //Description = string.Empty;
+            SelectedPlannerConfiguration = null;
+            SelectedBucket = null;
+            Title = string.Empty;
+            ProductName = string.Empty;
+            SelectedPredefinedTask = new KeyValuePair<string, List<Task>>();
+            IsPredefinedTaskSelected = false;
+            Description = string.Empty;
         }
 
         private void CreatePredefinedTaskButton_Click(object sender, RoutedEventArgs e)
@@ -411,8 +414,9 @@ namespace TOPOBOX.OSC.TeamsTool.Views
             return true;
         }
 
+
+
         #endregion
-        
 
     }
 }

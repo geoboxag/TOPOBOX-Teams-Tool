@@ -22,7 +22,8 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller
             availableControllers.Add(JSONExportTeamsOverviewController.GetCommandName(), typeof(JSONExportTeamsOverviewController));
             availableControllers.Add(HTMLExportTeamsOverviewController.GetCommandName(), typeof(HTMLExportTeamsOverviewController));
             // Users
-            availableControllers.Add(PDFExportUsersOverviewController.GetCommandName(), typeof(PDFExportUsersOverviewController));
+            availableControllers.Add(HTMLExportUsersOverviewController.GetCommandName(), typeof(HTMLExportUsersOverviewController));
+            availableControllers.Add(JSONExportUsersOverviewController.GetCommandName(), typeof(JSONExportUsersOverviewController));
             // Planners
             availableControllers.Add(JSONExportPlannersOverviewController.GetCommandName(), typeof(JSONExportPlannersOverviewController));
             availableControllers.Add(HTMLExportPlannersOverviewController.GetCommandName(), typeof(HTMLExportPlannersOverviewController));

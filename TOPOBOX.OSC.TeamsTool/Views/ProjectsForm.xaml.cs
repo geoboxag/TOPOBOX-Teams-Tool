@@ -63,7 +63,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
         {
             InitializeComponent();
             this.mainViewModel = mainViewModel;
-            Channels = mainViewModel.Channels;
+            //Channels = mainViewModel.Channels;
         }
 
         private void CreateChannelButton_Click(object sender, RoutedEventArgs e)

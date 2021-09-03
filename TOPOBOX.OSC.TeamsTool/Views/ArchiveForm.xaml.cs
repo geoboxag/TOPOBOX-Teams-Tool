@@ -124,7 +124,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
             {
                 return;
             }
-            //Teams = GetTeamsOverviewFromConfig();
+            Teams = GetTeamOverviewFromConfig();
         }
 
         private void TeamCmb_OnDropDownClosed(object sender, EventArgs e)
@@ -195,20 +195,18 @@ namespace TOPOBOX.OSC.TeamsTool.Views
         }
 
 
-        private List<TeamOverview> GetTeamsOverviewFromConfig()
+        private List<TeamOverview> GetTeamOverviewFromConfig()
         {
             string filePath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath,
                     Common.Properties.Settings.Default.RelFilePathTeamsJson);
+            var teamsOverview = JSONSerializer.ReadJson<List<TeamOverview>>(filePath);
 
-            //var jsonSerialization = new JsonSerialization();
-            //var teamsOverview = jsonSerialization.GetFromFile<GbxTeamOverview>(filePath);
+            if (!teamsOverview.Any())
+            {
+                LogMessages.Insert(0, $"{Properties.Resources.ErrorReadingFileMessage}{filePath}");
+            }
 
-            //if (!teamsOverview.Any())
-            //{
-            //    LogMessages.Insert(0, $"{Properties.Resources.ErrorReadingFileMessage}{filePath}");
-            //}
-            //return teamsOverview;
-            return null;
+            return teamsOverview;
         }
 
 

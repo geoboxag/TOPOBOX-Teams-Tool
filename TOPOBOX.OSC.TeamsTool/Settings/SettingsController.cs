@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace TOPOBOX.OSC.TeamsTool.Settings
 {
@@ -10,9 +12,42 @@ namespace TOPOBOX.OSC.TeamsTool.Settings
 
         internal List<string> Messages = new List<string>();
 
+        internal ApplicationSettings ApplicationSettings;
+
         internal SettingsController()
         {
+            ReadConfigurationFile();
         }
+
+        #region Read XML-File with Configurations
+        private void ReadConfigurationFile()
+        {
+            var xmlFilePath = Properties.Settings.Default.ApplicationSettingsPath;
+
+            if (!System.IO.File.Exists(xmlFilePath))
+            {
+                Messages.Add($"XML-Konfigurations-Datei wurde nicht gefunden. Gesuchte Datei [{xmlFilePath}]");
+                ConfigIsOk = false;
+                return;
+            }
+
+            try
+            {
+                using (var xmlTextReader = new XmlTextReader(xmlFilePath))
+                {
+                    var result = new XmlSerializer(typeof(ApplicationSettings)).Deserialize(xmlTextReader);
+                    ApplicationSettings = (ApplicationSettings)result;
+                }
+                // ToDo Check Settings
+                ConfigIsOk = true;
+            }
+            catch (Exception ex)
+            {
+                Messages.Add(ex.Message);
+                ConfigIsOk = false;
+            }
+        }
+        #endregion
 
         internal bool IsCmdParameterExists(string cmdParamter)
         {
