@@ -50,5 +50,36 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
             task.Start();
             return task.Result;
         }
+
+
+        /// <summary>
+        /// Get all my planners
+        /// </summary>
+        /// <returns>dictionary with plannerID and Graph.Planner Objects</returns>
+        public Dictionary<string, PlannerPlan> GetMyPlanners()
+        {
+            var graphRequest = graphClient.Me.Planner.Plans.Request();
+
+            var task = new Task<Dictionary<string, PlannerPlan>>(gR =>
+            {
+                var request = gR as PlannerUserPlansCollectionRequest;
+                var answer = request.GetAsync().Result;
+
+                if (answer.Any())
+                {
+                    Dictionary<string, PlannerPlan> returnDict = new Dictionary<string, PlannerPlan>();
+                    foreach (var plannerPlan in answer)
+                    {
+                        returnDict.Add(plannerPlan.Id, plannerPlan);
+                    }
+                    return returnDict;
+                }
+
+                return new Dictionary<string, PlannerPlan>();
+            }, graphRequest);
+
+            task.Start();
+            return task.Result;
+        }
     }
 }

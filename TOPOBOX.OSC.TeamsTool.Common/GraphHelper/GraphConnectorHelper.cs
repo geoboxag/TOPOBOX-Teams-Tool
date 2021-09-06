@@ -54,6 +54,24 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         }
 
         /// <summary>
+        /// Initialize a UserServiceClient
+        /// </summary>
+        /// <param name="authenticationProvider"></param>
+        /// <returns></returns>
+        public bool InitUserServiceClient(IAuthenticationProvider authenticationProvider)
+        {
+            GraphServiceClient = CreateServiceClient(authenticationProvider);
+            if (GraphServiceClient is null)
+            {
+                IsInitOK = false;
+                return IsInitOK;
+            }
+
+            IsInitOK = true;
+            return IsInitOK;
+        }
+
+        /// <summary>
         /// Creates a ClientApplication
         /// </summary>
         /// <param name="clientID"></param>

@@ -30,7 +30,16 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         }
 
         /// <summary>
-        /// Export the PlannerConfigration as a JSON-File
+        /// Gets my PlannerConfiguration
+        /// </summary>
+        /// <returns></returns>
+        public List<PlannerConfiguration> GetMyData()
+        {
+            return CollectMyData();
+        }
+
+        /// <summary>
+        /// Export the PlannerConfiguration as a JSON-File
         /// </summary>
         /// <param name="saveFilePath"></param>
         /// <returns></returns>
@@ -54,7 +63,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         }
 
         /// <summary>
-        /// Export the PlannerConfigration as a HTML-File
+        /// Export the PlannerConfiguration as a HTML-File
         /// </summary>
         /// <param name="saveFilePath"></param>
         /// <returns></returns>
@@ -88,6 +97,17 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         {
             GraphPlannerPlanHelper plannerHelper = new GraphPlannerPlanHelper(connectorHelper.GraphServiceClient);
             var planners = plannerHelper.GetPlanners();
+            return MapPlannerAndBuckets(planners);
+        }
+
+        /// <summary>
+        /// Returns my planner and their buckets
+        /// </summary>
+        /// <returns></returns>
+        private List<PlannerConfiguration> CollectMyData()
+        {
+            GraphPlannerPlanHelper plannerHelper = new GraphPlannerPlanHelper(connectorHelper.GraphServiceClient);
+            var planners = plannerHelper.GetMyPlanners();
             return MapPlannerAndBuckets(planners);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Logging
@@ -12,14 +13,14 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Logging
         /// <summary>
         /// Messages of the Logger
         /// </summary>
-        public List<string> Messages { get; private set; }
+        public ObservableCollection<LogItem> LogItems { get; private set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
         public Logger()
         {
-            Messages = new List<string>();
+            LogItems = new ObservableCollection<LogItem>();
         }
 
         /// <summary>
@@ -28,7 +29,11 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Logging
         /// <param name="message"></param>
         public void WriteError(string message)
         {
-            Messages.Add($"ERR: {message}");
+            LogItems.Add(new LogItem() 
+            {
+                Message = $"ERR: {message}",
+                LogDateTime = DateTime.Now
+            });
         }
 
         /// <summary>
@@ -37,7 +42,11 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Logging
         /// <param name="message"></param>
         public void WriteInformation(string message)
         {
-            Messages.Add($"INF: {message}");
+            LogItems.Add(new LogItem()
+            {
+                Message = $"INF: {message}",
+                LogDateTime = DateTime.Now
+            });
         }
 
         /// <summary>
@@ -46,7 +55,11 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Logging
         /// <param name="message"></param>
         public void WriteLine(string message)
         {
-            Messages.Add(message);
+            LogItems.Add(new LogItem()
+            {
+                Message = message,
+                LogDateTime = DateTime.Now
+            });
         }
 
         /// <summary>
@@ -55,7 +68,11 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Logging
         /// <param name="message"></param>
         public void WriteWarning(string message)
         {
-            Messages.Add($"WRN: {message}");
+            LogItems.Add(new LogItem()
+            {
+                Message = $"WRN: {message}",
+                LogDateTime = DateTime.Now
+            });
         }
 
         /// <summary>
@@ -70,7 +87,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Logging
                 if (!string.IsNullOrEmpty(logFilePath))
                 {
                     var logFilePathWithExtension = $"{logFilePath}.tmp";
-                    File.AppendAllLines(logFilePathWithExtension, Messages);
+                    File.AppendAllLines(logFilePathWithExtension, GetLogMessages());
                 }
                 return true;
             }
@@ -81,14 +98,25 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Logging
             }
         }
 
+        private List<string> GetLogMessages()
+        {
+            List<string> messages = new List<string>();
+
+            foreach(var logItem in LogItems)
+            {
+                messages.Add($"{logItem.LogDateTime.ToString("dd-MM-yyyy / HH:mm:ss")} - {logItem.Message}");
+            }
+
+            return messages;
+        }
+
         /// <summary>
         /// Clears the Messages
         /// </summary>
         public void Dispose()
         {
-            Messages.Clear();
+            LogItems.Clear();
         }
-
 
     }
 }

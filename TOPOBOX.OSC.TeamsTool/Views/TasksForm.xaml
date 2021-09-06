@@ -5,10 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TOPOBOX.OSC.TeamsTool.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="800"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    <Grid>
-        <StackPanel>
+             d:DesignHeight="550" d:DesignWidth="800">
+    <Grid x:Name="TaskFormGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"></RowDefinition>
+            <RowDefinition Height="250"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0"  Grid.Row="0">
+            <Label Content="Allgemein" FontSize="16" />
             <Label Content="Team *" />
             <ComboBox x:Name="TeamCmb" 
                       Margin="5,0,5,0" Height="30" 
@@ -21,9 +31,8 @@
             <ComboBox x:Name="PlannerPlanCmb" 
                       Margin="5,0,5,0" Height="30" 
                       ItemsSource="{Binding PlannerConfigurations, UpdateSourceTrigger=PropertyChanged}" 
-                      DisplayMemberPath="Planner.Name"
+                      DisplayMemberPath="Name"
                       SelectedValue="{Binding SelectedPlannerConfiguration, Mode=TwoWay}"
-                      DropDownOpened="Planner_DropDownOpened"
                       VerticalContentAlignment="Center" />
 
             <Label Content="Bucket" />
@@ -31,19 +40,21 @@
                       Margin="5,0,5,0" 
                       Height="30" 
                       ItemsSource="{Binding Buckets, UpdateSourceTrigger=PropertyChanged}" 
-                      DisplayMemberPath="Bucket.Name"
+                      DisplayMemberPath="Name"
                       SelectedValue="{Binding SelectedBucket, Mode=TwoWay}"
-                      DropDownOpened="Bucket_DropDownOpened"
                       VerticalContentAlignment="Center" />
 
             <Label Content="Zuweisung Benutzer" />
             <ComboBox x:Name="UserCmb" 
                       Margin="5,0,5,0" Height="30" 
                       ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" 
-                      DisplayMemberPath="User.Surname + User.Firstname"
+                      DisplayMemberPath="User.DisplayName"
                       SelectedValue="{Binding SelectedUser, Mode=TwoWay}"
                       VerticalContentAlignment="Center" />
+        </StackPanel>
 
+        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <Label Content="Einzelne Aufgabe erfassen"  FontSize="16" />
             <Label Content="Aufgabentitel oder Version *" />
             <TextBox x:Name="TaskTitleOrVersion" 
                      Margin="5,0,5,0" 
@@ -67,45 +78,44 @@
                 <Label Grid.Column="0" Content="Notizen" />
                 <Label Grid.Column="1" Content="Ansichtauswahl:" />
                 <RadioButton x:Name="NotesRBtn" Grid.Column="2" VerticalAlignment="Center" 
-                             HorizontalAlignment="Center"
-                             IsChecked="{Binding IsDescriptionChecked}">Notizen</RadioButton>
+                             HorizontalAlignment="Center">Notizen</RadioButton>
                 <RadioButton x:Name="ChecklistRBtn" Grid.Column="3" VerticalAlignment="Center" 
                              HorizontalAlignment="Center" IsChecked="True">Checklist</RadioButton>
             </Grid>
             <TextBox x:Name="DescriptionTxtBox" 
                      Margin="5,0,5,0" 
-                     Height="60" 
+                     Height="60"                      
                      Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                      IsEnabled="{Binding DescriptionIsEnabled}"
                      VerticalContentAlignment="Top"
                      TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"/>
-            <Button x:Name="CreateTaskButton" 
-                    Content="Aufgabe erfassen" 
-                    Click="CreateTaskButton_Click" 
-                    Margin="5" 
-                    Height="30" />
 
-            <Label Content="Vordefinierte Aufgaben" />
-            <ComboBox x:Name="PredefinedTasksCmb" 
-                      Margin="5,0,5,0" 
-                      Height="30" 
-                      ItemsSource="{Binding PredefinedTasks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                      DisplayMemberPath="Key"
-                      SelectedValue="{Binding SelectedPredefinedTask, Mode=TwoWay}"
-                      DropDownOpened="PredefinedTasks_DropDownOpened"
-                      VerticalContentAlignment="Center" />
+            <Label Content="Checklist-Eintrag erfassen" />
+            <TextBox x:Name="ChecklistInputTxtBox" 
+                     Margin="5,0,5,0" 
+                     Height="30" 
+                     ToolTip="Enter drücken"
+                     Text="{Binding ChecklistEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     VerticalContentAlignment="Center" KeyDown="ChecklistInputTxtBox_KeyDown" />
+
+            <Label Content="Checklist-Einträge" />
+            <ListView x:Name="ChecklistView" 
+                     Margin="5,0,5,0" 
+                     Height="140"                      
+                     ItemsSource="{Binding ChecklistEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="CreatePredefinedTasks" 
-                    Content="Vordefinierte Aufgaben erfassen" 
-                    Click="CreatePredefinedTaskButton_Click" 
+                <Button x:Name="CreateTaskButton" 
+                    Content="Aufgabe erfassen" 
+                    Click="CreateTaskButton_Click" 
                     Margin="5" 
-                    Height="30"
+                    Height="30" 
                     Grid.Column="0"
-                    HorizontalAlignment="Stretch"/>
+                    HorizontalAlignment="Stretch" />
                 <Button x:Name="ResetFields" 
                     Content="Eingaben zurücksetzen" 
                     Click="ResetFieldsButton_Click" 
@@ -114,16 +124,35 @@
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"/>
             </Grid>
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="1">
+
+            <Label Content="Vordefinierte Aufgaben erfassen"  FontSize="16" />
+            <Label Content="Aufgabenauswahl" />
+            <ComboBox x:Name="PredefinedTasksCmb" 
+                      Margin="5,0,5,0" 
+                      Height="30" 
+                      ItemsSource="{Binding PredefinedPlannerTasks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                      DisplayMemberPath="Key"
+                      SelectedValue="{Binding SelectedPredefinedPlannerTask, Mode=TwoWay}"
+                      VerticalContentAlignment="Center" />
+
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Content="Status:" />
-                <Label x:Name="StatusMessageLbl" Grid.Column="1" HorizontalAlignment="Left" Content="" />
+                <Button x:Name="CreatePredefinedTasks" 
+                    Content="Aufgaben erstellen" 
+                    Click="CreatePredefinedTaskButton_Click" 
+                    Margin="5" 
+                    Height="30"
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"/>
             </Grid>
             
-
         </StackPanel>
     </Grid>
 </UserControl>

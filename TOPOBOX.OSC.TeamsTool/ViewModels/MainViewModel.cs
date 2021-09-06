@@ -3,8 +3,8 @@ using Microsoft.Identity.Client;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using TOPOBOX.OSC.TeamsTool.Helpers;
+using Logger = TOPOBOX.OSC.TeamsTool.Common.Logging.Logger;
 
 namespace TOPOBOX.OSC.TeamsTool.ViewModels
 {
@@ -27,6 +27,8 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
                 OnPropertyChanged(nameof(UserLabelText));
             }
         }
+
+        internal Logger Logger { get; set; } = new Logger();
 
         private InteractiveAuthenticationProvider authenticationProvider;
         public InteractiveAuthenticationProvider AuthenticationProvider
@@ -130,7 +132,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         {
             if (ClientApplication.UserTokenCache is null)
             {
-                MessageBox.Show(Properties.Resources.LoginFirstBeforeExecuteMessage);
+                Logger.WriteInformation(Properties.Resources.LoginFirstBeforeExecuteMessage);
                 return false;
             }
             return true;
@@ -141,7 +143,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         internal async Task LoginUserAsync()
         {
             var authHelper = new GraphUserAuthenticationHelper();
-            if(await authHelper.InitUserClientAsync(ClientApplication, scopes))
+            if (await authHelper.InitUserClientAsync(ClientApplication, scopes))
             {
                 AuthenticationProvider = authHelper.AuthenticationProvider;
                 UserLabelText = authHelper.Username;
@@ -173,8 +175,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
                 catch (MsalException ex)
                 {
                     // TODO Log
-                    MessageBox.Show("Fehler beim Auslogen des Benutzers.", "Logout nicht erfolgreich", 
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    Logger.WriteWarning("Logout nicht erfolgreich - Fehler beim Auslogen des Benutzers.");
                 }
             }
         }

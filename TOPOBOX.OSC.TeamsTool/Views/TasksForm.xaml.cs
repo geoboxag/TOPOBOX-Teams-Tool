@@ -1,213 +1,29 @@
-﻿using TOPOBOX.OSC.TeamsTool.Common.DAL;
-using TOPOBOX.OSC.TeamsTool.ViewModels;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using TOPOBOX.OSC.TeamsTool.Common.IO;
-using System.IO;
+
+using TOPOBOX.OSC.TeamsTool.ViewModels;
 
 namespace TOPOBOX.OSC.TeamsTool.Views
 {
     /// <summary>
     /// Interaction logic for TasksForm.xaml
     /// </summary>
-    public partial class TasksForm : UserControl, INotifyPropertyChanged
+    public partial class TasksForm : UserControl
     {
         private TasksViewModel tasksViewModel;
-
-        private IList<PlannerConfiguration> plannerConfigurations;
-        public IList<PlannerConfiguration> PlannerConfigurations
-        {
-            get
-            {
-                return plannerConfigurations;
-            }
-            set
-            {
-                plannerConfigurations = value;
-                OnPropertyChanged("PlannerConfigurations");
-            }
-        }
-
-        private PlannerConfiguration selectedPlannerConfiguration;
-        public PlannerConfiguration SelectedPlannerConfiguration
-        {
-            get
-            {
-                return selectedPlannerConfiguration;
-            }
-            set
-            {
-                selectedPlannerConfiguration = value;
-                OnPropertyChanged("SelectedPlannerConfiguration");
-            }
-        }
-
-        private List<Bucket> buckets;
-        public List<Bucket> Buckets
-        {
-            get
-            {
-                return buckets;
-            }
-            set
-            {
-                buckets = value;
-                OnPropertyChanged("Buckets");
-            }
-        }
-
-        private Bucket selectedBucket;
-        public Bucket SelectedBucket
-        {
-            get
-            {
-                return selectedBucket;
-            }
-            set
-            {
-                selectedBucket = value;
-                OnPropertyChanged("SelectedBucket");
-            }
-        }
-
-        private string title;
-        public string Title
-        {
-            get
-            {
-                return title;
-            }
-            set
-            {
-                title = value;
-                OnPropertyChanged("Title");
-            }
-        }
-
-        private string productName = string.Empty;
-        public string ProductName
-        {
-            get
-            {
-                return productName;
-            }
-            set
-            {
-                productName = value;
-                OnPropertyChanged("ProductName");
-            }
-        }
-
-        private string description = string.Empty;
-        public string Description
-        {
-            get
-            {
-                return description;
-            }
-            set
-            {
-                description = value;
-                OnPropertyChanged("Description");
-            }
-        }
-
-        //private PlannerPreviewType previewType = PlannerPreviewType.Checklist;
-        //private bool isDescriptionChecked;
-        //public bool IsDescriptionChecked
-        //{
-        //    get
-        //    {
-        //        return isDescriptionChecked;
-        //    }
-        //    set
-        //    {
-        //        isDescriptionChecked = value;
-        //        if (IsDescriptionChecked)
-        //        {
-        //            previewType = PlannerPreviewType.Description;
-        //        }
-        //        else
-        //        {
-        //            previewType = PlannerPreviewType.Checklist;
-        //        }
-        //        OnPropertyChanged("IsDescriptionChecked");
-        //    }
-        //}
-
-        private Dictionary<string, List<Task>> predefinedTasks;
-        public Dictionary<string, List<Task>> PredefinedTasks
-        {
-            get
-            {
-                return predefinedTasks;
-            }
-            set
-            {
-                predefinedTasks = value;
-                OnPropertyChanged("PredefinedTasks");
-            }
-        }
-
-        private KeyValuePair<string, List<Task>> selectedPredefinedTask;
-        public KeyValuePair<string, List<Task>> SelectedPredefinedTask
-        {
-            get
-            {
-                return selectedPredefinedTask;
-            }
-            set
-            {
-                selectedPredefinedTask = value;
-                IsPredefinedTaskSelected = SelectedPredefinedTask.Key != null;
-                OnPropertyChanged("SelectedPredefinedTask");
-            }
-        }
-
-        private bool isPredefinedTaskSelected = false;
-        public bool IsPredefinedTaskSelected
-        {
-            get
-            {
-                return isPredefinedTaskSelected;
-            }
-            set
-            {
-                isPredefinedTaskSelected = value;
-                DescriptionIsEnabled = !IsPredefinedTaskSelected;
-                OnPropertyChanged("IsPredefinedTaskSelected");
-            }
-        }
-
-        private bool descriptionIsEnabled = true;
-        public bool DescriptionIsEnabled
-        {
-            get
-            {
-                return descriptionIsEnabled;
-            }
-            set
-            {
-                descriptionIsEnabled = value;
-                OnPropertyChanged("DescriptionIsEnabled");
-            }
-        }
 
         internal TasksForm(MainViewModel mainViewModel)
         {
             InitializeComponent();
-            this.tasksViewModel = new TasksViewModel(mainViewModel.AuthenticationProvider);
+            this.tasksViewModel = new TasksViewModel(mainViewModel);
             this.DataContext = tasksViewModel;
-
         }
         
         internal void CreateTaskButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (tasksViewModel.AuthenticationProvider != null || 
-                !IsPlannerConfigurationSelected() || 
+            if (tasksViewModel.AuthenticationProvider != null ||
+                !IsTeamSelected() ||
+                !IsPlannerSelected() || 
                 !IsBucketSelected() ||
                 !IsTasksFormValid()) 
             {
@@ -239,58 +55,21 @@ namespace TOPOBOX.OSC.TeamsTool.Views
 
         }
 
-        private void Planner_DropDownOpened(object sender, System.EventArgs e)
-        {
-            if (!tasksViewModel.IsTeamSelected())
-            {
-                return;
-            }
-
-            var rootPath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath, Common.Properties.Settings.Default.RelPathPlannerFolders);
-            PlannerConfigurations = JSONSerializer.ReadJson<List<PlannerConfiguration>>(
-                Path.Combine(rootPath, Common.Properties.Settings.Default.ConfigFileName));
-        }
-
-        private void PredefinedTasks_DropDownOpened(object sender, System.EventArgs e)
-        {
-            if (!IsPlannerConfigurationSelected())
-            {
-                return;
-            }
-
-            PredefinedTasks = JSONSerializer.ReadJson<Dictionary<string, List<Task>>>(SelectedPlannerConfiguration.Planner.ConfigPath);  
-
-        }
-
-        private void Bucket_DropDownOpened(object sender, System.EventArgs e)
-        {
-            if (!IsPlannerConfigurationSelected())
-            {
-                return;
-            }
-            Buckets = new List<Bucket>(SelectedPlannerConfiguration.Buckets);
-        }
-
         private void ResetFieldsButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedPlannerConfiguration = null;
-            SelectedBucket = null;
-            Title = string.Empty;
-            ProductName = string.Empty;
-            SelectedPredefinedTask = new KeyValuePair<string, List<Task>>();
-            IsPredefinedTaskSelected = false;
-            Description = string.Empty;
+            tasksViewModel.ResetFields();
         }
 
         private void CreatePredefinedTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (!mainViewModel.IsAuthTokenSet() || 
-            //    !IsPlannerConfigurationSelected() || 
-            //    !IsTasksFormValid() ||
-            //    IsPredefinedTaskSelected)
-            //{
-            //    return;
-            //}
+            if (tasksViewModel.AuthenticationProvider != null ||
+                !IsTeamSelected() ||
+                !IsPlannerSelected() ||
+                !IsBucketSelected() ||
+                !IsPredefinedPlannerTaskSelected())
+            {
+                return;
+            }
 
             //var mappingToGraphItem = new GraphItemMapping();
 
@@ -312,28 +91,6 @@ namespace TOPOBOX.OSC.TeamsTool.Views
             //    SendTask(plannerTask);
             //}
 
-        }
-
-
-        private string GetTaskTitle(string title, string productName, string predefinedTaskTitle = "")
-        {
-            if (string.IsNullOrEmpty(predefinedTaskTitle) && string.IsNullOrEmpty(productName))
-            {
-                return title;
-            }
-
-            string resultTitle = string.Empty;
-
-            if (!string.IsNullOrEmpty(productName) && !string.IsNullOrEmpty(title))
-            {
-                resultTitle = predefinedTaskTitle.Replace("[TitlePlaceHolder]", $"{title} - {productName}");
-            }
-            else if (!string.IsNullOrEmpty(title))
-            {
-                resultTitle = predefinedTaskTitle.Replace("[TitlePlaceHolder]", title);
-            }
-
-            return resultTitle;
         }
 
         //private PlannerTask CreatePlannerTask(string planId, string bucketId, string title, string description, string userId = null)
@@ -374,30 +131,53 @@ namespace TOPOBOX.OSC.TeamsTool.Views
         //}
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName = null)
+        private void ChecklistInputTxtBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (e.Key.Equals(System.Windows.Input.Key.Enter))
+            {
+                tasksViewModel.AddChecklistEntry();
+            }
         }
 
-
         #region Validate-Methods
-        private bool IsBucketSelected()
+        private bool IsTeamSelected()
         {
-            if (SelectedBucket is null)
+            if (tasksViewModel.IsTeamSelected())
             {
-                string message = Properties.Resources.SelectAnyItemFromListMessage.Replace("{0}", "Bucket");
+                string message = string.Format(Properties.Resources.SelectAnyItemFromListMessage, "Team");
                 MessageBox.Show(message);
                 return false;
             }
             return true;
         }
 
-        private bool IsPlannerConfigurationSelected()
+        private bool IsBucketSelected()
         {
-            if (SelectedPlannerConfiguration is null)
+            if (tasksViewModel.IsBucketSelected())
             {
-                string message = Properties.Resources.SelectAnyItemFromListMessage.Replace("{0}", "Planner");
+                string message = string.Format(Properties.Resources.SelectAnyItemFromListMessage, "Bucket");
+                MessageBox.Show(message);
+                return false;
+            }
+            return true;
+        }
+
+        private bool IsPlannerSelected()
+        {
+            if (tasksViewModel.IsPlannerConfigurationSelected())
+            {
+                string message = string.Format(Properties.Resources.SelectAnyItemFromListMessage, "Planner");
+                MessageBox.Show(message);
+                return false;
+            }
+            return true;
+        }
+
+        private bool IsPredefinedPlannerTaskSelected()
+        {
+            if (tasksViewModel.IsPredefinedPlannerTaskSelected())
+            {
+                string message = string.Format(Properties.Resources.SelectAnyItemFromListMessage, "Planner");
                 MessageBox.Show(message);
                 return false;
             }
@@ -406,16 +186,13 @@ namespace TOPOBOX.OSC.TeamsTool.Views
 
         private bool IsTasksFormValid()
         {
-            if (string.IsNullOrEmpty(Title))
+            if (tasksViewModel.IsTasksFormValid())
             {
                 MessageBox.Show(Properties.Resources.FirstFillRequiredFieldsMessage);
                 return false;
             }
             return true;
         }
-
-
-
         #endregion
 
     }
