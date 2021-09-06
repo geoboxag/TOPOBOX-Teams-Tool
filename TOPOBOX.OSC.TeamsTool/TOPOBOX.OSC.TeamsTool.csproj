@@ -78,6 +78,7 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="Controller\MessageBuilder.cs" />
+    <Compile Include="Converters\LoggerItemTypeToBrush.cs" />
     <Compile Include="Helpers\GraphUserAuthenticationHelper.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
