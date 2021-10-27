@@ -3,12 +3,12 @@
     /// <summary>
     /// Internal object ChecklistItem, which partially corresponds to the object <see cref="Microsoft.Graph.PlannerChecklistItem"/>
     /// </summary>
-    public class ChecklistItem : BaseData
+    public class ChecklistItem
     {
         /// <summary>
-        /// Description <see cref="Microsoft.Graph.PlannerChecklistItem.Title"/>
+        /// Title <see cref="Microsoft.Graph.PlannerChecklistItem.Title"/>
         /// </summary>
-        public string Description { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// IsChecked <see cref="Microsoft.Graph.PlannerChecklistItem.IsChecked"/>

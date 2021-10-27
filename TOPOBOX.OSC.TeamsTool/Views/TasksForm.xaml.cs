@@ -69,15 +69,6 @@ namespace TOPOBOX.OSC.TeamsTool.Views
 
         private void CreatePredefinedTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            if (tasksViewModel.AuthenticationProvider != null ||
-                !IsTeamSelected() ||
-                !IsPlannerSelected() ||
-                !IsBucketSelected() ||
-                !IsPredefinedPlannerTaskSelected())
-            {
-                return;
-            }
-
             tasksViewModel.CreatePredefinedPlannerTask();
         }
 

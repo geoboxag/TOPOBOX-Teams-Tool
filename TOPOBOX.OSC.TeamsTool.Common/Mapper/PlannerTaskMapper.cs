@@ -30,7 +30,9 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             graphPlannerTask.Id = plannerTask.Id;
             graphPlannerTask.Title = plannerTask.Title;
             graphPlannerTask.BucketId = plannerTask.BucketId;
+            graphPlannerTask.Details = new Graph.PlannerTaskDetails();
             graphPlannerTask.Details.Description = plannerTask.TaskDescription;
+            graphPlannerTask.Details.Checklist = MapTo(plannerTask.ChecklistItems);
 
             return graphPlannerTask;
         }
@@ -42,7 +44,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             foreach(var graphChecklistItem in graphPlannerChecklistItems)
             {
                 ChecklistItem checklistItem = new ChecklistItem();
-                checklistItem.Description = graphChecklistItem.Value.Title;
+                checklistItem.Title = graphChecklistItem.Value.Title;
                 checklistItem.IsChecked = graphChecklistItem.Value.IsChecked ?? false;
             }
 
@@ -54,8 +56,11 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             Graph.PlannerChecklistItems plannerChecklistItems = new Graph.PlannerChecklistItems();
 
             foreach (var checklistItem in checklistItems)
-            {               
-                plannerChecklistItems.AddChecklistItem(checklistItem.Description);
+            {
+                if (!string.IsNullOrEmpty(checklistItem.Title))
+                {
+                    plannerChecklistItems.AddChecklistItem(checklistItem.Title);
+                }
             }
 
             return plannerChecklistItems;

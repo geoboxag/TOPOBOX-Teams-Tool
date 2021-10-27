@@ -42,6 +42,23 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
                 DisplayName = graphIdentitySet.User.DisplayName               
             };
         }
+
+        public static Graph.User MapTo(User user)
+        {
+            var graphUser = new Graph.User();
+            graphUser.Id = user.Id;
+            graphUser.DisplayName = user.DisplayName;
+            graphUser.Surname = user.Surname;
+            graphUser.GivenName = user.Firstname;
+            graphUser.Mail = user.Email;
+
+            if (user.BusinessPhones != null && user.BusinessPhones.Any())
+            {
+                graphUser.BusinessPhones = user.BusinessPhones;
+            }
+
+            return graphUser;
+        }
 # pragma warning restore CS1591
     }
 }

@@ -126,6 +126,13 @@
   <data name="BeginMigrateChannelItemMessage" xml:space="preserve">
     <value>{0} werden migriert</value>
   </data>
+  <data name="BucketName" xml:space="preserve">
+    <value>Bucket</value>
+  </data>
+  <data name="CreatedPlannerTaskMessage" xml:space="preserve">
+    <value>Die Aufgabe mit dem Titel {0} wurde im Bucket {1} erstellt.</value>
+    <comment>{0} Titel der Aufgabe, {1} = Name des Bucket</comment>
+  </data>
   <data name="EndArchivingChannelItemMessage" xml:space="preserve">
     <value>{0} sind archiviert: {1}</value>
   </data>
@@ -144,17 +151,39 @@
   <data name="genModulName" xml:space="preserve">
     <value>TOPOBOX Teams Tool</value>
   </data>
+  <data name="IsSelectedMessage" xml:space="preserve">
+    <value>{0} ausgewählt: {1}</value>
+    <comment>{0} = Team, Bucket, PlannerTask, etc.  {1} = Name, Title, etc</comment>
+  </data>
   <data name="ListFilesMessage" xml:space="preserve">
     <value>Einlesen der Dateien aus dem Verzeichnis: {0}</value>
   </data>
   <data name="ListFoldersMessage" xml:space="preserve">
-    <value>Einlesen der Verzeichnisse.</value>
+    <value>Einlesen der Verzeichnisse: {0}</value>
+    <comment>{0} = RootPath</comment>
   </data>
   <data name="LoginFirstBeforeExecuteMessage" xml:space="preserve">
     <value>Bitte melden Sie sich an, um diesen Vorgang durchführen zu können.</value>
   </data>
   <data name="NoEntriesInListFoundMessage" xml:space="preserve">
     <value>Keine Einträge in der Liste vorhanden.</value>
+  </data>
+  <data name="NotCreatedPlannerTaskMessage" xml:space="preserve">
+    <value>Die Aufgabe mit dem Titel {0} konnte nicht im Bucket {1} erstellt werden.</value>
+    <comment>{0} Titel der Aufgabe, {1} = Name des Bucket</comment>
+  </data>
+  <data name="NotSelectedWarningMessage" xml:space="preserve">
+    <value>Es wurde kein/e {0} ausgewählt.</value>
+    <comment>{0} = Team, Bucket, PlannerTask, etc.</comment>
+  </data>
+  <data name="PlannerName" xml:space="preserve">
+    <value>Planner</value>
+  </data>
+  <data name="PredefinedTaskName" xml:space="preserve">
+    <value>Vordefinierte Tasks</value>
+  </data>
+  <data name="ReplacedTitleMessage" xml:space="preserve">
+    <value>Titel wurde wie folgt zusammengesetzt: {0}</value>
   </data>
   <data name="SavePathIsEmptyMessage" xml:space="preserve">
     <value>Kein Verzeichnis gewählt.</value>
@@ -167,5 +196,14 @@
   </data>
   <data name="TeamListImportetMessage" xml:space="preserve">
     <value>Team-Liste importiert.</value>
+  </data>
+  <data name="TeamName" xml:space="preserve">
+    <value>Team</value>
+  </data>
+  <data name="TitleIsEmptyWarningMessage" xml:space="preserve">
+    <value>Es muss ein Titel angegeben werden.</value>
+  </data>
+  <data name="TitleName" xml:space="preserve">
+    <value>Titel</value>
   </data>
 </root>

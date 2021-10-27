@@ -88,6 +88,24 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bucket.
+        /// </summary>
+        internal static string BucketName {
+            get {
+                return ResourceManager.GetString("BucketName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Die Aufgabe mit dem Titel {0} wurde im Bucket {1} erstellt..
+        /// </summary>
+        internal static string CreatedPlannerTaskMessage {
+            get {
+                return ResourceManager.GetString("CreatedPlannerTaskMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} sind archiviert: {1}.
         /// </summary>
         internal static string EndArchivingChannelItemMessage {
@@ -142,6 +160,15 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} ausgewählt: {1}.
+        /// </summary>
+        internal static string IsSelectedMessage {
+            get {
+                return ResourceManager.GetString("IsSelectedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Einlesen der Dateien aus dem Verzeichnis: {0}.
         /// </summary>
         internal static string ListFilesMessage {
@@ -151,7 +178,7 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Einlesen der Verzeichnisse..
+        ///   Looks up a localized string similar to Einlesen der Verzeichnisse: {0}.
         /// </summary>
         internal static string ListFoldersMessage {
             get {
@@ -174,6 +201,51 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         internal static string NoEntriesInListFoundMessage {
             get {
                 return ResourceManager.GetString("NoEntriesInListFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Die Aufgabe mit dem Titel {0} konnte nicht im Bucket {1} erstellt werden..
+        /// </summary>
+        internal static string NotCreatedPlannerTaskMessage {
+            get {
+                return ResourceManager.GetString("NotCreatedPlannerTaskMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Es wurde kein/e {0} ausgewählt..
+        /// </summary>
+        internal static string NotSelectedWarningMessage {
+            get {
+                return ResourceManager.GetString("NotSelectedWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planner.
+        /// </summary>
+        internal static string PlannerName {
+            get {
+                return ResourceManager.GetString("PlannerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vordefinierte Tasks.
+        /// </summary>
+        internal static string PredefinedTaskName {
+            get {
+                return ResourceManager.GetString("PredefinedTaskName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Titel wurde wie folgt zusammengesetzt: {0}.
+        /// </summary>
+        internal static string ReplacedTitleMessage {
+            get {
+                return ResourceManager.GetString("ReplacedTitleMessage", resourceCulture);
             }
         }
         
@@ -210,6 +282,33 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         internal static string TeamListImportetMessage {
             get {
                 return ResourceManager.GetString("TeamListImportetMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team.
+        /// </summary>
+        internal static string TeamName {
+            get {
+                return ResourceManager.GetString("TeamName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Es muss ein Titel angegeben werden..
+        /// </summary>
+        internal static string TitleIsEmptyWarningMessage {
+            get {
+                return ResourceManager.GetString("TitleIsEmptyWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Titel.
+        /// </summary>
+        internal static string TitleName {
+            get {
+                return ResourceManager.GetString("TitleName", resourceCulture);
             }
         }
     }

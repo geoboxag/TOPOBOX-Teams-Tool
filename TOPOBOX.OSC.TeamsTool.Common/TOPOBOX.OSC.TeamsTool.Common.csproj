@@ -86,6 +86,7 @@
     <Compile Include="Domain\PlannerOverviewHelper.cs" />
     <Compile Include="Domain\UsersOverviewHelper.cs" />
     <Compile Include="Domain\TeamsOverviewHelper.cs" />
+    <Compile Include="GraphHelper\GraphPlannerTaskHelper.cs" />
     <Compile Include="GraphHelper\GraphConnectorHelper.cs" />
     <Compile Include="GraphHelper\GraphBucketHelper.cs" />
     <Compile Include="GraphHelper\GraphUserConversationMemberHelper.cs" />

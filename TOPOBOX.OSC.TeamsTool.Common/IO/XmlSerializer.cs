@@ -45,24 +45,28 @@ namespace TOPOBOX.OSC.TeamsTool.Common.IO
         /// <returns>object of T or null</returns>
         public static T ReadXml<T>(string path, ILogger logger)
         {
+            Stream stream = new FileStream(path, FileMode.Open);
             try
             {
                 logger?.WriteInformation(string.Format(Properties.Resources.ReadFromFileMessage, path));
-                Stream stream = new FileStream(path, FileMode.Open);
-                System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(object));
+                System.Xml.Serialization.XmlSerializer xmlSerializer =
+                    new System.Xml.Serialization.XmlSerializer(typeof(T));
 
-                object deserializedObject = xmlSerializer.Deserialize(stream);
-
-                stream.Flush();
-                stream.Close();
+                T deserializedObject = (T)xmlSerializer.Deserialize(stream);
 
                 logger?.WriteInformation(string.Format(Properties.Resources.ReadFromFileSuccessMessage, path));
-                return (T)deserializedObject;
+                return deserializedObject;
             }
             catch (Exception ex)
             {
-                logger?.WriteError(string.Format(Properties.Resources.ReadFromFileErrorMessage, path) + $" {ex.Message}");
+                logger?.WriteError(
+                    string.Format(Properties.Resources.ReadFromFileErrorMessage, path) + $" {ex.Message}");
                 return Activator.CreateInstance<T>();
+            }
+            finally
+            {
+                stream.Flush();
+                stream.Close();
             }
         }
     }
