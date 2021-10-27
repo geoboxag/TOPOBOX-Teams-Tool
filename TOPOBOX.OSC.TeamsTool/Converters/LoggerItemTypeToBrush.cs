@@ -1,5 +1,4 @@
 ﻿using System.Windows.Data;
-using TOPOBOX.OSC.TeamsTool.Common.Logging;
 
 namespace TOPOBOX.OSC.TeamsTool.Converters
 {
@@ -7,17 +6,17 @@ namespace TOPOBOX.OSC.TeamsTool.Converters
     {
         public object Convert(object value, System.Type targetType, object paramter, System.Globalization.CultureInfo culture)
         {
-            LogItem inputValue = (LogItem)value;
+            //LogItem inputValue = (LogItem)value;
 
-            if (inputValue.Message.Contains("ERR"))
-            {
-                return new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
-            }
+            //if (inputValue.Message.Contains("ERR"))
+            //{
+            //    return new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+            //}
 
-            if (inputValue.Message.Contains("WRN"))
-            {
-                return new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Orange);
-            }
+            //if (inputValue.Message.Contains("WRN"))
+            //{
+            //    return new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Orange);
+            //}
 
             return new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black);
         }

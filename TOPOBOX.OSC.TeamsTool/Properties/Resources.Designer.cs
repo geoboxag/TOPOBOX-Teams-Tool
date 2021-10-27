@@ -124,6 +124,15 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keine Verzeichnisse vorhanden..
+        /// </summary>
+        internal static string FolderIsEmptyMessage {
+            get {
+                return ResourceManager.GetString("FolderIsEmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TOPOBOX Teams Tool.
         /// </summary>
         internal static string genModulName {
@@ -133,11 +142,38 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Einlesen der Dateien aus dem Verzeichnis: {0}.
+        /// </summary>
+        internal static string ListFilesMessage {
+            get {
+                return ResourceManager.GetString("ListFilesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Einlesen der Verzeichnisse..
+        /// </summary>
+        internal static string ListFoldersMessage {
+            get {
+                return ResourceManager.GetString("ListFoldersMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bitte melden Sie sich an, um diesen Vorgang durchführen zu können..
         /// </summary>
         internal static string LoginFirstBeforeExecuteMessage {
             get {
                 return ResourceManager.GetString("LoginFirstBeforeExecuteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keine Einträge in der Liste vorhanden..
+        /// </summary>
+        internal static string NoEntriesInListFoundMessage {
+            get {
+                return ResourceManager.GetString("NoEntriesInListFoundMessage", resourceCulture);
             }
         }
         

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GEOBOX.OSC.Common.Logging;
+using System.Collections.Generic;
 using System.IO;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
@@ -6,7 +7,6 @@ using TOPOBOX.OSC.TeamsTool.Common.Html.PlannerOverview;
 using TOPOBOX.OSC.TeamsTool.Common.IO;
 using TOPOBOX.OSC.TeamsTool.Common.Mapper;
 using Graph = Microsoft.Graph;
-using Logger = TOPOBOX.OSC.TeamsTool.Common.Logging.Logger;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Controller
 {
@@ -16,14 +16,14 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
     public class PlannerOverviewHelper
     {
         private GraphConnectorHelper connectorHelper;
-        private Logger Logger;
+        private ILogger Logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="graphConnectorHelper"></param>
         /// <param name="logger"></param>
-        public PlannerOverviewHelper(GraphConnectorHelper graphConnectorHelper, Logger logger)
+        public PlannerOverviewHelper(GraphConnectorHelper graphConnectorHelper, ILogger logger)
         {
             connectorHelper = graphConnectorHelper;
             Logger = logger;
@@ -129,12 +129,12 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
                 
                 plannerConfiguration.Buckets = new List<Bucket>();
                
-                var buckets = graphBucketHelper.GetBuckets(planner.Value.Id);
-                BucketMapper bucketMapper = new BucketMapper();
+                var plannerBuckets = graphBucketHelper.GetBuckets(planner.Value.Id);
 
-                foreach (var bucket in buckets)
+                foreach (var plannerBucket in plannerBuckets)
                 {
-                    plannerConfiguration.Buckets.Add((Bucket)bucketMapper.MapFrom(bucket));
+                    Bucket bucket = BucketMapper.MapFrom(plannerBucket.Value);
+                    plannerConfiguration.Buckets.Add(bucket);
                 }
 
                 plannerOverview.Add(plannerConfiguration);

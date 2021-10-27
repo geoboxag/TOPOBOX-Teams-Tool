@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GEOBOX.OSC.Common.Logging;
+using System.Collections.Generic;
 using System.IO;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
@@ -6,7 +7,6 @@ using TOPOBOX.OSC.TeamsTool.Common.Html.UserOverview;
 using TOPOBOX.OSC.TeamsTool.Common.IO;
 using TOPOBOX.OSC.TeamsTool.Common.Mapper;
 using Graph = Microsoft.Graph;
-using Logger = TOPOBOX.OSC.TeamsTool.Common.Logging.Logger;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Controller
 {
@@ -16,14 +16,14 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
     public class UsersOverviewHelper
     {
         private GraphConnectorHelper connectorHelper;
-        private Logger Logger;
+        private ILogger Logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="graphConnectorHelper"></param>
         /// <param name="logger"></param>
-        public UsersOverviewHelper(GraphConnectorHelper graphConnectorHelper, Logger logger)
+        public UsersOverviewHelper(GraphConnectorHelper graphConnectorHelper, ILogger logger)
         {
             connectorHelper = graphConnectorHelper;
             Logger = logger;

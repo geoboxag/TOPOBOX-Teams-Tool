@@ -1,11 +1,14 @@
-﻿using Microsoft.Graph.Auth;
+﻿using GEOBOX.OSC.Common.Logging;
+using Microsoft.Graph.Auth;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using TOPOBOX.OSC.TeamsTool.Common.Controller;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
 using TOPOBOX.OSC.TeamsTool.Common.IO;
+using TOPOBOX.OSC.TeamsTool.Common.Mapper;
 
 namespace TOPOBOX.OSC.TeamsTool.ViewModels
 {
@@ -14,6 +17,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         #region Properties and Attributes
 
         private MainViewModel mainViewModel;
+        private ILogger logger;
 
         private InteractiveAuthenticationProvider authenticationProvider;
         public InteractiveAuthenticationProvider AuthenticationProvider
@@ -250,7 +254,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             {
                 isPredefinedTaskSelected = value;
                 DescriptionIsEnabled = !IsPredefinedTaskSelected;
-                OnPropertyChanged("IsPredefinedTaskSelected");
+                OnPropertyChanged(nameof(IsPredefinedTaskSelected));
             }
         }
 
@@ -264,7 +268,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             set
             {
                 descriptionIsEnabled = value;
-                OnPropertyChanged("DescriptionIsEnabled");
+                OnPropertyChanged(nameof(DescriptionIsEnabled));
             }
         }
 
@@ -280,23 +284,26 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         public TasksViewModel(MainViewModel mainViewModel)
         {
             this.mainViewModel = mainViewModel;
-            LoadConfigFiles();
-            LoadUserSpecificContent();
+            logger = mainViewModel.Logger;
+            //LoadConfigFiles();
+            //LoadUserSpecificContent();
         }
         #endregion
 
         #region Methods for Loading Data from Files
-        private void LoadConfigFiles()
+        internal void LoadConfigFiles()
         {
             LoadTeams();
             SetSelectedTeamToDefault();
             LoadPlannerConfigurations();
             LoadChannels();
             LoadUsers();
+            LoadPredefinedPlannerTasks();
         }
+
         private void LoadUserSpecificContent()
         {
-            LoadPlannerConfigurations();
+            //LoadPlannerConfigurations();
         }
 
         private void LoadTeams()
@@ -307,7 +314,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
             if (!teamsOverview.Any())
             {
-                mainViewModel.Logger.WriteError($"{Properties.Resources.ErrorReadingFileMessage}{filePath}");
+                logger?.WriteWarning($"{Properties.Resources.NoEntriesInListFoundMessage}: {filePath}");
             }
 
             Teams = teamsOverview;
@@ -318,17 +325,84 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             var folderPath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath,
                                     Common.Properties.Settings.Default.RelPathPlannerFolders);
 
-            //PlannerOverviewHelper plannerOverviewHelper = new PlannerOverviewHelper(
-            //    mainViewModel.GraphConnectorHelper, 
-            //    new Common.Logging.Logger());
 
-            var plannerConfigs = new List<PlannerConfiguration>(); //plannerOverviewHelper.GetMyData();
+            PlannerOverviewHelper plannerOverviewHelper = new PlannerOverviewHelper(
+                mainViewModel.GraphConnectorHelper,
+                logger);
+
+            var plannerConfigs = plannerOverviewHelper.GetMyData();
             if (!plannerConfigs.Any())
             {
-                mainViewModel.Logger.WriteError($"{Properties.Resources.ErrorReadingFileMessage}{folderPath}");
+                logger?.WriteWarning($"{Properties.Resources.FolderIsEmptyMessage}: {folderPath}");
             }
 
             PlannerConfigurations = plannerConfigs;
+        }
+
+        private void LoadPredefinedPlannerTasks()
+        {
+            var folderPath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath,
+                                    Common.Properties.Settings.Default.RelPathPlannerFolders);
+
+            var predefinedPlannerTask = new Dictionary<string, List<PlannerTask>>();
+
+            logger.WriteInformation(Properties.Resources.ListFoldersMessage);
+            var directories = Directory.GetDirectories(folderPath);
+            foreach(var dir in directories)
+            {
+                logger.WriteInformation(string.Format(Properties.Resources.ListFilesMessage, dir));
+                foreach (var file in Directory.GetFiles(dir))
+                {                   
+                    try
+                    {
+                        logger.WriteInformation(string.Format(Common.Properties.Resources.ReadFromFileMessage, file));
+                        List<PlannerTask> plannerTasks = XmlSerializer.ReadXml<List<PlannerTask>>(file, logger);
+
+                        if (plannerTasks.Any())
+                        {
+                            predefinedPlannerTask.Add(Path.GetFileName(file), plannerTasks);
+                        }
+                        else
+                        {
+                            logger.WriteWarning(Properties.Resources.NoEntriesInListFoundMessage);
+                        }
+                    }
+                    catch
+                    {
+                        logger.WriteWarning(string.Format(Common.Properties.Resources.ReadFromFileErrorMessage, file));
+                    }                  
+                }
+            }
+
+            if (!predefinedPlannerTask.Any())
+            {
+                logger?.WriteError($"{Properties.Resources.ErrorReadingFileMessage}{folderPath}");
+            }
+
+            PredefinedPlannerTasks = predefinedPlannerTask;
+        }
+
+        internal void CreatePredefinedPlannerTask()
+        {
+            var plannerTaskMapper = new PlannerTaskMapper();
+
+            foreach (var predefinedTask in SelectedPredefinedPlannerTask.Value)
+            {
+                if (predefinedTask != null)
+                {
+                    predefinedTask.Title = GetTaskTitle(Title, ProductName, predefinedTask.Title);
+                }
+
+                //var plannerTask = plannerTaskMapper.MapTo(predefinedTask);
+                //plannerTask.BucketId = predefinedTask.BucketId;
+                //plannerTask.PlanId = SelectedPlannerConfiguration.GbxPlanner.Id;
+                //if (mainViewModel.SelectedUser != null)
+                //{
+                //    plannerTask.Assignments = mappingToGraphItem.GetPlannerAssignments(mainViewModel.SelectedUser.Id);
+                //}
+
+                //SendTask(plannerTask);
+            }
         }
 
         private void LoadChannels()
@@ -340,7 +414,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
             //if (!channels.Any())
             //{
-            //    LogMessages.Insert(0, $"{Properties.Resources.ErrorReadingFileMessage}{filePath}");
+            //    logger?.WriteError($"{Properties.Resources.ErrorReadingFileMessage}{filePath}");
             //}
 
             //Channels = channels;
@@ -355,7 +429,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
             if (!users.Any())
             {
-                mainViewModel.Logger.WriteError($"{Properties.Resources.ErrorReadingFileMessage}{filePath}");
+                logger?.WriteError($"{Properties.Resources.ErrorReadingFileMessage}{filePath}");
             }
 
             Users = users;
@@ -413,7 +487,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         }
         #endregion
 
-
         #region Validate-Methods
 
         internal bool IsTeamSelected()
@@ -433,7 +506,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         internal bool IsPredefinedPlannerTaskSelected()
         {
-            if (SelectedPredefinedPlannerTask.Key != null)
+            if (SelectedPredefinedPlannerTask.Key is null)
             {
                 return false;
             }
@@ -445,7 +518,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             return !string.IsNullOrEmpty(Title);
         }
         #endregion
-
 
     }
 }

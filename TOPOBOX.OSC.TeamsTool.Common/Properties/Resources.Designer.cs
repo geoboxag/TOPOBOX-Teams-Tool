@@ -61,17 +61,85 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+        ///   Looks up a localized string similar to Erstelle Datei: {0}..
+        /// </summary>
+        internal static string CreateFileMessage {
+            get {
+                return ResourceManager.GetString("CreateFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fehler beim erstellen der Datei: {0}.
+        /// </summary>
+        internal static string CreatingFileErrorMessage {
+            get {
+                return ResourceManager.GetString("CreatingFileErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datei erstellt: {0}.
+        /// </summary>
+        internal static string CreatingFileSuccessMessage {
+            get {
+                return ResourceManager.GetString("CreatingFileSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!doctype html&gt;
         ///&lt;!-- Diese Datei wurde automatisch Generiert von [APP_NAME] [APP_VERSION] am [GEN_DATE] [GEN_TIME] --&gt;
         ///&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
         ///&lt;head&gt;
-        ///&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
-        ///&lt;title&gt;[GEN_TITLE] - generated with [APP_NAME] GEOBOX AG&lt;/title&gt;
-        ///&lt;link href=&quot;http://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic&quot; rel=&quot;stylesheet&quot; [rest of string was truncated]&quot;;.
+        ///&lt;meta charset=&quot;utf-8&quot;&gt;
+        ///&lt;title&gt;[GEN_TITLE] - generated with [APP_NAME] geotopo AG, GEOBOX AG&lt;/title&gt;
+        ///&lt;link href=&quot;http://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
+        ///&lt;style type=&quot;text/css&quot;&gt;
+        ///*, body {
+        ///	font-family: Lato,sans-serif,Helvetica;
+        ///	font-size: 14Px;
+        ///	padding-top: 0px;        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string htmlTemplate {
             get {
                 return ResourceManager.GetString("htmlTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPOBOX_Log_{0}.log.
+        /// </summary>
+        internal static string LogFileName {
+            get {
+                return ResourceManager.GetString("LogFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fehler beim lesen der Datei: {0}.
+        /// </summary>
+        internal static string ReadFromFileErrorMessage {
+            get {
+                return ResourceManager.GetString("ReadFromFileErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lese Datei: {0}.
+        /// </summary>
+        internal static string ReadFromFileMessage {
+            get {
+                return ResourceManager.GetString("ReadFromFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datei gelesen: {0}.
+        /// </summary>
+        internal static string ReadFromFileSuccessMessage {
+            get {
+                return ResourceManager.GetString("ReadFromFileSuccessMessage", resourceCulture);
             }
         }
     }

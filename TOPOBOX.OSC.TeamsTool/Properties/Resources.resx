@@ -138,11 +138,23 @@
   <data name="FirstFillRequiredFieldsMessage" xml:space="preserve">
     <value>Bitte füllen Sie alle Pflichtfelder (*) im Formular aus.</value>
   </data>
+  <data name="FolderIsEmptyMessage" xml:space="preserve">
+    <value>Keine Verzeichnisse vorhanden.</value>
+  </data>
   <data name="genModulName" xml:space="preserve">
     <value>TOPOBOX Teams Tool</value>
   </data>
+  <data name="ListFilesMessage" xml:space="preserve">
+    <value>Einlesen der Dateien aus dem Verzeichnis: {0}</value>
+  </data>
+  <data name="ListFoldersMessage" xml:space="preserve">
+    <value>Einlesen der Verzeichnisse.</value>
+  </data>
   <data name="LoginFirstBeforeExecuteMessage" xml:space="preserve">
     <value>Bitte melden Sie sich an, um diesen Vorgang durchführen zu können.</value>
+  </data>
+  <data name="NoEntriesInListFoundMessage" xml:space="preserve">
+    <value>Keine Einträge in der Liste vorhanden.</value>
   </data>
   <data name="SavePathIsEmptyMessage" xml:space="preserve">
     <value>Kein Verzeichnis gewählt.</value>

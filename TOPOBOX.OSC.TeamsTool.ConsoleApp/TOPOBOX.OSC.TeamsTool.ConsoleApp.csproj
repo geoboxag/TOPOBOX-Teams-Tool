@@ -93,11 +93,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Identity">
+      <Version>1.5.0</Version>
+    </PackageReference>
     <PackageReference Include="CommandLineParser">
-      <Version>2.8.0</Version>
+      <Version>2.9.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Graph">
-      <Version>4.0.0-preview.7</Version>
+      <Version>4.7.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Graph.Auth">
       <Version>1.0.0-preview.7</Version>

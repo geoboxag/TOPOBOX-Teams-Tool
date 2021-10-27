@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 using TOPOBOX.OSC.TeamsTool.ViewModels;
@@ -14,9 +15,15 @@ namespace TOPOBOX.OSC.TeamsTool.Views
 
         internal TasksForm(MainViewModel mainViewModel)
         {
-            InitializeComponent();
             this.tasksViewModel = new TasksViewModel(mainViewModel);
+            InitializeComponent();
             this.DataContext = tasksViewModel;
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            tasksViewModel.LoadConfigFiles();
         }
         
         internal void CreateTaskButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -71,26 +78,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
                 return;
             }
 
-            //var mappingToGraphItem = new GraphItemMapping();
-
-            //foreach (var predefinedTask in selectedPredefinedTask.Value)
-            //{
-            //    if (predefinedTask != null)
-            //    {
-            //        predefinedTask.Title = GetTaskTitle(Title, ProductName, predefinedTask.Title);
-            //    }
-
-            //    var plannerTask = mappingToGraphItem.MapGbxTaskToPlannerTask(predefinedTask, previewType);
-            //    plannerTask.BucketId = predefinedTask.BucketId;
-            //    plannerTask.PlanId = SelectedPlannerConfiguration.GbxPlanner.Id;
-            //    if (mainViewModel.SelectedUser != null)
-            //    {
-            //        plannerTask.Assignments = mappingToGraphItem.GetPlannerAssignments(mainViewModel.SelectedUser.Id);
-            //    }
-
-            //    SendTask(plannerTask);
-            //}
-
+            tasksViewModel.CreatePredefinedPlannerTask();
         }
 
         //private PlannerTask CreatePlannerTask(string planId, string bucketId, string title, string description, string userId = null)
@@ -142,7 +130,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
         #region Validate-Methods
         private bool IsTeamSelected()
         {
-            if (tasksViewModel.IsTeamSelected())
+            if (!tasksViewModel.IsTeamSelected())
             {
                 string message = string.Format(Properties.Resources.SelectAnyItemFromListMessage, "Team");
                 MessageBox.Show(message);
@@ -153,7 +141,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
 
         private bool IsBucketSelected()
         {
-            if (tasksViewModel.IsBucketSelected())
+            if (!tasksViewModel.IsBucketSelected())
             {
                 string message = string.Format(Properties.Resources.SelectAnyItemFromListMessage, "Bucket");
                 MessageBox.Show(message);
@@ -164,7 +152,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
 
         private bool IsPlannerSelected()
         {
-            if (tasksViewModel.IsPlannerConfigurationSelected())
+            if (!tasksViewModel.IsPlannerConfigurationSelected())
             {
                 string message = string.Format(Properties.Resources.SelectAnyItemFromListMessage, "Planner");
                 MessageBox.Show(message);
@@ -175,7 +163,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
 
         private bool IsPredefinedPlannerTaskSelected()
         {
-            if (tasksViewModel.IsPredefinedPlannerTaskSelected())
+            if (!tasksViewModel.IsPredefinedPlannerTaskSelected())
             {
                 string message = string.Format(Properties.Resources.SelectAnyItemFromListMessage, "Planner");
                 MessageBox.Show(message);

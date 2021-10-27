@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using GEOBOX.OSC.Common.Logging;
 using System;
 using System.Collections.Generic;
 using TOPOBOX.OSC.TeamsTool.Common.Batch;
@@ -79,6 +80,8 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
                     OutputFileName = commandLineOptions.FileName,
                     LogFilePath = commandLineOptions.LogFilePath
                 };
+
+                ILogger logger = new CustomerFriendlyLogger(FileLogger.Create(commandLineOptions.LogFilePath), true);
 
                 using (IController controller = (IController)Activator.CreateInstance(availableControllers[commandLineOptions.FunctionType], new[] { batchRuntimeSettings }))
                 {

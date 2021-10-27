@@ -31,7 +31,7 @@
             <ComboBox x:Name="PlannerPlanCmb" 
                       Margin="5,0,5,0" Height="30" 
                       ItemsSource="{Binding PlannerConfigurations, UpdateSourceTrigger=PropertyChanged}" 
-                      DisplayMemberPath="Name"
+                      DisplayMemberPath="Planner.Name"
                       SelectedValue="{Binding SelectedPlannerConfiguration, Mode=TwoWay}"
                       VerticalContentAlignment="Center" />
 
@@ -39,7 +39,7 @@
             <ComboBox x:Name="Bucket" 
                       Margin="5,0,5,0" 
                       Height="30" 
-                      ItemsSource="{Binding Buckets, UpdateSourceTrigger=PropertyChanged}" 
+                      ItemsSource="{Binding SelectedPlannerConfiguration.Buckets, UpdateSourceTrigger=PropertyChanged}" 
                       DisplayMemberPath="Name"
                       SelectedValue="{Binding SelectedBucket, Mode=TwoWay}"
                       VerticalContentAlignment="Center" />

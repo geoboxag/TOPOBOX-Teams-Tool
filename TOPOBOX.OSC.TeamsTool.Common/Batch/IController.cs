@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GEOBOX.OSC.Common.Logging;
+using System;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Batch
 {
@@ -23,7 +24,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Batch
         /// <summary>
         /// Logger with all Messages from execute
         /// </summary>
-        Logging.Logger Logger { get; }
+        ILogger Logger { get; }
 
         // ToDo after refactoring
         /// <summary>

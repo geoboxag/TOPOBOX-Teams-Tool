@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using GEOBOX.OSC.Common.Logging;
+using System.IO;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
-using TOPOBOX.OSC.TeamsTool.Common.Logging;
 
 namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain
 {
@@ -23,7 +23,7 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain
             GraphConnectorHelper.InitServiceClient(clientId, clientSecret, tenantId);
         }
 
-        public bool CheckSettings(Logger logger)
+        public bool CheckSettings(ILogger logger)
         {
             bool isInitOk = IsInitOk(logger);
 
@@ -34,7 +34,7 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain
             return isInitOk;
         }
 
-        private bool IsInitOk(Logger logger)
+        private bool IsInitOk(ILogger logger)
         {
             if (string.IsNullOrEmpty(OutputDirectory))
             {

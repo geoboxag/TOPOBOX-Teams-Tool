@@ -117,8 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreateFileMessage" xml:space="preserve">
+    <value>Erstelle Datei: {0}.</value>
+  </data>
+  <data name="CreatingFileErrorMessage" xml:space="preserve">
+    <value>Fehler beim erstellen der Datei: {0}</value>
+  </data>
+  <data name="CreatingFileSuccessMessage" xml:space="preserve">
+    <value>Datei erstellt: {0}</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="htmlTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resource\htmlTemplate.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="LogFileName" xml:space="preserve">
+    <value>TOPOBOX_Log_{0}.log</value>
+    <comment>Replace {0} with DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")</comment>
+  </data>
+  <data name="ReadFromFileErrorMessage" xml:space="preserve">
+    <value>Fehler beim lesen der Datei: {0}</value>
+  </data>
+  <data name="ReadFromFileMessage" xml:space="preserve">
+    <value>Lese Datei: {0}</value>
+  </data>
+  <data name="ReadFromFileSuccessMessage" xml:space="preserve">
+    <value>Datei gelesen: {0}</value>
   </data>
 </root>

@@ -1,10 +1,13 @@
-﻿using Microsoft.Graph.Auth;
+﻿using GEOBOX.OSC.Common.Logging;
+using Microsoft.Graph.Auth;
 using Microsoft.Identity.Client;
+using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
 using TOPOBOX.OSC.TeamsTool.Helpers;
-using Logger = TOPOBOX.OSC.TeamsTool.Common.Logging.Logger;
 
 namespace TOPOBOX.OSC.TeamsTool.ViewModels
 {
@@ -28,7 +31,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             }
         }
 
-        internal Logger Logger { get; set; } = new Logger();
+        internal ILogger Logger { get; set; }
 
         private InteractiveAuthenticationProvider authenticationProvider;
         public InteractiveAuthenticationProvider AuthenticationProvider
@@ -40,6 +43,19 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             set
             {
                 authenticationProvider = value;
+            }
+        }
+
+        private GraphConnectorHelper graphConnectorHelper;
+        public GraphConnectorHelper GraphConnectorHelper
+        {
+            internal get
+            {
+                return graphConnectorHelper;
+            }
+            set
+            {
+                graphConnectorHelper = value;
             }
         }
 
@@ -57,6 +73,9 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         public MainViewModel(IPublicClientApplication clientApplication)
         {
             ClientApplication = clientApplication;
+
+            var logFilePath = Path.Combine(Path.GetTempPath(), string.Format(Common.Properties.Resources.LogFileName, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")));
+            Logger = new CustomerFriendlyLogger(FileLogger.Create(logFilePath), true);
         }
         #endregion
 
@@ -146,6 +165,8 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             if (await authHelper.InitUserClientAsync(ClientApplication, scopes))
             {
                 AuthenticationProvider = authHelper.AuthenticationProvider;
+                GraphConnectorHelper = new GraphConnectorHelper();
+                GraphConnectorHelper.InitUserServiceClient(AuthenticationProvider);
                 UserLabelText = authHelper.Username;
             }
         }
@@ -156,6 +177,8 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             if (await authHelper.InitUserClientAsync(ClientApplication, scopes, true))
             {
                 AuthenticationProvider = authHelper.AuthenticationProvider;
+                GraphConnectorHelper = new GraphConnectorHelper();
+                GraphConnectorHelper.InitUserServiceClient(AuthenticationProvider);
                 UserLabelText = authHelper.Username;
             }
         }
