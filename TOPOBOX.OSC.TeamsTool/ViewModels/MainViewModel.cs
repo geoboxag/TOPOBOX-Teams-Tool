@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Data;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
 using TOPOBOX.OSC.TeamsTool.Helpers;
 using TOPOBOX.OSC.TeamsTool.Logging;

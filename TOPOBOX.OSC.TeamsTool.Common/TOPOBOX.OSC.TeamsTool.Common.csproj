@@ -108,7 +108,6 @@
     <Compile Include="IO\JSONSerializer.cs" />
     <Compile Include="Mapper\BaseObjectMapper.cs" />
     <Compile Include="Mapper\PlannerTaskMapper.cs" />
-    <Compile Include="Mapper\GraphItemMapping.cs" />
     <Compile Include="Mapper\IObjectMapper.cs" />
     <Compile Include="Mapper\TeamMapper.cs" />
     <Compile Include="Mapper\BucketMapper.cs" />

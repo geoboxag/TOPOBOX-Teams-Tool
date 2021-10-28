@@ -4,7 +4,7 @@ using TOPOBOX.OSC.TeamsTool.Common.Batch;
 using TOPOBOX.OSC.TeamsTool.Common.Controller;
 using TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain;
 
-namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.TeamsOverview
+namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.UsersOverview
 {
     internal sealed class HTMLExportUsersOverviewController : IController
     {

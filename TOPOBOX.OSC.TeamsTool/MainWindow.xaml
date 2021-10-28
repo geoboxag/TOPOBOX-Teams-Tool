@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TOPOBOX.OSC.TeamsTool"
+        xmlns:converters="clr-namespace:TOPOBOX.OSC.TeamsTool.Converters"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Style="{StaticResource GEOBOX.WindowStyle}"
@@ -14,6 +15,9 @@
         AllowDrop="True"
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip">
+    <Window.Resources>
+        <converters:LoggerMessageTypeToBrush x:Key="LoggerMessageTypeToBrush" />
+    </Window.Resources>
     <Grid x:Name="MainWindowGrid" Style="{StaticResource GEOBOX.MainWindowGrid}">
         <Grid.RowDefinitions>
             <RowDefinition Height="34" />
@@ -112,7 +116,10 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <!-- Siehe Software Manager-->
-                                    <TextBlock Text="{Binding .}" Grid.Column="0" />
+                                    <TextBlock Text="{Binding .}" 
+                                               Foreground="{Binding ., Converter={StaticResource LoggerMessageTypeToBrush}}" 
+                                               Grid.Column="0">
+                                    </TextBlock>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

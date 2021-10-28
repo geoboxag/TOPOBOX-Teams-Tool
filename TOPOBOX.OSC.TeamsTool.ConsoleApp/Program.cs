@@ -45,13 +45,22 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
         /// </summary>
         /// <param name="commandLineOptions">Options from Command Line Input</param>
         static void RunOptions(CommandLineOptions commandLineOptions)
-        { 
+        {
+            ILogger logger = new CustomerFriendlyLogger(
+                FileLogger.Create(commandLineOptions.LogFilePath), true);
+
             // Check is type available
             if (!availableControllers.ContainsKey(commandLineOptions.FunctionType))
             {
-                Console.WriteLine("Die angegebene Funktion wurde nicht gefunden.");
+                var message = "Die angegebene Funktion wurde nicht gefunden.";
+                logger.WriteWarning(message);
+                Console.WriteLine(message);
                 exitCode = ExitCode.Error;
                 return;
+            }
+            else
+            {
+                logger.WriteInformation("Die angegebene Funktion wurde gefunden.");
             }
 
             // Init Console Settings
@@ -59,13 +68,20 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
 
             if (!settingsController.ConfigIsOk)
             {
-                Console.WriteLine("Problem beim lesen der Einstellungsdatei:");
+                var message1 = "Problem beim lesen der Einstellungsdatei:";
+                logger.WriteWarning(message1);
+                Console.WriteLine(message1);
                 foreach(string message in settingsController.Messages)
                 {
+                    logger.WriteWarning(message);
                     Console.WriteLine(message);
                 }
                 exitCode = ExitCode.Error;
                 return;
+            }
+            else
+            {
+                logger.WriteInformation("Einstellungsdatei wurde erfolgreich gelesen.");
             }
 
             try
@@ -81,18 +97,23 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
                     LogFilePath = commandLineOptions.LogFilePath
                 };
 
-                ILogger logger = new CustomerFriendlyLogger(FileLogger.Create(commandLineOptions.LogFilePath), true);
 
-                using (IController controller = (IController)Activator.CreateInstance(availableControllers[commandLineOptions.FunctionType], new[] { batchRuntimeSettings }))
+                using (IController controller = (IController)Activator.CreateInstance(availableControllers[commandLineOptions.FunctionType], new object[] { batchRuntimeSettings, logger }))
                 {
+                    logger.WriteInformation($"Starte die Funktion: {commandLineOptions.FunctionType}");
+
                     if (controller.Execute())
                     {
-                        Console.WriteLine($"Erfolgreich abgeschlossen: {commandLineOptions.FunctionType}");
+                        var message = $"Erfolgreich abgeschlossen: {commandLineOptions.FunctionType}";
+                        logger.WriteWarning(message);
+                        Console.WriteLine(message);
                         exitCode = ExitCode.Success;
                     }
                     else
                     {
-                        Console.WriteLine($"Funktion fehlgeschlagen: {commandLineOptions.FunctionType}");
+                        var message = $"Funktion fehlgeschlagen: {commandLineOptions.FunctionType}";
+                        logger.WriteError(message);
+                        Console.WriteLine(message);
                         exitCode = ExitCode.Error;
                     }
 
@@ -101,7 +122,10 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Hopperla, da ging etwas nicht so wie es sollte....");
+                var message = "Hopperla, da ging etwas nicht so wie es sollte....";
+                logger.WriteError(message);
+                Console.WriteLine(message);
+                logger.WriteError(ex.Message);
                 Console.WriteLine(ex.Message);
                 exitCode = ExitCode.Error;
                 return;

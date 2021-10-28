@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Web.UI;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
-using TOPOBOX.OSC.TeamsTool.Common.Properties;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Html.TeamOverview
 {

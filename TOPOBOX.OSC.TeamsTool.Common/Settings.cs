@@ -1,4 +1,4 @@
-﻿namespace TOPOBOX.OSC.TeamsTool.Common.Properties {
+﻿namespace TOPOBOX.OSC.TeamsTool.Common {
     
     
     // This class allows you to handle specific events on the settings class:

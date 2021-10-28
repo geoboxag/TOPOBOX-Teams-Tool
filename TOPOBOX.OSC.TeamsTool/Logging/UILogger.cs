@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GEOBOX.OSC.Common.Logging;
+using System;
 using System.Collections.ObjectModel;
-using GEOBOX.OSC.Common.Logging;
 
 namespace TOPOBOX.OSC.TeamsTool.Logging
 {
