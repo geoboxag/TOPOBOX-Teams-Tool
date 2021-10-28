@@ -241,6 +241,15 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Produktname.
+        /// </summary>
+        internal static string ProductName {
+            get {
+                return ResourceManager.GetString("ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Titel wurde wie folgt zusammengesetzt: {0}.
         /// </summary>
         internal static string ReplacedTitleMessage {

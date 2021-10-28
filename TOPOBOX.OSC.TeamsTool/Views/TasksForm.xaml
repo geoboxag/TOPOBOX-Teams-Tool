@@ -80,7 +80,7 @@
                 <RadioButton x:Name="NotesRBtn" Grid.Column="2" VerticalAlignment="Center" 
                              HorizontalAlignment="Center">Notizen</RadioButton>
                 <RadioButton x:Name="ChecklistRBtn" Grid.Column="3" VerticalAlignment="Center" 
-                             HorizontalAlignment="Center" IsChecked="True">Checklist</RadioButton>
+                             HorizontalAlignment="Center" IsChecked="{Binding ChecklistIsChecked}">Checklist</RadioButton>
             </Grid>
             <TextBox x:Name="DescriptionTxtBox" 
                      Margin="5,0,5,0" 

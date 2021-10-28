@@ -6,8 +6,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
 using TOPOBOX.OSC.TeamsTool.Helpers;
+using TOPOBOX.OSC.TeamsTool.Logging;
 
 namespace TOPOBOX.OSC.TeamsTool.ViewModels
 {
@@ -31,7 +33,11 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             }
         }
 
-        internal ILogger Logger { get; set; }
+        // TODO: Try with ICollectionView for Sorting
+        //public ICollectionView LogMessagesView { get; internal set; }
+
+        public UILogger Logger { get; set; }
+
 
         private InteractiveAuthenticationProvider authenticationProvider;
         public InteractiveAuthenticationProvider AuthenticationProvider
@@ -75,7 +81,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             ClientApplication = clientApplication;
 
             var logFilePath = Path.Combine(Path.GetTempPath(), string.Format(Common.Properties.Resources.LogFileName, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")));
-            Logger = new CustomerFriendlyLogger(FileLogger.Create(logFilePath), true);
+            Logger = new UILogger(FileLogger.Create(logFilePath), true);
         }
         #endregion
 

@@ -80,6 +80,7 @@
     <Compile Include="Controller\MessageBuilder.cs" />
     <Compile Include="Converters\LoggerItemTypeToBrush.cs" />
     <Compile Include="Helpers\GraphUserAuthenticationHelper.cs" />
+    <Compile Include="Logging\UILogger.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -205,6 +206,7 @@
     <Resource Include="Includes\GEOBOXCuboBackground.png" />
     <Resource Include="Includes\Logo65_200_RGB.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

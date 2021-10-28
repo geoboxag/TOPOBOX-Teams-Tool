@@ -182,6 +182,9 @@
   <data name="PredefinedTaskName" xml:space="preserve">
     <value>Vordefinierte Tasks</value>
   </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Produktname</value>
+  </data>
   <data name="ReplacedTitleMessage" xml:space="preserve">
     <value>Titel wurde wie folgt zusammengesetzt: {0}</value>
   </data>

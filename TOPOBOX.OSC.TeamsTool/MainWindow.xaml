@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TOPOBOX.OSC.TeamsTool"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Style="{StaticResource GEOBOX.WindowStyle}"
         Title="TOPOBOX - TeamsTool" 
@@ -96,26 +97,22 @@
         <Grid x:Name="ContentGrid"  Grid.Row="3" Margin="5,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="100" />
+                <RowDefinition Height="150" />
             </Grid.RowDefinitions>
             <UserControl x:Name="MainContentControl" Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" />
 
             <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Grid.Row="1">
                 <Label x:Name="LogLabel" Content="Log:" DockPanel.Dock="Top"/>
                 <ScrollViewer x:Name="LogScrollView" Margin ="5" Padding="0" CanContentScroll="True" DockPanel.Dock="Bottom">
-                    <ListBox x:Name="LogListBox" ItemsSource="{Binding LoggerItems}">
+                    <ListBox x:Name="LogListBox" ItemsSource="{Binding Logger.LogMessages}" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="50" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <!-- Siehe Software Manager-->
-                                    <TextBlock Text="Zeit" Grid.Column="0" Foreground="Red" />
-                                    <TextBlock Text="ERROR" Grid.Column="1" Foreground="Red" />
-                                    <TextBlock Text="Dies isr ein Fehler...." Grid.Column="2" Foreground="Red" />
+                                    <TextBlock Text="{Binding .}" Grid.Column="0" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

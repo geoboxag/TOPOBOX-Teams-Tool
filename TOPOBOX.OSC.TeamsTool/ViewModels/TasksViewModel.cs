@@ -204,6 +204,20 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             }
         }
 
+        private bool checklistIsChecked = true;
+        public bool ChecklistIsChecked
+        {
+            get
+            {
+                return checklistIsChecked;
+            }
+            set
+            {
+                checklistIsChecked = value;
+                OnPropertyChanged(nameof(ChecklistIsChecked));
+            }
+        }
+
         private ObservableCollection<string> checklistEntries = new ObservableCollection<string>();
         public ObservableCollection<string> ChecklistEntries
         {
@@ -384,6 +398,22 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             PredefinedPlannerTasks = predefinedPlannerTask;
         }
 
+        internal void CreatePlannerTask()
+        {
+            if (AuthenticationProvider != null ||
+                !IsTeamSelected() ||
+                !IsPlannerConfigurationSelected() ||
+                !IsBucketSelected() ||
+                !IsTasksFormValid() ||
+                !IsPredefinedPlannerTaskSelected())
+            {
+                return;
+            }
+
+
+        }
+
+
         internal void CreatePredefinedPlannerTask()
         {
             if (AuthenticationProvider != null ||
@@ -407,11 +437,12 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
                 var plannerTask = PlannerTaskMapper.MapTo(predefinedTask);
                 plannerTask.BucketId = SelectedBucket.Id;
                 plannerTask.PlanId = SelectedPlannerConfiguration.Planner.Id;
-                
-                if (SelectedUser != null)
+
+                plannerTask.Details.PreviewType = GetPlannerPreviewType();
+
+                if (SelectedUser != null && SelectedUser.User != null)
                 {
-                    plannerTask.Assignments = new PlannerAssignments();
-                    plannerTask.Assignments.AddAssignee(SelectedUser.User.Id);
+                    plannerTask.Assignments = GetUserAssignments(SelectedUser.User);
                 }
 
                 GraphPlannerTaskHelper graphPlannerTaskHelper =
@@ -419,7 +450,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
                 var result = graphPlannerTaskHelper.SendPlannerTask(plannerTask);
 
-                if (result.Title == plannerTask.Title)
+                if (result != null && result.Title == plannerTask.Title)
                 {
                     logger?.WriteInformation(string.Format(Properties.Resources.CreatedPlannerTaskMessage, 
                         plannerTask.Title, 
@@ -433,6 +464,26 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
                 }
 
             }
+        }
+
+        private PlannerPreviewType GetPlannerPreviewType()
+        {
+            if (ChecklistIsChecked)
+            {
+                return PlannerPreviewType.Checklist;
+            }
+            return PlannerPreviewType.Description;
+        }
+
+        private PlannerAssignments GetUserAssignments(Common.DAL.User user)
+        {
+            var assignments = new PlannerAssignments();
+            // foreach (var user in users)
+            // {
+                assignments.AddAssignee(user.Id);
+            // }
+
+            return assignments;
         }
 
         private void LoadChannels()
@@ -593,6 +644,9 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             logger.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage,
                 Properties.Resources.TitleName,
                 Title));
+            logger.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage,
+                Properties.Resources.ProductName,
+                ProductName));
             return true;
         }
         #endregion
