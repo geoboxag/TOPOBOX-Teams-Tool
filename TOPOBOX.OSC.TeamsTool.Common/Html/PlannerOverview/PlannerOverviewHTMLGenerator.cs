@@ -50,10 +50,11 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Html.PlannerOverview
 
         private void AddBuckets(Control divControl, List<Bucket> buckets)
         {
-            // ToDo order buckets by name
-            if (buckets != null && buckets.Count > 0)
+            List<Bucket> sortedBuckets = buckets.OrderBy(b => b.Name).ToList();
+
+            if (sortedBuckets != null && sortedBuckets.Count > 0)
             {
-                foreach (var bucket in buckets)
+                foreach (var bucket in sortedBuckets)
                 {
                     divControl.Controls.Add(GetParagraphAndDescription(bucket.Name, $"(ID: {bucket.Id})"));
                 }

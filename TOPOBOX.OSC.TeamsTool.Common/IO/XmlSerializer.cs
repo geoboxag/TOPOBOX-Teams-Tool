@@ -14,6 +14,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.IO
         /// </summary>
         /// <param name="path">path to save the file</param>
         /// <param name="objectToSerialize">object to serialize as xml</param>
+        /// <param name="logger">ILogger</param>
         /// <returns></returns>
         public static bool WriteXml<T>(string path, T objectToSerialize, ILogger logger)
         {
@@ -42,6 +43,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.IO
         ///  object of T is the target for read the xml data
         /// </summary>
         /// <param name="path">filepath and filename for read</param>
+        /// <param name="logger">ILogger</param>
         /// <returns>object of T or null</returns>
         public static T ReadXml<T>(string path, ILogger logger)
         {

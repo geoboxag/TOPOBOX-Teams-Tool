@@ -15,9 +15,8 @@ namespace TOPOBOX.OSC.TeamsTool.Common.IO
         /// </summary>
         /// <param name="path">path to save the file</param>
         /// <param name="objectToSerialize">object to serialize as json</param>
+        /// <param name="logger">ILogger</param>
         /// <returns></returns>
-        // ToDO Logger
-        //public static bool WriteJson(string path, object objectToSerialize, ILogger logger = null)
         public static bool WriteJson(string path, object objectToSerialize, ILogger logger)
         {
             try
@@ -41,9 +40,8 @@ namespace TOPOBOX.OSC.TeamsTool.Common.IO
         ///  object of T is the target for read the json data
         /// </summary>
         /// <param name="path">filepath and filename for read</param>
+        /// <param name="logger">ILogger</param>
         /// <returns>object of T or null</returns>
-        // ToDo Logger
-        //public static T ReadJson<T>(string path, ILogger logger = null)
         public static T ReadJson<T>(string path, ILogger logger)
         {
             try

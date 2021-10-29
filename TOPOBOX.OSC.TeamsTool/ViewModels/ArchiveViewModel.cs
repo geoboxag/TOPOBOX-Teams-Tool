@@ -161,7 +161,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         {
             if (!mainViewModel.IsUserAuthTokenSet())
             {
-                logger?.WriteError(Properties.Resources.UserIsNotLoggedInMessage);
                 return;
             }
             TeamOverviews = GetTeams();
@@ -169,6 +168,10 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         internal void LoadChannels()
         {
+            if (!mainViewModel.IsUserAuthTokenSet())
+            {
+                return;
+            }
             Channels = LoadChannelsOfSelectedTeam(SelectedTeamOverview);
         }
 
@@ -195,9 +198,25 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
                 return;
             }
 
-            logger?.WriteError("Not Implemented");
-            ArchivingChatMessages();
-            ArchiveDriveItems();
+            if (MessagesCheckBoxIsChecked)
+            {
+                ArchivingChatMessages();
+            }
+
+            if (FilesCheckBoxIsChecked)
+            {
+                ArchiveDriveItems();
+            }
+
+            if (TasksCheckBoxIsChecked)
+            {
+                logger?.WriteError("Not Implemented: Archivieren Aufgaben");
+            }
+
+            if (MembersCheckBoxIsChecked)
+            {
+                logger?.WriteError("Not Implemented: Archivieren Kanal-Mitglieder");
+            }
 
         }
 
@@ -232,6 +251,8 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         private bool ArchivingChatMessages()
         {
+            logger?.WriteError("Not Implemented: Archivieren Messages");
+
             //LogMessages.Insert(0, Properties.Resources.BeginArchivingChannelItemMessage.Replace("{0}", "Kanal-Nachrichten"));
 
             //var chatMessagesController = new ChatMessagesController(mainViewModel.AuthenticationProvider);
@@ -248,6 +269,8 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         private bool ArchiveDriveItems()
         {
+            logger?.WriteError("Not Implemented: Archivieren Dateien");
+
             //DriveItemsController driveItemsController = new DriveItemsController(mainViewModel.AuthenticationProvider);
             //return driveItemsController.ArchiveDriveItems(SavePath, SelectedTeam.Team.Id, SelectedChannel.Id);
             return false;

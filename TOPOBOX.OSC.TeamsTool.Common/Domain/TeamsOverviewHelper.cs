@@ -158,20 +158,19 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
 
                 }
 
-                // TODO: maybe Order By Surname and firstname?
                 if (teamOverview.Owners != null && teamOverview.Owners.Any())
                 {
-                    teamOverview.Owners = teamOverview.Owners.OrderBy(p => $"{p.Surname} {p.Firstname}").ToList();
+                    teamOverview.Owners = teamOverview.Owners.OrderBy(p => p.Surname).ThenBy(p => p.Firstname).ToList();
                 }
 
                 if (teamOverview.Members != null && teamOverview.Members.Any())
                 {
-                    teamOverview.Members = teamOverview.Members.OrderBy(p => $"{p.Surname} {p.Firstname}").ToList();
+                    teamOverview.Members = teamOverview.Members.OrderBy(p => p.Surname).ThenBy(p => p.Firstname).ToList();
                 }
 
                 if (teamOverview.Guests != null && teamOverview.Guests.Any())
                 {
-                    teamOverview.Guests = teamOverview.Guests.OrderBy(p => $"{p.Surname} {p.Firstname}").ToList();
+                    teamOverview.Guests = teamOverview.Guests.OrderBy(p => p.Surname).ThenBy(p => p.Firstname).ToList();
                 }
 
                 teamOverviews.Add(teamOverview);
