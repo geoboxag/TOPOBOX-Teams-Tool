@@ -22,31 +22,31 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         private MainViewModel mainViewModel;
         private ILogger logger;
 
-        private List<TeamOverview> teams;
-        public List<TeamOverview> Teams
+        private List<TeamOverview> teamOverviews;
+        public List<TeamOverview> TeamOverviews
         {
             get
             {
-                return teams;
+                return teamOverviews;
             }
             set
             {
-                teams = value;
-                OnPropertyChanged(nameof(Teams));
+                teamOverviews = value;
+                OnPropertyChanged(nameof(TeamOverviews));
             }
         }
 
-        private TeamOverview selectedTeam;
-        public TeamOverview SelectedTeam
+        private TeamOverview selectedTeamOverview;
+        public TeamOverview SelectedTeamOverview
         {
             get
             {
-                return selectedTeam;
+                return selectedTeamOverview;
             }
             set
             {
-                selectedTeam = value;
-                OnPropertyChanged(nameof(SelectedTeam));
+                selectedTeamOverview = value;
+                OnPropertyChanged(nameof(SelectedTeamOverview));
             }
         }
 
@@ -78,20 +78,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             }
         }
 
-        private List<Bucket> buckets;
-        public List<Bucket> Buckets
-        {
-            get
-            {
-                return buckets;
-            }
-            set
-            {
-                buckets = value;
-                OnPropertyChanged(nameof(Buckets));
-            }
-        }
-
         private Bucket selectedBucket;
         public Bucket SelectedBucket
         {
@@ -106,31 +92,45 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             }
         }
 
-        private List<UserOverview> users;
-        public List<UserOverview> Users
+        private List<UserOverview> userOverviews;
+        public List<UserOverview> UserOverviews
         {
             get
             {
-                return users;
+                return userOverviews;
             }
             set
             {
-                users = value;
-                OnPropertyChanged(nameof(Users));
+                userOverviews = value;
+                OnPropertyChanged(nameof(UserOverviews));
             }
         }
 
-        private UserOverview selectedUser;
-        public UserOverview SelectedUser
+        private UserOverview selectedUserOverview;
+        public UserOverview SelectedUserOverview
         {
             get
             {
-                return selectedUser;
+                return selectedUserOverview;
             }
             set
             {
-                selectedUser = value;
-                OnPropertyChanged(nameof(SelectedUser));
+                selectedUserOverview = value;
+                OnPropertyChanged(nameof(SelectedUserOverview));
+            }
+        }
+
+        private ObservableCollection<UserOverview> assignedUsers;
+        public ObservableCollection<UserOverview> AssignedUsers
+        {
+            get
+            {
+                return assignedUsers;
+            }
+            set
+            {
+                assignedUsers = value;
+                OnPropertyChanged(nameof(AssignedUsers));
             }
         }
 
@@ -312,7 +312,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             teamsOverviews.Add(new TeamOverview(new Common.DAL.Team()));
             teamsOverviews.AddRange(teamsOverviewHelper.CollectDataFromConfigFile());
 
-            Teams = teamsOverviews;
+            TeamOverviews = teamsOverviews;
         }
 
         private void LoadPlanners()
@@ -325,7 +325,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             {
                 Planner = new Common.DAL.Planner()
             });
-            plannersConfigurations.AddRange(plannerOverviewHelper.CollectDataFromConfigFile());
+            plannersConfigurations.AddRange(plannerOverviewHelper.CollectMyData());
 
             PlannerConfigurations = plannersConfigurations;
         }
@@ -388,10 +388,24 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             logger?.WriteError("Not Implemented");
         }
 
+        internal void AssignSelectedUser()
+        {
+            if (AssignedUsers == null)
+            {
+                AssignedUsers = new ObservableCollection<UserOverview>();
+            }
+
+            if (SelectedUserOverview != null)
+            {
+                AssignedUsers.Add(SelectedUserOverview);
+            }
+
+            SelectedUserOverview = null;
+        }
 
         internal void CreatePredefinedPlannerTask()
         {
-            if (mainViewModel.IsUserAuthTokenSet() ||
+            if (!mainViewModel.IsUserAuthTokenSet() ||
                 !IsTeamSelected() ||
                 !IsPlannerConfigurationSelected() ||
                 !IsBucketSelected() ||
@@ -415,9 +429,9 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
                 plannerTask.Details.PreviewType = GetPlannerPreviewType();
 
-                if (SelectedUser != null && SelectedUser.User != null)
+                if (AssignedUsers != null && AssignedUsers.Any())
                 {
-                    plannerTask.Assignments = GetUserAssignments(SelectedUser.User);
+                    plannerTask.Assignments = GetPlannerAssignments(AssignedUsers);
                 }
 
                 GraphPlannerTaskHelper graphPlannerTaskHelper =
@@ -450,13 +464,13 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             return PlannerPreviewType.Description;
         }
 
-        private PlannerAssignments GetUserAssignments(Common.DAL.User user)
+        private PlannerAssignments GetPlannerAssignments(IEnumerable<Common.DAL.UserOverview> userOverviews)
         {
             var assignments = new PlannerAssignments();
-            // foreach (var user in users)
-            // {
-                assignments.AddAssignee(user.Id);
-            // }
+             foreach (var userOverview in userOverviews)
+             {
+                assignments.AddAssignee(userOverview.User.Id);
+             }
 
             return assignments;
         }
@@ -485,7 +499,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             userOverviews.Add(null);
             userOverviews.AddRange(usersOverviewHelper.CollectDataFromConfigFile());
 
-            Users = userOverviews;
+            UserOverviews = userOverviews;
         }
 
         #endregion
@@ -493,9 +507,9 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         #region Help-Methods
         private void SetSelectedTeamToDefault()
         {
-            if (Teams.Any())
+            if (TeamOverviews.Any())
             {
-                SelectedTeam = Teams.Find(team => team.Team.Name.Equals(
+                SelectedTeamOverview = TeamOverviews.Find(team => team.Team.Name.Equals(
                     Common.Properties.Settings.Default.DefaultSelectedTeamName));
             }
         }
@@ -526,13 +540,17 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         internal void ResetFields()
         {
+            SelectedTeamOverview = null;
             SelectedPlannerConfiguration = null;
             SelectedBucket = null;
             Title = string.Empty;
             ProductName = string.Empty;
             ChecklistEntry = string.Empty;
+            ChecklistIsChecked = true;
             ChecklistEntries.Clear();
             SelectedPredefinedPlannerTask = new KeyValuePair<string, List<PlannerTask>>();
+            SelectedUserOverview = null;
+            AssignedUsers = new ObservableCollection<UserOverview>();
             IsPredefinedTaskSelected = false;
             Description = string.Empty;
         }
@@ -551,7 +569,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         internal bool IsTeamSelected()
         {
-            if (SelectedTeam is null)
+            if (SelectedTeamOverview is null)
             {
                 logger?.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage, 
                     Properties.Resources.TeamName));
@@ -560,7 +578,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
             logger?.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage, 
                 Properties.Resources.TeamName, 
-                SelectedTeam.Team.Name));
+                SelectedTeamOverview.Team.Name));
             return true;
         }
 

@@ -13,7 +13,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.DAL
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// FullName ([Firstname] [Surname]
+        /// FullName ([Firstname] [Surname] [(DisplayName)])
         /// </summary>
         public string FullName { get; set; }
 

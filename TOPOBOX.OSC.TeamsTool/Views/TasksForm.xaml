@@ -13,8 +13,8 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="350"></RowDefinition>
-            <RowDefinition Height="250"></RowDefinition>
+            <RowDefinition Height="400"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0"  Grid.Row="0">
@@ -22,11 +22,11 @@
             <Label Content="Team *" />
             <ComboBox x:Name="TeamCmb" 
                       Margin="5,0,5,0" Height="30" 
-                      ItemsSource="{Binding Teams, UpdateSourceTrigger=PropertyChanged}" 
+                      ItemsSource="{Binding TeamOverviews, UpdateSourceTrigger=PropertyChanged}" 
                       DisplayMemberPath="Team.Name"
-                      SelectedValue="{Binding SelectedTeam, Mode=TwoWay}"
+                      SelectedValue="{Binding SelectedTeamOverview, Mode=TwoWay}"
                       VerticalContentAlignment="Center" />
-            
+
             <Label Content="Planner *" />
             <ComboBox x:Name="PlannerPlanCmb" 
                       Margin="5,0,5,0" Height="30" 
@@ -45,17 +45,37 @@
                       VerticalContentAlignment="Center" />
 
             <Label Content="Zuweisung Benutzer" />
-            <ComboBox x:Name="UserCmb" 
-                      Margin="5,0,5,0" Height="30" 
-                      ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" 
-                      DisplayMemberPath="User.DisplayName"
-                      SelectedValue="{Binding SelectedUser, Mode=TwoWay}"
-                      VerticalContentAlignment="Center" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="UserCmb" Grid.Column="0"
+                          Margin="5,0,5,0" Height="30" 
+                          ItemsSource="{Binding UserOverviews, UpdateSourceTrigger=PropertyChanged}" 
+                          DisplayMemberPath="User.FullName"
+                          SelectedValue="{Binding SelectedUserOverview, Mode=TwoWay}"
+                          VerticalContentAlignment="Center" />
+
+                    <Button x:Name="AssignUserBtn" Grid.Column="1"
+                        Content="Hinzufügen" 
+                        Click="AssignUserButton_Click" 
+                        Margin="5" 
+                        Height="30"
+                        HorizontalAlignment="Stretch"/>
+            </Grid>
+
+            <Label Content="Zugewiesene Benutzer" />
+            <ListView x:Name="AssignedUsersView" 
+                      Margin="5,0,5,0" 
+                      Height="100" 
+                      DisplayMemberPath="User.FullName"
+                      ItemsSource="{Binding AssignedUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
             <Label Content="Einzelne Aufgabe erfassen"  FontSize="16" />
-            <Label Content="Aufgabentitel oder Version *" />
+            <Label Content="Titel oder Version *" />
             <TextBox x:Name="TaskTitleOrVersion" 
                      Margin="5,0,5,0" 
                      Height="30" 
@@ -103,7 +123,6 @@
                      Margin="5,0,5,0" 
                      Height="140"                      
                      ItemsSource="{Binding ChecklistEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -127,7 +146,7 @@
 
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="1">
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
 
             <Label Content="Vordefinierte Aufgaben erfassen"  FontSize="16" />
             <Label Content="Aufgabenauswahl" />
@@ -152,7 +171,7 @@
                     Grid.Column="0"
                     HorizontalAlignment="Stretch"/>
             </Grid>
-            
+
         </StackPanel>
     </Grid>
 </UserControl>

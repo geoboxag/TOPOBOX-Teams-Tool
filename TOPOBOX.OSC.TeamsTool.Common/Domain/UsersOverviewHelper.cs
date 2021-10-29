@@ -92,7 +92,8 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
             var users = userHelper.GetUsers();
             GraphTeamsHelper teamsHelper = new GraphTeamsHelper(connectorHelper.GraphServiceClient);
             var teamGroups = teamsHelper.GetTeamsFromGroups();
-            return MapUsersAndTeams(users, teamGroups);
+            var usersAndTeams = MapUsersAndTeams(users, teamGroups);
+            return usersAndTeams.OrderBy(u => u.User.FullName).ToList();
         }
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
                 Logger?.WriteError($"{Properties.Resources.NoEntriesInListFoundMessage}: {filePath}");
             }
 
-            return users.OrderBy(u => u.User.Surname).ThenBy(u => u.User.Firstname).ToList();
+            return users.OrderBy(u => u.User.FullName).ToList();
         }
 
         /// <summary>

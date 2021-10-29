@@ -15,6 +15,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             var user = new User();
             user.Id = graphUser.Id;
             user.DisplayName = graphUser.DisplayName;
+            user.FullName = $"{graphUser.GivenName} {graphUser.Surname} ({graphUser.DisplayName})";
             user.Surname = graphUser.Surname;
             user.Firstname = graphUser.GivenName;
             user.Email = graphUser.Mail;
@@ -38,8 +39,9 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             return new User()
             {
                 Id = graphIdentitySet.User.Id,
-                IdentityType = userIdentityType.ToString(),
-                DisplayName = graphIdentitySet.User.DisplayName               
+                IdentityType = userIdentityType?.ToString(),
+                DisplayName = graphIdentitySet.User.DisplayName,    
+                FullName = $"({graphIdentitySet.User.DisplayName})"
             };
         }
 
@@ -55,7 +57,8 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             {
                 Id = graphIdentity.Id,
                 IdentityType = userIdentityType?.ToString(),
-                DisplayName = graphIdentity.DisplayName
+                DisplayName = graphIdentity.DisplayName,
+                FullName = $"({graphIdentity.DisplayName})"
             };
         }
         

@@ -36,6 +36,11 @@ namespace TOPOBOX.OSC.TeamsTool.Views
             tasksViewModel.ResetFields();
         }
 
+        private void AssignUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            tasksViewModel.AssignSelectedUser();
+        }
+
         private void CreatePredefinedTaskButton_Click(object sender, RoutedEventArgs e)
         {
             tasksViewModel.CreatePredefinedPlannerTask();
@@ -49,6 +54,5 @@ namespace TOPOBOX.OSC.TeamsTool.Views
                 tasksViewModel.AddChecklistEntry();
             }
         }
-
     }
 }
