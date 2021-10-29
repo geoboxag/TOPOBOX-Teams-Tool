@@ -1,4 +1,5 @@
-﻿using TOPOBOX.OSC.TeamsTool.Common.DAL;
+﻿using System.Collections.Generic;
+using TOPOBOX.OSC.TeamsTool.Common.DAL;
 using Graph = Microsoft.Graph;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
@@ -11,19 +12,11 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
 # pragma warning disable CS1591
         public static ChatMessage MapFrom(Graph.ChatMessage graphChatMessage)
         {
-            // TODO: Implement
-
-            // var graphChatMessageReplies = new List<GbxChatMessage>();
-            // if (graphChatMessage.Replies != null && graphChatMessage.Replies.Any())
-            // {
-            //     graphChatMessageReplies = ChatMessageMapper.MapToGbxChatMessages(graphChatMessage.Replies.ToList());
-            // }
-
             return new ChatMessage()
             {
                 Id = graphChatMessage.Id,
                 ReplyToId = graphChatMessage.ReplyToId,
-                MessageType = graphChatMessage.MessageType.Value,
+                MessageType = graphChatMessage.MessageType,
                 CreatedDateTime = graphChatMessage.CreatedDateTime,
                 LastModifiedDateTime = graphChatMessage.LastModifiedDateTime,
                 LastEditedDateTime = graphChatMessage.LastEditedDateTime,
@@ -31,32 +24,34 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
                 Summary = graphChatMessage.Summary,
                 ChatId = graphChatMessage.ChatId,
                 Importance = graphChatMessage.Importance,
-                // User = MapToGbxUser(graphChatMessage.From),
-                // GbxMessageBody = MapToGbxMessageBody(graphChatMessage.Body),
-                // GbxChannelIdentity = MapToGbxChannelIdentity(graphChatMessage.ChannelIdentity),
-                // GbxMentions = MapToGbxMentions(graphChatMessage.Mentions),
-                // GbxAttachments = MapToGbxAttachments(graphChatMessage.Attachments),
-                // MessageReplies = graphChatMessageReplies
+                User = UserMapper.MapFrom(graphChatMessage.From),
+                MessageBody = ItemBodyMapper.MapFrom(graphChatMessage.Body),
+                ChannelIdentity = ChannelIdentityMapper.MapFrom(graphChatMessage.ChannelIdentity),
+                Mentions = MentionMapper.MapFrom(graphChatMessage.Mentions),
+                Attachments = ChatMessageAttachmentsMapper.MapFrom(graphChatMessage.Attachments),
+                MessageReplies = MapFrom(graphChatMessage.Replies)
             };
-
         }
 
-
-
-        public static Graph.ChatMessage MapFrom(ChatMessage chatMessage)
+        public static List<ChatMessage> MapFrom(IEnumerable<Graph.ChatMessage> graphChatMessages)
         {
-            // TODO: Implement
-            // var chatMessageReplies = new List<GbxChatMessage>();
-            // if (chatMessage.Replies != null && chatMessage.Replies.Any())
-            // {
-            //     chatMessageReplies = ChatMessageMapper.MapToGbxChatMessages(chatMessage.Replies.ToList());
-            // }
+            List<ChatMessage> chatMessages = new List<ChatMessage>();
 
+            foreach (var graphChatMessage in graphChatMessages)
+            {
+                chatMessages.Add(MapFrom(graphChatMessage));
+            }
+
+            return chatMessages;
+        }
+
+        public static Graph.ChatMessage MapTo(ChatMessage chatMessage)
+        {
             return new Graph.ChatMessage()
             {
                 Id = chatMessage.Id,
                 ReplyToId = chatMessage.ReplyToId,
-                MessageType = chatMessage.MessageType.Value,
+                MessageType = chatMessage.MessageType,
                 CreatedDateTime = chatMessage.CreatedDateTime,
                 LastModifiedDateTime = chatMessage.LastModifiedDateTime,
                 LastEditedDateTime = chatMessage.LastEditedDateTime,
@@ -64,16 +59,39 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
                 Summary = chatMessage.Summary,
                 ChatId = chatMessage.ChatId,
                 Importance = chatMessage.Importance,
-                // User = MapToGbxUser(chatMessage.From),
-                // GbxMessageBody = MapToGbxMessageBody(chatMessage.Body),
-                // GbxChannelIdentity = MapToGbxChannelIdentity(chatMessage.ChannelIdentity),
-                // GbxMentions = MapToGbxMentions(chatMessage.Mentions),
-                // GbxAttachments = MapToGbxAttachments(chatMessage.Attachments),
-                // MessageReplies = chatMessageReplies
+                From = UserMapper.MapToChatMessageFromIdentitySet(chatMessage.User),
+                Body = ItemBodyMapper.MapTo(chatMessage.MessageBody),
+                ChannelIdentity = ChannelIdentityMapper.MapTo(chatMessage.ChannelIdentity),
+                Mentions = MentionMapper.MapTo(chatMessage.Mentions),
+                Attachments = ChatMessageAttachmentsMapper.MapTo(chatMessage.Attachments),
+                Replies = MapToCollectionPage(chatMessage.MessageReplies)
             };
-
         }
-# pragma warning restore CS1591
+
+        public static List<Graph.ChatMessage> MapTo(List<ChatMessage> chatMessages)
+        {
+            List<Graph.ChatMessage> graphChatMessages = new List<Graph.ChatMessage>();
+
+            foreach (var chatMessage in chatMessages)
+            {
+                graphChatMessages.Add(MapTo(chatMessage));
+            }
+
+            return graphChatMessages;
+        }
+
+        private static Graph.IChatMessageRepliesCollectionPage MapToCollectionPage(List<ChatMessage> messageReplies)
+        {
+            var collPages = new Graph.ChatMessageRepliesCollectionPage();
+            foreach (var messageReply in messageReplies)
+            {
+                collPages.Add(MapTo(messageReply));
+            }
+
+            return collPages;
+        }
+
+#pragma warning restore CS1591
 
     }
 }

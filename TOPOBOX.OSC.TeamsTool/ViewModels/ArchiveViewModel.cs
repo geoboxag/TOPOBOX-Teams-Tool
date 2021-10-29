@@ -139,7 +139,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             }
         }
 
-
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName = null)
         {
@@ -155,7 +154,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             logger = mainViewModel.Logger;
         }
         #endregion
-
 
         internal void LoadTeams()
         {
@@ -220,7 +218,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         }
 
-
         internal void SetRootSavePath(string rootSavePath)
         {
             if (string.IsNullOrEmpty(rootSavePath))
@@ -235,7 +232,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             }
         }
 
-
         private List<TeamOverview> GetTeams()
         {
             TeamsOverviewHelper teamsOverviewHelper =
@@ -247,7 +243,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
             return teamsOverviews;
         }
-
 
         private bool ArchivingChatMessages()
         {
@@ -277,7 +272,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         }
 
-
         private bool IsArchiveFormValid()
         {
             if (SelectedTeamOverview is null || SelectedChannel is null || string.IsNullOrEmpty(SavePath))
@@ -288,7 +282,5 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             logger?.WriteInformation(Properties.Resources.RequiredFieldsIsOkMessage);
             return true;
         }
-
-
     }
 }

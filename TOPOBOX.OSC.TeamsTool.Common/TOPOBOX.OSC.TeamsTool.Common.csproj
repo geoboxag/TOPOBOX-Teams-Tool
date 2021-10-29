@@ -107,6 +107,10 @@
     <Compile Include="IO\XmlSerializer.cs" />
     <Compile Include="IO\JSONSerializer.cs" />
     <Compile Include="Mapper\BaseObjectMapper.cs" />
+    <Compile Include="Mapper\ChatMessageAttachmentsMapper.cs" />
+    <Compile Include="Mapper\ChannelIdentityMapper.cs" />
+    <Compile Include="Mapper\MentionMapper.cs" />
+    <Compile Include="Mapper\ItemBodyMapper.cs" />
     <Compile Include="Mapper\ChatMessageMapper.cs" />
     <Compile Include="Mapper\PlannerTaskMapper.cs" />
     <Compile Include="Mapper\IObjectMapper.cs" />

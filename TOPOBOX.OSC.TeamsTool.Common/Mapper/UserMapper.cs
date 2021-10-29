@@ -43,6 +43,22 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             };
         }
 
+        public static User MapFrom(Graph.Identity graphIdentity)
+        {
+            object userIdentityType = string.Empty;
+            if (graphIdentity.AdditionalData != null && graphIdentity.AdditionalData.Any())
+            {
+                graphIdentity.AdditionalData.TryGetValue("userIdentityType", out userIdentityType);
+            }
+
+            return new User()
+            {
+                Id = graphIdentity.Id,
+                IdentityType = userIdentityType?.ToString(),
+                DisplayName = graphIdentity.DisplayName
+            };
+        }
+        
         public static Graph.User MapTo(User user)
         {
             var graphUser = new Graph.User();
@@ -58,6 +74,28 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             }
 
             return graphUser;
+        }
+
+        public static Graph.Identity MapToIdentity(User user)
+        {
+            var graphIdentity = new Graph.Identity();
+            graphIdentity.Id = user.Id;
+            graphIdentity.DisplayName = user.DisplayName;
+            return graphIdentity;
+        }
+
+        public static Graph.ChatMessageFromIdentitySet MapToChatMessageFromIdentitySet(User user)
+        {
+            var chatMessageFromIdentitySet = new Graph.ChatMessageFromIdentitySet();
+            chatMessageFromIdentitySet.User = MapToIdentity(user);
+            return chatMessageFromIdentitySet;
+        }
+
+        public static Graph.ChatMessageMentionedIdentitySet MapToChatMessageMentionedIdentitySet(User user)
+        {
+            var chatMessageMentionedIdentitySet = new Graph.ChatMessageMentionedIdentitySet();
+            chatMessageMentionedIdentitySet.User = MapToIdentity(user);
+            return chatMessageMentionedIdentitySet;
         }
 # pragma warning restore CS1591
     }
