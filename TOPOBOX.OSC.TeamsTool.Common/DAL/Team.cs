@@ -8,7 +8,7 @@
         /// <summary>
         /// Name <see cref="Microsoft.Graph.Group.DisplayName"/>
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Description <see cref="Microsoft.Graph.Group.Description"/>

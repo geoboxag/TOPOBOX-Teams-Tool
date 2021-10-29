@@ -9,7 +9,7 @@ using TOPOBOX.OSC.TeamsTool.Common.IO;
 using TOPOBOX.OSC.TeamsTool.Common.Mapper;
 using Graph = Microsoft.Graph;
 
-namespace TOPOBOX.OSC.TeamsTool.Common.Controller
+namespace TOPOBOX.OSC.TeamsTool.Common.Domain
 {
     /// <summary>
     /// TeamsOverviewHelper for Mapping Teams and Members, Import and Export Data
@@ -40,7 +40,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
             var teamsOverview = CollectData();
             try
             {
-                if (JSONSerializer.WriteJson(saveFilePath, teamsOverview))
+                if (JSONSerializer.WriteJson(saveFilePath, teamsOverview, Logger))
                 {
                     return true;
                 }
@@ -85,13 +85,32 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         /// Returns the teams and their members
         /// </summary>
         /// <returns></returns>
-        private List<TeamOverview> CollectData()
+        internal List<TeamOverview> CollectData()
         {
             GraphUserHelper userHelper = new GraphUserHelper(connectorHelper.GraphServiceClient);
             var users = userHelper.GetUsers();
             GraphTeamsHelper teamsHelper = new GraphTeamsHelper(connectorHelper.GraphServiceClient);
             var teamGroups = teamsHelper.GetTeamsFromGroups();
-            return MapTeamsAndMembers(teamGroups, users);
+            var teamsOverviews = MapTeamsAndMembers(teamGroups, users);
+            return teamsOverviews.OrderBy(t => t.Team.Name).ToList();
+        }
+
+        /// <summary>
+        /// Returns the teams and their members from configFile
+        /// </summary>
+        /// <returns></returns>
+        internal List<TeamOverview> CollectDataFromConfigFile()
+        {
+            string filePath = Path.Combine(Properties.Settings.Default.TeamsToolConfigRootPath,
+                Properties.Settings.Default.RelFilePathTeamsJson);
+            var teamsOverviews = JSONSerializer.ReadJson<List<TeamOverview>>(filePath, Logger);
+
+            if (!teamsOverviews.Any())
+            {
+                Logger?.WriteWarning($"{Properties.Resources.NoEntriesInListFoundMessage}: {filePath}");
+            }
+
+            return teamsOverviews.OrderBy(t => t.Team.Name).ToList();
         }
 
         /// <summary>

@@ -84,75 +84,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         }
         #endregion
 
-        #region Methods for Loading Data from Files
-        //private void LoadTeams()
-        //{           
-        //    //var filePath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath,
-        //    //            Common.Properties.Settings.Default.RelFilePathTeamsJson);
-
-        //    //var jsonSerialization = new JsonSerialization();
-        //    //Teams = jsonSerialization.GetFromFile<GbxTeamOverview>(filePath);
-        //    //SetSelectedTeamToDefault();
-        //}
-
-        //private void LoadChannels()
-        //{
-        //    //var filePath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath,
-        //    //                        Common.Properties.Settings.Default.RelFilePathChannelJson);
-
-        //    //var jsonSerialization = new JsonSerialization();
-        //    //Channels = jsonSerialization.GetFromFile<GbxChannel>(filePath);
-        //}
-
-        //private void LoadUsers()
-        //{
-        //    //var filePath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath,
-        //    //                        Common.Properties.Settings.Default.RelFilePathUsersJson);
-
-        //    //var jsonSerialization = new JsonSerialization();
-        //    //Users = jsonSerialization.GetFromFile<GbxUser>(filePath);
-        //}
-
-        //#endregion
-
-        //#region Help-Methods
-        //private void LoadConfigFiles()
-        //{
-        //    LoadTeams();
-        //    LoadChannels();
-        //    LoadUsers();
-        //}
-
-        //private void SetSelectedTeamToDefault()
-        //{
-        //    SelectedTeam = Teams.Find(team => team.Team.Name.Equals(
-        //        Common.Properties.Settings.Default.DefaultSelectedTeamName));
-        //}
-        //#endregion
-
-        //#region Validate-Methods
-
-        //internal bool IsTeamSelected()
-        //{
-        //    if (SelectedTeam is null)
-        //    {
-        //        string message = Properties.Resources.SelectAnyItemFromListMessage.Replace("{0}", "Team");
-        //        MessageBox.Show(message);
-        //        return false;
-        //    }
-        //    return true;
-        //}
-
-        //internal bool IsUserSelected()
-        //{
-        //    if (SelectedUser is null)
-        //    {
-        //        return false;
-        //    }
-        //    return true;
-        //}
-
-        internal bool IsAuthTokenSet()
+        internal bool IsUserAuthTokenSet()
         {
             if (ClientApplication.UserTokenCache is null)
             {
@@ -161,8 +93,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             }
             return true;
         }
-
-        #endregion
 
         internal async Task LoginUserAsync()
         {

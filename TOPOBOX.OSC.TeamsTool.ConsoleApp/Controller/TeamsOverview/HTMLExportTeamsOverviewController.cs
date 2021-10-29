@@ -1,7 +1,7 @@
 ﻿using GEOBOX.OSC.Common.Logging;
 using System;
 using TOPOBOX.OSC.TeamsTool.Common.Batch;
-using TOPOBOX.OSC.TeamsTool.Common.Controller;
+using TOPOBOX.OSC.TeamsTool.Common.Domain;
 using TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain;
 
 namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.TeamsOverview
@@ -59,7 +59,6 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.TeamsOverview
                 Logger.WriteInformation($"Datei erstellt: {htmlFilePath}");
             }
 
-            Logger.Dispose();
             return true;
         }
 

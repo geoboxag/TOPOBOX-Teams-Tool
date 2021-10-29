@@ -8,7 +8,7 @@
         /// <summary>
         /// Name <see cref="Microsoft.Graph.PlannerPlan.Title"/>
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Internal path to the config of the planner

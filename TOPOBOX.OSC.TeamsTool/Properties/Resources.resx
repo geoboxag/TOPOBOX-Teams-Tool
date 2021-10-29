@@ -136,9 +136,6 @@
   <data name="EndArchivingChannelItemMessage" xml:space="preserve">
     <value>{0} sind archiviert: {1}</value>
   </data>
-  <data name="ErrorReadingFileMessage" xml:space="preserve">
-    <value>Fehler beim auslesen der Datei: </value>
-  </data>
   <data name="FaultedChangeMigrationModeMessage" xml:space="preserve">
     <value>Der Migrationsmodus für den Kanal {0}, konnte nicht gesetzt werden!</value>
   </data>
@@ -162,11 +159,11 @@
     <value>Einlesen der Verzeichnisse: {0}</value>
     <comment>{0} = RootPath</comment>
   </data>
+  <data name="LoadChannelsOfTeamMessage" xml:space="preserve">
+    <value>Die Kanäle des Teams "{0}" werden geladen.</value>
+  </data>
   <data name="LoginFirstBeforeExecuteMessage" xml:space="preserve">
     <value>Bitte melden Sie sich an, um diesen Vorgang durchführen zu können.</value>
-  </data>
-  <data name="NoEntriesInListFoundMessage" xml:space="preserve">
-    <value>Keine Einträge in der Liste vorhanden.</value>
   </data>
   <data name="NotCreatedPlannerTaskMessage" xml:space="preserve">
     <value>Die Aufgabe mit dem Titel {0} konnte nicht im Bucket {1} erstellt werden.</value>
@@ -188,6 +185,9 @@
   <data name="ReplacedTitleMessage" xml:space="preserve">
     <value>Titel wurde wie folgt zusammengesetzt: {0}</value>
   </data>
+  <data name="RequiredFieldsIsOkMessage" xml:space="preserve">
+    <value>Alle Pflichtfelder (*) sind ausgefüllt.</value>
+  </data>
   <data name="SavePathIsEmptyMessage" xml:space="preserve">
     <value>Kein Verzeichnis gewählt.</value>
   </data>
@@ -208,5 +208,8 @@
   </data>
   <data name="TitleName" xml:space="preserve">
     <value>Titel</value>
+  </data>
+  <data name="UserIsNotLoggedInMessage" xml:space="preserve">
+    <value>Es ist kein Benutzer angemeldet. Bitte zuerst einloggen.</value>
   </data>
 </root>

@@ -46,21 +46,23 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
         /// <param name="commandLineOptions">Options from Command Line Input</param>
         static void RunOptions(CommandLineOptions commandLineOptions)
         {
+            string logFilePath = $"{commandLineOptions.LogFilePath}.log";
+
             ILogger logger = new CustomerFriendlyLogger(
-                FileLogger.Create(commandLineOptions.LogFilePath), true);
+                FileLogger.Create(logFilePath), true);
 
             // Check is type available
             if (!availableControllers.ContainsKey(commandLineOptions.FunctionType))
             {
                 var message = "Die angegebene Funktion wurde nicht gefunden.";
-                logger.WriteWarning(message);
+                logger?.WriteWarning(message);
                 Console.WriteLine(message);
                 exitCode = ExitCode.Error;
                 return;
             }
             else
             {
-                logger.WriteInformation("Die angegebene Funktion wurde gefunden.");
+                logger?.WriteInformation("Die angegebene Funktion wurde gefunden.");
             }
 
             // Init Console Settings
@@ -69,11 +71,11 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
             if (!settingsController.ConfigIsOk)
             {
                 var message1 = "Problem beim lesen der Einstellungsdatei:";
-                logger.WriteWarning(message1);
+                logger?.WriteWarning(message1);
                 Console.WriteLine(message1);
                 foreach(string message in settingsController.Messages)
                 {
-                    logger.WriteWarning(message);
+                    logger?.WriteWarning(message);
                     Console.WriteLine(message);
                 }
                 exitCode = ExitCode.Error;
@@ -81,7 +83,7 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
             }
             else
             {
-                logger.WriteInformation("Einstellungsdatei wurde erfolgreich gelesen.");
+                logger?.WriteInformation("Einstellungsdatei wurde erfolgreich gelesen.");
             }
 
             try
@@ -100,34 +102,36 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp
 
                 using (IController controller = (IController)Activator.CreateInstance(availableControllers[commandLineOptions.FunctionType], new object[] { batchRuntimeSettings, logger }))
                 {
-                    logger.WriteInformation($"Starte die Funktion: {commandLineOptions.FunctionType}");
+                    logger?.WriteInformation($"Starte die Funktion: {commandLineOptions.FunctionType}");
 
                     if (controller.Execute())
                     {
                         var message = $"Erfolgreich abgeschlossen: {commandLineOptions.FunctionType}";
-                        logger.WriteWarning(message);
+                        logger?.WriteInformation(message);
                         Console.WriteLine(message);
                         exitCode = ExitCode.Success;
                     }
                     else
                     {
                         var message = $"Funktion fehlgeschlagen: {commandLineOptions.FunctionType}";
-                        logger.WriteError(message);
+                        logger?.WriteError(message);
                         Console.WriteLine(message);
                         exitCode = ExitCode.Error;
                     }
 
+                    logger?.Dispose();
                     return;
                 }
             }
             catch (Exception ex)
             {
                 var message = "Hopperla, da ging etwas nicht so wie es sollte....";
-                logger.WriteError(message);
+                logger?.WriteError(message);
                 Console.WriteLine(message);
-                logger.WriteError(ex.Message);
+                logger?.WriteError(ex.Message);
                 Console.WriteLine(ex.Message);
                 exitCode = ExitCode.Error;
+                logger?.Dispose();
                 return;
             }
         }

@@ -1,13 +1,12 @@
 ﻿using GEOBOX.OSC.Common.Logging;
 using Microsoft.Graph;
-using Microsoft.Graph.Auth;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using TOPOBOX.OSC.TeamsTool.Common.Controller;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
+using TOPOBOX.OSC.TeamsTool.Common.Domain;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
 using TOPOBOX.OSC.TeamsTool.Common.IO;
 using TOPOBOX.OSC.TeamsTool.Common.Mapper;
@@ -22,19 +21,6 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         private MainViewModel mainViewModel;
         private ILogger logger;
-
-        private InteractiveAuthenticationProvider authenticationProvider;
-        public InteractiveAuthenticationProvider AuthenticationProvider
-        {
-            internal get
-            {
-                return authenticationProvider;
-            }
-            set
-            {
-                authenticationProvider = value;
-            }
-        }
 
         private List<TeamOverview> teams;
         public List<TeamOverview> Teams
@@ -303,57 +289,45 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         {
             this.mainViewModel = mainViewModel;
             logger = mainViewModel.Logger;
-            //LoadConfigFiles();
-            //LoadUserSpecificContent();
         }
         #endregion
 
         #region Methods for Loading Data from Files
-        internal void LoadConfigFiles()
+        internal void LoadData()
         {
             LoadTeams();
-            SetSelectedTeamToDefault();
-            LoadPlannerConfigurations();
+            LoadPlanners();
             LoadChannels();
             LoadUsers();
+            SetSelectedTeamToDefault();
             LoadPredefinedPlannerTasks();
-        }
-
-        private void LoadUserSpecificContent()
-        {
-            //LoadPlannerConfigurations();
         }
 
         private void LoadTeams()
         {
-            string filePath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath,
-                    Common.Properties.Settings.Default.RelFilePathTeamsJson);
-            var teamsOverview = JSONSerializer.ReadJson<List<TeamOverview>>(filePath);
+            TeamsOverviewHelper teamsOverviewHelper =
+                new TeamsOverviewHelper(mainViewModel.GraphConnectorHelper, logger);
 
-            if (!teamsOverview.Any())
-            {
-                logger?.WriteWarning($"{Properties.Resources.NoEntriesInListFoundMessage}: {filePath}");
-            }
+            List<TeamOverview> teamsOverviews = new List<TeamOverview>();
+            teamsOverviews.Add(new TeamOverview(new Common.DAL.Team()));
+            teamsOverviews.AddRange(teamsOverviewHelper.CollectDataFromConfigFile());
 
-            Teams = teamsOverview;
+            Teams = teamsOverviews;
         }
 
-        private void LoadPlannerConfigurations()
+        private void LoadPlanners()
         {
-            // var folderPath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath,
-            //                         Common.Properties.Settings.Default.RelPathPlannerFolders);
+            PlannerOverviewHelper plannerOverviewHelper =
+                new PlannerOverviewHelper(mainViewModel.GraphConnectorHelper, logger);
 
-            List<PlannerConfiguration> plannerConfigs = new List<PlannerConfiguration>();
-
-            if (mainViewModel.GraphConnectorHelper != null)
+            List<PlannerConfiguration> plannersConfigurations = new List<PlannerConfiguration>();
+            plannersConfigurations.Add(new PlannerConfiguration()
             {
-                PlannerOverviewHelper plannerOverviewHelper = new PlannerOverviewHelper(
-                    mainViewModel.GraphConnectorHelper,
-                    logger);
-                plannerConfigs = plannerOverviewHelper.GetMyData();
-            }
+                Planner = new Common.DAL.Planner()
+            });
+            plannersConfigurations.AddRange(plannerOverviewHelper.CollectDataFromConfigFile());
 
-            PlannerConfigurations = plannerConfigs;
+            PlannerConfigurations = plannersConfigurations;
         }
 
         private void LoadPredefinedPlannerTasks()
@@ -362,6 +336,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
                                     Common.Properties.Settings.Default.RelPathPlannerFolders);
 
             var predefinedPlannerTask = new Dictionary<string, List<PlannerTask>>();
+            predefinedPlannerTask.Add("", null);
 
             logger?.WriteInformation(string.Format(Properties.Resources.ListFoldersMessage, folderPath));
             var directories = Directory.GetDirectories(folderPath);
@@ -380,7 +355,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
                         }
                         else
                         {
-                            logger?.WriteWarning(Properties.Resources.NoEntriesInListFoundMessage);
+                            logger?.WriteWarning(Common.Properties.Resources.NoEntriesInListFoundMessage);
                         }
                     }
                     catch
@@ -392,7 +367,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
             if (!predefinedPlannerTask.Any())
             {
-                logger?.WriteError($"{Properties.Resources.ErrorReadingFileMessage}{folderPath}");
+                logger?.WriteWarning($"{Common.Properties.Resources.NoEntriesInListFoundMessage}{folderPath}");
             }
 
             PredefinedPlannerTasks = predefinedPlannerTask;
@@ -400,7 +375,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         internal void CreatePlannerTask()
         {
-            if (AuthenticationProvider != null ||
+            if (mainViewModel.IsUserAuthTokenSet() ||
                 !IsTeamSelected() ||
                 !IsPlannerConfigurationSelected() ||
                 !IsBucketSelected() ||
@@ -410,13 +385,13 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
                 return;
             }
 
-
+            logger?.WriteError("Not Implemented");
         }
 
 
         internal void CreatePredefinedPlannerTask()
         {
-            if (AuthenticationProvider != null ||
+            if (mainViewModel.IsUserAuthTokenSet() ||
                 !IsTeamSelected() ||
                 !IsPlannerConfigurationSelected() ||
                 !IsBucketSelected() ||
@@ -503,25 +478,26 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         private void LoadUsers()
         {
-            var filePath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath,
-                                    Common.Properties.Settings.Default.RelFilePathUsersJson);
+            UsersOverviewHelper usersOverviewHelper =
+                new UsersOverviewHelper(mainViewModel.GraphConnectorHelper, logger);
 
-            var users = JSONSerializer.ReadJson<List<UserOverview>>(filePath);
+            List<UserOverview> userOverviews = new List<UserOverview>();
+            userOverviews.Add(null);
+            userOverviews.AddRange(usersOverviewHelper.CollectDataFromConfigFile());
 
-            if (!users.Any())
-            {
-                logger?.WriteError($"{Properties.Resources.ErrorReadingFileMessage}{filePath}");
-            }
-
-            Users = users;
+            Users = userOverviews;
         }
+
         #endregion
 
         #region Help-Methods
         private void SetSelectedTeamToDefault()
         {
-            SelectedTeam = Teams.Find(team => team.Team.Name.Equals(
-                Common.Properties.Settings.Default.DefaultSelectedTeamName));
+            if (Teams.Any())
+            {
+                SelectedTeam = Teams.Find(team => team.Team.Name.Equals(
+                    Common.Properties.Settings.Default.DefaultSelectedTeamName));
+            }
         }
 
         private string GetTaskTitle(string title, string productName, string predefinedTaskTitle = null)
@@ -577,12 +553,12 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         {
             if (SelectedTeam is null)
             {
-                logger.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage, 
+                logger?.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage, 
                     Properties.Resources.TeamName));
                 return false;
             }
 
-            logger.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage, 
+            logger?.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage, 
                 Properties.Resources.TeamName, 
                 SelectedTeam.Team.Name));
             return true;
@@ -592,12 +568,12 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         {
             if (SelectedBucket is null)
             {
-                logger.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage, 
+                logger?.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage, 
                     Properties.Resources.BucketName));
                 return false;
             }
 
-            logger.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage, 
+            logger?.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage, 
                 Properties.Resources.BucketName, SelectedBucket.Name));
             return true;
         }
@@ -606,12 +582,12 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         {
             if (SelectedPlannerConfiguration is null)
             {
-                logger.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage, 
+                logger?.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage, 
                     Properties.Resources.PlannerName));
                 return false;
             }
 
-            logger.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage, 
+            logger?.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage, 
                 Properties.Resources.PlannerName, 
                 SelectedPlannerConfiguration.Planner.Name));
             return true;
@@ -621,12 +597,12 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         {
             if (string.IsNullOrEmpty(SelectedPredefinedPlannerTask.Key))
             {
-                logger.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage,
+                logger?.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage,
                     Properties.Resources.PredefinedTaskName));
                 return false;
             }
 
-            logger.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage,
+            logger?.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage,
                 Properties.Resources.PredefinedTaskName,
                 SelectedPredefinedPlannerTask.Key));
             return true;
@@ -636,15 +612,15 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         {
             if (string.IsNullOrEmpty(Title))
             {
-                logger.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage,
+                logger?.WriteWarning(string.Format(Properties.Resources.NotSelectedWarningMessage,
                     Properties.Resources.TitleName));
                 return false;
             }
 
-            logger.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage,
+            logger?.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage,
                 Properties.Resources.TitleName,
                 Title));
-            logger.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage,
+            logger?.WriteInformation(string.Format(Properties.Resources.IsSelectedMessage,
                 Properties.Resources.ProductName,
                 ProductName));
             return true;

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
+using GEOBOX.OSC.Common.Logging;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.IO
 {
@@ -17,17 +18,20 @@ namespace TOPOBOX.OSC.TeamsTool.Common.IO
         /// <returns></returns>
         // ToDO Logger
         //public static bool WriteJson(string path, object objectToSerialize, ILogger logger = null)
-        public static bool WriteJson(string path, object objectToSerialize)
+        public static bool WriteJson(string path, object objectToSerialize, ILogger logger)
         {
             try
             {
+                logger?.WriteInformation(string.Format(Properties.Resources.CreateFileMessage, path));
                 string jsonExportContent = JsonConvert.SerializeObject(objectToSerialize);
                 File.WriteAllText(path, jsonExportContent);
+
+                logger?.WriteInformation(string.Format(Properties.Resources.CreatingFileSuccessMessage, path));
                 return true;
             }
             catch (Exception ex)
             {
-                //logger?.WriteError($"Error writing json to file [{path}]: {ex.Message}");
+                logger?.WriteError(string.Format(Properties.Resources.CreatingFileErrorMessage, path) + $" {ex.Message}");
                 return false;
             }
         }
@@ -40,16 +44,22 @@ namespace TOPOBOX.OSC.TeamsTool.Common.IO
         /// <returns>object of T or null</returns>
         // ToDo Logger
         //public static T ReadJson<T>(string path, ILogger logger = null)
-        public static T ReadJson<T>(string path)
+        public static T ReadJson<T>(string path, ILogger logger)
         {
             try
             {
+                logger?.WriteInformation(string.Format(Properties.Resources.ReadFromFileMessage, path));
+
                 var jsonExportConvertRule = File.ReadAllText(path);
-                return JsonConvert.DeserializeObject<T>(jsonExportConvertRule);
+                var serializedContent = JsonConvert.DeserializeObject<T>(jsonExportConvertRule);
+
+                logger?.WriteInformation(string.Format(Properties.Resources.ReadFromFileSuccessMessage, path));
+                return serializedContent;
             }
             catch (Exception ex)
             {
-                //logger?.WriteError($"Error reading json from file [{path}]: {ex.Message}");
+                logger?.WriteError(
+                    string.Format(Properties.Resources.ReadFromFileErrorMessage, path) + $" {ex.Message}");
                 return Activator.CreateInstance<T>();
             }
         }

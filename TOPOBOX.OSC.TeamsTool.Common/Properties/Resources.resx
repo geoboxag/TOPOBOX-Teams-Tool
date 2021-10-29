@@ -143,4 +143,10 @@
   <data name="ReadFromFileSuccessMessage" xml:space="preserve">
     <value>Datei gelesen: {0}</value>
   </data>
+  <data name="NoEntriesInListFoundMessage" xml:space="preserve">
+    <value>Keine Einträge in der Liste vorhanden.</value>
+  </data>
+  <data name="ErrorReadingFileMessage" xml:space="preserve">
+    <value>Fehler beim auslesen der Datei: </value>
+  </data>
 </root>

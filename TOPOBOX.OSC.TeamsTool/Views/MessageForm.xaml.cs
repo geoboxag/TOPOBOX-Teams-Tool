@@ -92,7 +92,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
         private void SendMessageButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO Implement via Graph API Nuget
-            if (mainViewModel.IsAuthTokenSet())
+            if (mainViewModel.IsUserAuthTokenSet())
             {
                 return;
             }

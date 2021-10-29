@@ -2,21 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TOPOBOX.OSC.TeamsTool.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="RelFilePathUsersJson" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Organisation\Users.json</Value>
-    </Setting>
-    <Setting Name="RelFilePathChannelJson" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Channel\Channels.json</Value>
-    </Setting>
-    <Setting Name="RelPathPlannerFolders" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Planner\</Value>
-    </Setting>
-    <Setting Name="ConfigFileName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">_config.json</Value>
-    </Setting>
-    <Setting Name="SearchPatternForPredefinedTaskFiles" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">*Tasks*</Value>
-    </Setting>
     <Setting Name="DefaultSelectedTeamName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">GEOBOX AG</Value>
     </Setting>

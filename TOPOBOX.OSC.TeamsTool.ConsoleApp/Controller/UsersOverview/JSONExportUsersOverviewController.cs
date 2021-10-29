@@ -1,7 +1,7 @@
 ﻿using GEOBOX.OSC.Common.Logging;
 using System;
 using TOPOBOX.OSC.TeamsTool.Common.Batch;
-using TOPOBOX.OSC.TeamsTool.Common.Controller;
+using TOPOBOX.OSC.TeamsTool.Common.Domain;
 using TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain;
 
 namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.UsersOverview
@@ -26,6 +26,8 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.UsersOverview
 
         private BatchRuntimeSettings runtimeSettings;
 
+        public ILogger Logger { get; set; }
+
         #region Constructor and Dispose
         public JSONExportUsersOverviewController(BatchRuntimeSettings batchRuntimeSettings, ILogger logger)
         {
@@ -38,8 +40,6 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.UsersOverview
             GC.SuppressFinalize(this);
         }
         #endregion
-
-        public ILogger Logger { get; set; }
 
         /// <summary>
         /// Run Command
@@ -59,7 +59,6 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Controller.UsersOverview
                 Logger.WriteInformation($"Datei erstellt: {jsonFilePath}");
             }
 
-            Logger.Dispose();
             return true;
         }
     }

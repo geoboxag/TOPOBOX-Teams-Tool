@@ -1,6 +1,7 @@
 ﻿using GEOBOX.OSC.Common.Logging;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
 using TOPOBOX.OSC.TeamsTool.Common.Html.UserOverview;
@@ -8,7 +9,7 @@ using TOPOBOX.OSC.TeamsTool.Common.IO;
 using TOPOBOX.OSC.TeamsTool.Common.Mapper;
 using Graph = Microsoft.Graph;
 
-namespace TOPOBOX.OSC.TeamsTool.Common.Controller
+namespace TOPOBOX.OSC.TeamsTool.Common.Domain
 {
     /// <summary>
     /// UsersOverviewHelper for Mapping Users and Teams, Import and Export Data
@@ -39,7 +40,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
             var usersOverview = CollectData();
             try
             {
-                if (JSONSerializer.WriteJson(saveFilePath, usersOverview))
+                if (JSONSerializer.WriteJson(saveFilePath, usersOverview, Logger))
                 {
                     return true;
                 }
@@ -85,13 +86,32 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         /// Returns the users and their teams
         /// </summary>
         /// <returns></returns>
-        private List<UserOverview> CollectData()
+        internal List<UserOverview> CollectData()
         {
             GraphUserHelper userHelper = new GraphUserHelper(connectorHelper.GraphServiceClient);
             var users = userHelper.GetUsers();
             GraphTeamsHelper teamsHelper = new GraphTeamsHelper(connectorHelper.GraphServiceClient);
             var teamGroups = teamsHelper.GetTeamsFromGroups();
             return MapUsersAndTeams(users, teamGroups);
+        }
+
+        /// <summary>
+        /// Returns the users and their teams from configFile
+        /// </summary>
+        /// <returns></returns>
+        internal List<UserOverview> CollectDataFromConfigFile()
+        {
+            var filePath = Path.Combine(Properties.Settings.Default.TeamsToolConfigRootPath,
+                Properties.Settings.Default.RelFilePathUsersJson);
+
+            var users = JSONSerializer.ReadJson<List<UserOverview>>(filePath, Logger);
+
+            if (!users.Any())
+            {
+                Logger?.WriteError($"{Properties.Resources.NoEntriesInListFoundMessage}: {filePath}");
+            }
+
+            return users.OrderBy(u => u.User.Surname).ThenBy(u => u.User.Firstname).ToList();
         }
 
         /// <summary>

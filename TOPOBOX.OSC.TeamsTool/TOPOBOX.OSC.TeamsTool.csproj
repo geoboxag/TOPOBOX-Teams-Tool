@@ -89,6 +89,7 @@
     <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="Settings\SettingsController.cs" />
     <Compile Include="Helpers\TokenCacheHelper.cs" />
+    <Compile Include="ViewModels\ArchiveViewModel.cs" />
     <Compile Include="ViewModels\TasksViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
@@ -206,7 +207,9 @@
     <Resource Include="Includes\GEOBOXCuboBackground.png" />
     <Resource Include="Includes\Logo65_200_RGB.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Includes\icoFileopen.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

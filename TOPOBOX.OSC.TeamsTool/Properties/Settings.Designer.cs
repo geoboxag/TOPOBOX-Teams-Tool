@@ -25,51 +25,6 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Organisation\\Users.json")]
-        public string RelFilePathUsersJson {
-            get {
-                return ((string)(this["RelFilePathUsersJson"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Channel\\Channels.json")]
-        public string RelFilePathChannelJson {
-            get {
-                return ((string)(this["RelFilePathChannelJson"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Planner\\")]
-        public string RelPathPlannerFolders {
-            get {
-                return ((string)(this["RelPathPlannerFolders"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("_config.json")]
-        public string ConfigFileName {
-            get {
-                return ((string)(this["ConfigFileName"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("*Tasks*")]
-        public string SearchPatternForPredefinedTaskFiles {
-            get {
-                return ((string)(this["SearchPatternForPredefinedTaskFiles"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("GEOBOX AG")]
         public string DefaultSelectedTeamName {
             get {

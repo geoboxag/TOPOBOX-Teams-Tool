@@ -1,6 +1,7 @@
 ﻿using GEOBOX.OSC.Common.Logging;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
 using TOPOBOX.OSC.TeamsTool.Common.Html.PlannerOverview;
@@ -8,7 +9,7 @@ using TOPOBOX.OSC.TeamsTool.Common.IO;
 using TOPOBOX.OSC.TeamsTool.Common.Mapper;
 using Graph = Microsoft.Graph;
 
-namespace TOPOBOX.OSC.TeamsTool.Common.Controller
+namespace TOPOBOX.OSC.TeamsTool.Common.Domain
 {
     /// <summary>
     /// PlannerOverviewHelper for Mapping Planners and Buckets, Import and Export Data
@@ -30,15 +31,6 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         }
 
         /// <summary>
-        /// Gets my PlannerConfiguration
-        /// </summary>
-        /// <returns></returns>
-        public List<PlannerConfiguration> GetMyData()
-        {
-            return CollectMyData();
-        }
-
-        /// <summary>
         /// Export the PlannerConfiguration as a JSON-File
         /// </summary>
         /// <param name="saveFilePath"></param>
@@ -48,7 +40,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
             var plannerOverview = CollectData();
             try
             {
-                if (JSONSerializer.WriteJson(saveFilePath, plannerOverview))
+                if (JSONSerializer.WriteJson(saveFilePath, plannerOverview, Logger))
                 {
                     return true;
                 }
@@ -93,7 +85,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         /// Returns the planner and their buckets
         /// </summary>
         /// <returns></returns>
-        private List<PlannerConfiguration> CollectData()
+        internal List<PlannerConfiguration> CollectData()
         {
             GraphPlannerPlanHelper plannerHelper = new GraphPlannerPlanHelper(connectorHelper.GraphServiceClient);
             var planners = plannerHelper.GetPlanners();
@@ -104,11 +96,45 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Controller
         /// Returns my planner and their buckets
         /// </summary>
         /// <returns></returns>
-        private List<PlannerConfiguration> CollectMyData()
+        internal List<PlannerConfiguration> CollectMyData()
         {
             GraphPlannerPlanHelper plannerHelper = new GraphPlannerPlanHelper(connectorHelper.GraphServiceClient);
             var planners = plannerHelper.GetMyPlanners();
-            return MapPlannerAndBuckets(planners);
+            var plannerConfigurations = MapPlannerAndBuckets(planners);
+            return plannerConfigurations.OrderBy(p => p.Planner.Name).ToList();
+        }
+
+        /// <summary>
+        /// Returns the planner and their buckets from configFile
+        /// </summary>
+        /// <returns></returns>
+        internal List<PlannerConfiguration> CollectDataFromConfigFile()
+        {
+            string rootDirPath = Path.Combine(Properties.Settings.Default.TeamsToolConfigRootPath,
+                Properties.Settings.Default.RelPathPlannerFolders);
+
+            List<PlannerConfiguration> plannerConfigurations = new List<PlannerConfiguration>();
+            
+            foreach (var dirPath in Directory.GetDirectories(rootDirPath))
+            {
+                foreach (var filePath in Directory.GetFiles(dirPath, Properties.Settings.Default.ConfigFileName))
+                {
+                    Logger?.WriteInformation(string.Format(Properties.Resources.ReadFromFileMessage, filePath));
+                    var plannerConfigs = JSONSerializer.ReadJson<List<PlannerConfiguration>>(filePath, Logger);
+
+                    if(plannerConfigs != null && plannerConfigs.Any())
+                    {
+                        plannerConfigurations.AddRange(plannerConfigs);
+                    }
+                }
+            }
+
+            if (!plannerConfigurations.Any())
+            {
+                Logger?.WriteWarning(Properties.Resources.NoEntriesInListFoundMessage);
+            }
+
+            return plannerConfigurations;
         }
 
         /// <summary>

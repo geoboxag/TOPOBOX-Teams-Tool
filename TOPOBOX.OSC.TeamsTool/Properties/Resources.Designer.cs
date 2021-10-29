@@ -115,15 +115,6 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fehler beim auslesen der Datei: .
-        /// </summary>
-        internal static string ErrorReadingFileMessage {
-            get {
-                return ResourceManager.GetString("ErrorReadingFileMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Der Migrationsmodus für den Kanal {0}, konnte nicht gesetzt werden!.
         /// </summary>
         internal static string FaultedChangeMigrationModeMessage {
@@ -187,20 +178,20 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Die Kanäle des Teams &quot;{0}&quot; werden geladen..
+        /// </summary>
+        internal static string LoadChannelsOfTeamMessage {
+            get {
+                return ResourceManager.GetString("LoadChannelsOfTeamMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bitte melden Sie sich an, um diesen Vorgang durchführen zu können..
         /// </summary>
         internal static string LoginFirstBeforeExecuteMessage {
             get {
                 return ResourceManager.GetString("LoginFirstBeforeExecuteMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Keine Einträge in der Liste vorhanden..
-        /// </summary>
-        internal static string NoEntriesInListFoundMessage {
-            get {
-                return ResourceManager.GetString("NoEntriesInListFoundMessage", resourceCulture);
             }
         }
         
@@ -255,6 +246,15 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         internal static string ReplacedTitleMessage {
             get {
                 return ResourceManager.GetString("ReplacedTitleMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alle Pflichtfelder (*) sind ausgefüllt..
+        /// </summary>
+        internal static string RequiredFieldsIsOkMessage {
+            get {
+                return ResourceManager.GetString("RequiredFieldsIsOkMessage", resourceCulture);
             }
         }
         
@@ -318,6 +318,15 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
         internal static string TitleName {
             get {
                 return ResourceManager.GetString("TitleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Es ist kein Benutzer angemeldet. Bitte zuerst einloggen..
+        /// </summary>
+        internal static string UserIsNotLoggedInMessage {
+            get {
+                return ResourceManager.GetString("UserIsNotLoggedInMessage", resourceCulture);
             }
         }
     }

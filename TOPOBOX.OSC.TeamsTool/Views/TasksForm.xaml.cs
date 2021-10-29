@@ -23,7 +23,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            tasksViewModel.LoadConfigFiles();
+            tasksViewModel.LoadData();
         }
         
         internal void CreateTaskButton_Click(object sender, System.Windows.RoutedEventArgs e)

@@ -118,7 +118,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
 
         private void TeamCmb_OnDropDownOpened(object sender, System.EventArgs e)
         {
-            if (!mainViewModel.IsAuthTokenSet())
+            if (!mainViewModel.IsUserAuthTokenSet())
             {
                 return;
             }
@@ -162,7 +162,7 @@ namespace TOPOBOX.OSC.TeamsTool.Views
 
         private void MigrateChannelButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!mainViewModel.IsAuthTokenSet() ||
+            if (!mainViewModel.IsUserAuthTokenSet() ||
                 !IsMigrateFormValid())
             {
                 return;

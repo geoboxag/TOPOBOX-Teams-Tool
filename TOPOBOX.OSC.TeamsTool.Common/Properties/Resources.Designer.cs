@@ -88,6 +88,15 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fehler beim auslesen der Datei: .
+        /// </summary>
+        internal static string ErrorReadingFileMessage {
+            get {
+                return ResourceManager.GetString("ErrorReadingFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;!doctype html&gt;
         ///&lt;!-- Diese Datei wurde automatisch Generiert von [APP_NAME] [APP_VERSION] am [GEN_DATE] [GEN_TIME] --&gt;
         ///&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
@@ -113,6 +122,15 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Properties {
         internal static string LogFileName {
             get {
                 return ResourceManager.GetString("LogFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keine Einträge in der Liste vorhanden..
+        /// </summary>
+        internal static string NoEntriesInListFoundMessage {
+            get {
+                return ResourceManager.GetString("NoEntriesInListFoundMessage", resourceCulture);
             }
         }
         

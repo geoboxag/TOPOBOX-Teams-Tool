@@ -29,7 +29,7 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain
 
             if (!isInitOk)
             {
-                logger.WriteWarning($"{nameof(BatchRuntimeSettings)} ist nicht initialisiert.");
+                logger?.WriteWarning($"{nameof(BatchRuntimeSettings)} ist nicht initialisiert.");
             }
             return isInitOk;
         }
@@ -39,25 +39,25 @@ namespace TOPOBOX.OSC.TeamsTool.ConsoleApp.Domain
             if (string.IsNullOrEmpty(OutputDirectory))
             {
                 IsInitOK = false;
-                logger.WriteWarning($"{nameof(OutputDirectory)} enthält keine Angabe.");
+                logger?.WriteWarning($"{nameof(OutputDirectory)} enthält keine Angabe.");
                 return IsInitOK;
             }
             if (string.IsNullOrEmpty(OutputFileName))
             {
                 IsInitOK = false;
-                logger.WriteWarning($"{nameof(OutputFileName)} enthält keine Angabe.");
+                logger?.WriteWarning($"{nameof(OutputFileName)} enthält keine Angabe.");
                 return IsInitOK;
             }
             if (string.IsNullOrEmpty(LogFilePath))
             {
                 IsInitOK = false;
-                logger.WriteWarning($"{nameof(LogFilePath)} enthält keine Angabe.");
+                logger?.WriteWarning($"{nameof(LogFilePath)} enthält keine Angabe.");
                 return IsInitOK;
             }
             if (GraphConnectorHelper is null)
             {
                 IsInitOK = false;
-                logger.WriteWarning($"{nameof(GraphConnectorHelper)} ist null.");
+                logger?.WriteWarning($"{nameof(GraphConnectorHelper)} ist null.");
                 return IsInitOK;
             }
 
