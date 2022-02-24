@@ -92,6 +92,7 @@
     <Compile Include="GraphHelper\GraphUserConversationMemberHelper.cs" />
     <Compile Include="GraphHelper\GraphTeamsHelper.cs" />
     <Compile Include="GraphHelper\GraphPlannerPlanHelper.cs" />
+    <Compile Include="GraphHelper\GraphDriveItemHelper.cs" />
     <Compile Include="GraphHelper\GraphUserHelper.cs" />
     <Compile Include="Html\BaseHTMLGenerator.cs" />
     <Compile Include="Html\HtmlWriterReplacements.cs" />
