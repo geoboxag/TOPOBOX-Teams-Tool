@@ -329,5 +329,32 @@ namespace TOPOBOX.OSC.TeamsTool.Properties {
                 return ResourceManager.GetString("UserIsNotLoggedInMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Der Benutzer &apos;{0}&apos; wurde erfolgreich angemeldet..
+        /// </summary>
+        internal static string UserLoginSuccessMessage {
+            get {
+                return ResourceManager.GetString("UserLoginSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Der Benutzer konnte nicht abgemeldet werden..
+        /// </summary>
+        internal static string UserLogoutFailureMessage {
+            get {
+                return ResourceManager.GetString("UserLogoutFailureMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Der Benutzer &apos;{0}&apos; wurde erfolgreich abgemeldet..
+        /// </summary>
+        internal static string UserLogoutSuccessMessage {
+            get {
+                return ResourceManager.GetString("UserLogoutSuccessMessage", resourceCulture);
+            }
+        }
     }
 }

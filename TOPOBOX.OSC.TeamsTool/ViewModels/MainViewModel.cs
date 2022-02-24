@@ -1,10 +1,8 @@
-﻿using GEOBOX.OSC.Common.Logging;
-using Microsoft.Graph.Auth;
-using Microsoft.Identity.Client;
+﻿using Azure.Identity;
+using GEOBOX.OSC.Common.Logging;
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
 using TOPOBOX.OSC.TeamsTool.Helpers;
@@ -15,10 +13,9 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
     public class MainViewModel : INotifyPropertyChanged
     {
         #region Properties and Attributes
-        //default scopes
-        string[] scopes = new string[] { "user.read", "channelmessage.send", "group.read.all", "channelsettings.readwrite.all" };
 
-        private string userLabelText = "Login";
+        private const string LOGINUSERLABELTEXT = "Login";
+        private string userLabelText = LOGINUSERLABELTEXT;
         public string UserLabelText
         {
             get
@@ -38,16 +35,16 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         public UILogger Logger { get; set; }
 
 
-        private InteractiveAuthenticationProvider authenticationProvider;
-        public InteractiveAuthenticationProvider AuthenticationProvider
+        private InteractiveBrowserCredential interactiveBrowserCredential;
+        public InteractiveBrowserCredential InteractiveBrowserCredential
         {
             internal get
             {
-                return authenticationProvider;
+                return interactiveBrowserCredential;
             }
             set
             {
-                authenticationProvider = value;
+                interactiveBrowserCredential = value;
             }
         }
 
@@ -70,23 +67,19 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public IPublicClientApplication ClientApplication { get; private set; }
-
         #endregion
 
         #region Constructor
-        public MainViewModel(IPublicClientApplication clientApplication)
+        public MainViewModel()
         {
-            ClientApplication = clientApplication;
-
             var logFilePath = Path.Combine(Path.GetTempPath(), string.Format(Common.Properties.Resources.LogFileName, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")));
             Logger = new UILogger(FileLogger.Create(logFilePath), true);
         }
         #endregion
 
-        internal bool IsUserAuthTokenSet()
+        internal bool IsUserAuthCredentialsSet()
         {
-            if (ClientApplication.UserTokenCache is null)
+            if (InteractiveBrowserCredential is null)
             {
                 Logger.WriteInformation(Properties.Resources.LoginFirstBeforeExecuteMessage);
                 return false;
@@ -94,48 +87,58 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             return true;
         }
 
-        internal async Task LoginUserAsync()
+        internal async Task LoginUserAsync(Action loadDataAction)
         {
-            var authHelper = new GraphUserAuthenticationHelper();
-            if (await authHelper.InitUserClientAsync(ClientApplication, scopes))
+            var authHelper = new AzureAuthenticationHelper();
+            if (await authHelper.InitUserClientAsync())
             {
-                AuthenticationProvider = authHelper.AuthenticationProvider;
+                InteractiveBrowserCredential = authHelper.InteractiveBrowserCredential;
                 GraphConnectorHelper = new GraphConnectorHelper();
-                GraphConnectorHelper.InitUserServiceClient(AuthenticationProvider);
+                GraphConnectorHelper.InitUserServiceClient(authHelper.InteractiveBrowserCredential);
                 UserLabelText = authHelper.Username;
+
+                loadDataAction.Invoke();
+            }
+            else
+            {
+                Logger.WriteInformation(Properties.Resources.UserIsNotLoggedInMessage);
             }
         }
 
-        internal async void TryAutoLoginUserAsync()
+        internal async Task TryAutoLoginUserAsync(Action loadDataAction)
         {
-            var authHelper = new GraphUserAuthenticationHelper();
-            if (await authHelper.InitUserClientAsync(ClientApplication, scopes, true))
+            var authHelper = new AzureAuthenticationHelper();
+            if (await authHelper.InitUserClientAsync(true))
             {
-                AuthenticationProvider = authHelper.AuthenticationProvider;
+                InteractiveBrowserCredential = authHelper.InteractiveBrowserCredential;
                 GraphConnectorHelper = new GraphConnectorHelper();
-                GraphConnectorHelper.InitUserServiceClient(AuthenticationProvider);
+                GraphConnectorHelper.InitUserServiceClient(authHelper.InteractiveBrowserCredential);
                 UserLabelText = authHelper.Username;
+
+                Logger.WriteInformation(string.Format(Properties.Resources.UserLoginSuccessMessage, UserLabelText));
+
+                loadDataAction.Invoke();
+            }
+            else
+            {
+                Logger.WriteInformation(Properties.Resources.UserIsNotLoggedInMessage);
             }
         }
 
         internal async Task LogoutUser()
         {
-            var accounts = await ClientApplication.GetAccountsAsync();
-            if (accounts.Any())
+            var authHelper = new AzureAuthenticationHelper();
+            if(authHelper.DeleteAuthenticationRecordCache())
             {
-                try
-                {
-                    await ClientApplication.RemoveAsync(accounts.FirstOrDefault());
-
-                    AuthenticationProvider = null;
-                    UserLabelText = "Login";
-                }
-                catch (MsalException ex)
-                {
-                    // TODO Log
-                    Logger.WriteWarning("Logout nicht erfolgreich - Fehler beim Auslogen des Benutzers.");
-                }
+                Logger.WriteInformation(string.Format(Properties.Resources.UserLogoutSuccessMessage, UserLabelText));
+                InteractiveBrowserCredential = null;
+                UserLabelText = LOGINUSERLABELTEXT;
             }
+            else
+            {
+                Logger.WriteWarning(Properties.Resources.UserLogoutFailureMessage);
+            }
+
         }
     }
 }

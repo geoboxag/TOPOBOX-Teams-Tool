@@ -23,7 +23,6 @@ namespace TOPOBOX.OSC.TeamsTool.Views
             DataContext = archiveViewModel;
         }
 
-
         private void TeamCmb_OnDropDownOpened(object sender, System.EventArgs e)
         {
             archiveViewModel.LoadTeams();

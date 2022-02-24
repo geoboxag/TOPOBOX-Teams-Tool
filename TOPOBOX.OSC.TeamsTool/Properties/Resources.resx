@@ -212,4 +212,15 @@
   <data name="UserIsNotLoggedInMessage" xml:space="preserve">
     <value>Es ist kein Benutzer angemeldet. Bitte zuerst einloggen.</value>
   </data>
+  <data name="UserLoginSuccessMessage" xml:space="preserve">
+    <value>Der Benutzer '{0}' wurde erfolgreich angemeldet.</value>
+    <comment>{0} = Username</comment>
+  </data>
+  <data name="UserLogoutFailureMessage" xml:space="preserve">
+    <value>Der Benutzer konnte nicht abgemeldet werden.</value>
+  </data>
+  <data name="UserLogoutSuccessMessage" xml:space="preserve">
+    <value>Der Benutzer '{0}' wurde erfolgreich abgemeldet.</value>
+    <comment>{0} = Username</comment>
+  </data>
 </root>

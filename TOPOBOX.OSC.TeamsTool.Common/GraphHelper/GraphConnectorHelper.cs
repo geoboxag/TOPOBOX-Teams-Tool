@@ -1,4 +1,5 @@
-﻿using Microsoft.Graph;
+﻿using Azure.Identity;
+using Microsoft.Graph;
 using Microsoft.Graph.Auth;
 using Microsoft.Identity.Client;
 
@@ -56,11 +57,11 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         /// <summary>
         /// Initialize a UserServiceClient
         /// </summary>
-        /// <param name="authenticationProvider"></param>
+        /// <param name="interactiveBrowserCredential"></param>
         /// <returns></returns>
-        public bool InitUserServiceClient(IAuthenticationProvider authenticationProvider)
+        public bool InitUserServiceClient(InteractiveBrowserCredential interactiveBrowserCredential)
         {
-            GraphServiceClient = CreateServiceClient(authenticationProvider);
+            GraphServiceClient = CreateServiceClient(interactiveBrowserCredential);
             if (GraphServiceClient is null)
             {
                 IsInitOK = false;
@@ -112,16 +113,34 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         }
 
         /// <summary>
-        /// Creates a GraphServiceClient
+        /// Creates a GraphServiceClient with ClientCredentialProvider
         /// </summary>
         /// <param name="authProvider"></param>
         /// <returns></returns>
-        private GraphServiceClient CreateServiceClient(IAuthenticationProvider authProvider)
+        private GraphServiceClient CreateServiceClient(ClientCredentialProvider clientCredentialProvider)
+        {
+
+            try
+            {
+                return new GraphServiceClient(clientCredentialProvider);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Creates a GraphServiceClient with InteractiveBrowserCredential
+        /// </summary>
+        /// <param name="authProvider"></param>
+        /// <returns></returns>
+        private GraphServiceClient CreateServiceClient(InteractiveBrowserCredential interactiveBrowserCredential)
         {
             
             try
             {
-                return new GraphServiceClient(authProvider);
+                return new GraphServiceClient(interactiveBrowserCredential);
             }
             catch
             {

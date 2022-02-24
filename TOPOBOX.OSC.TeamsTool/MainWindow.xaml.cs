@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using TOPOBOX.OSC.TeamsTool.ViewModels;
 using TOPOBOX.OSC.TeamsTool.Views;
@@ -15,8 +14,8 @@ namespace TOPOBOX.OSC.TeamsTool
     {
         private MainViewModel mainViewModel;
 
-        private UserControl tasksForm;
-        private UserControl archiveForm;
+        private TasksForm tasksForm;
+        private ArchiveForm archiveForm;
 
         /// <summary>
         /// Constructor
@@ -26,19 +25,23 @@ namespace TOPOBOX.OSC.TeamsTool
             InitializeComponent();
             LoadAndShowMode();
 
-            mainViewModel = new MainViewModel(App.PublicClientApp);
+            mainViewModel = new MainViewModel();
             DataContext = mainViewModel;
-
-
-            if (Properties.Settings.Default.EnableAutologin)
-            {
-                mainViewModel.TryAutoLoginUserAsync();
-            }
 
             tasksForm = new TasksForm(mainViewModel);
             archiveForm = new ArchiveForm(mainViewModel);
 
+            if (Properties.Settings.Default.EnableAutologin)
+            {
+                mainViewModel.TryAutoLoginUserAsync(LoadDataFromWeb);
+            }
+
             ShowTasksForm();
+        }
+
+        private void LoadDataFromWeb()
+        {
+            tasksForm.LoadData();
         }
 
         private void LoadAndShowMode()
@@ -151,9 +154,9 @@ namespace TOPOBOX.OSC.TeamsTool
 
         private async void User_Click(object sender, MouseButtonEventArgs e)
         {
-            if(mainViewModel.AuthenticationProvider is null)
+            if (mainViewModel.InteractiveBrowserCredential is null)
             {
-                await mainViewModel.LoginUserAsync();
+                await mainViewModel.LoginUserAsync(LoadDataFromWeb);
             }
             else
             {

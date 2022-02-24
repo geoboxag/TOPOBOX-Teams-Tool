@@ -157,7 +157,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         internal void LoadTeams()
         {
-            if (!mainViewModel.IsUserAuthTokenSet())
+            if (!mainViewModel.IsUserAuthCredentialsSet())
             {
                 return;
             }
@@ -166,7 +166,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         internal void LoadChannels()
         {
-            if (!mainViewModel.IsUserAuthTokenSet())
+            if (!mainViewModel.IsUserAuthCredentialsSet())
             {
                 return;
             }
@@ -190,7 +190,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         internal void ArchivingChannel()
         {
-            if (!mainViewModel.IsUserAuthTokenSet() ||
+            if (!mainViewModel.IsUserAuthCredentialsSet() ||
                 !IsArchiveFormValid())
             {
                 return;

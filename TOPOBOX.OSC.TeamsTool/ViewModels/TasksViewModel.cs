@@ -375,7 +375,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         internal void CreatePlannerTask()
         {
-            if (mainViewModel.IsUserAuthTokenSet() ||
+            if (mainViewModel.IsUserAuthCredentialsSet() ||
                 !IsTeamSelected() ||
                 !IsPlannerConfigurationSelected() ||
                 !IsBucketSelected() ||
@@ -405,7 +405,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         internal void CreatePredefinedPlannerTask()
         {
-            if (!mainViewModel.IsUserAuthTokenSet() ||
+            if (!mainViewModel.IsUserAuthCredentialsSet() ||
                 !IsTeamSelected() ||
                 !IsPlannerConfigurationSelected() ||
                 !IsBucketSelected() ||

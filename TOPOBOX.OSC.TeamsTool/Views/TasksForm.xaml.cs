@@ -20,9 +20,8 @@ namespace TOPOBOX.OSC.TeamsTool.Views
             this.DataContext = tasksViewModel;
         }
 
-        protected override void OnInitialized(EventArgs e)
+        internal void LoadData()
         {
-            base.OnInitialized(e);
             tasksViewModel.LoadData();
         }
         
