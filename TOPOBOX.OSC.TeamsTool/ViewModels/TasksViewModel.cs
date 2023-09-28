@@ -335,6 +335,8 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             var folderPath = Path.Combine(Common.Properties.Settings.Default.TeamsToolConfigRootPath,
                                     Common.Properties.Settings.Default.RelPathPlannerFolders);
 
+            if (!Directory.Exists(folderPath)) return;
+
             var predefinedPlannerTask = new Dictionary<string, List<PlannerTask>>();
             predefinedPlannerTask.Add("", null);
 
