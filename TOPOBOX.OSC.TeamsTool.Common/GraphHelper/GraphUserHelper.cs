@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using Microsoft.Graph.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,12 +28,13 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         /// <returns>dictionary with userID and Graph.User Objects</returns>
         public Dictionary<string, User> GetUsers()
         {
-            var graphRequest = graphClient.Users.Request();
+            var graphRequest = graphClient.Users.ToGetRequestInformation();
 
             var task = new Task<Dictionary<string, User>>(gR =>
             {
-                var request = gR as GraphServiceUsersCollectionRequest;
-                var answer = request.GetAsync().Result;
+                var request = graphClient.Users.GetAsync();
+                //var request = gR as GraphServiceUsersCollectionRequest;
+                var answer = request.Result.Value;
 
                 if (answer.Any())
                 {

@@ -1,5 +1,5 @@
 ﻿using GEOBOX.OSC.Common.Logging;
-using Microsoft.Graph;
+using TOPOBOX.OSC.TeamsTool.Common.Mapper;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,9 +9,9 @@ using TOPOBOX.OSC.TeamsTool.Common.DAL;
 using TOPOBOX.OSC.TeamsTool.Common.Domain;
 using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
 using TOPOBOX.OSC.TeamsTool.Common.IO;
-using TOPOBOX.OSC.TeamsTool.Common.Mapper;
 using Directory = System.IO.Directory;
 using PlannerTask = TOPOBOX.OSC.TeamsTool.Common.DAL.PlannerTask;
+using Microsoft.Graph.Models;
 
 namespace TOPOBOX.OSC.TeamsTool.ViewModels
 {
@@ -424,7 +424,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
                     predefinedTask.Title = GetTaskTitle(Title, ProductName, predefinedTask.Title);
                     logger?.WriteInformation(string.Format(Properties.Resources.ReplacedTitleMessage, predefinedTask.Title));
                 }
-
+                
                 var plannerTask = PlannerTaskMapper.MapTo(predefinedTask);
                 plannerTask.BucketId = SelectedBucket.Id;
                 plannerTask.PlanId = SelectedPlannerConfiguration.Planner.Id;
@@ -468,10 +468,11 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         private PlannerAssignments GetPlannerAssignments(IEnumerable<Common.DAL.UserOverview> userOverviews)
         {
+            //TODO: figure out what why
             var assignments = new PlannerAssignments();
              foreach (var userOverview in userOverviews)
              {
-                assignments.AddAssignee(userOverview.User.Id);
+                //assignments.GetFieldDeserializers().Add(userOverview.User.Id);
              }
 
             return assignments;

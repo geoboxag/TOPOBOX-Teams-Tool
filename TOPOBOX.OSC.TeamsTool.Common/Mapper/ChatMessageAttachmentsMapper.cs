@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
-using Graph = Microsoft.Graph;
+using Graph = Microsoft.Graph.Models;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
 {

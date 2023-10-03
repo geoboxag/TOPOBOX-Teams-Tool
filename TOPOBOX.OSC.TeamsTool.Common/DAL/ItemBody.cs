@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using Microsoft.Graph.Models;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.DAL
 {

@@ -7,7 +7,7 @@ using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
 using TOPOBOX.OSC.TeamsTool.Common.Html.TeamOverview;
 using TOPOBOX.OSC.TeamsTool.Common.IO;
 using TOPOBOX.OSC.TeamsTool.Common.Mapper;
-using Graph = Microsoft.Graph;
+using Graph = Microsoft.Graph.Models;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Domain
 {

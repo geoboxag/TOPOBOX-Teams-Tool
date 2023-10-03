@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using Microsoft.Graph.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,14 +26,15 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         /// Get all planners
         /// </summary>
         /// <returns>dictionary with plannerID and Graph.Planner Objects</returns>
-        public Dictionary<string, PlannerPlan> GetPlanners()
+        public async Task<Dictionary<string, PlannerPlan>> GetPlannersAsync()
         {
-            var graphRequest = graphClient.Planner.Plans.Request();
-
+            var graphRequest = graphClient.Planner.Plans.ToGetRequestInformation();
+            var request = await graphClient.Planner.Plans.GetAsync();
             var task = new Task<Dictionary<string, PlannerPlan>>(gR =>
             {
-                var request = gR as PlannerPlansCollectionRequest;
-                var answer = request.GetAsync().Result;
+                //var request = gR as PlannerPlansCollectionRequest;
+                //var answer = request.GetAsync().Result;
+                var answer = request.Value;
 
                 if (answer.Any())
                 {
@@ -56,15 +58,15 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         /// Get all my planners
         /// </summary>
         /// <returns>dictionary with plannerID and Graph.Planner Objects</returns>
-        public Dictionary<string, PlannerPlan> GetMyPlanners()
+        public async Task<Dictionary<string, PlannerPlan>> GetMyPlannersAsync()
         {
-            var graphRequest = graphClient.Me.Planner.Plans.Request();
+            var graphRequest = graphClient.Me.Planner.Plans.ToGetRequestInformation();
 
-            var task = new Task<Dictionary<string, PlannerPlan>>(gR =>
+            var request = await graphClient.Me.Planner.Plans.GetAsync();
+            var task = new Task<Dictionary<string, PlannerPlan>>( gR =>
             {
-                var request = gR as PlannerUserPlansCollectionRequest;
-                var answer = request.GetAsync().Result;
-
+                //var answer = request.GetAsync().Result;
+                var answer = request.Value;
                 if (answer.Any())
                 {
                     Dictionary<string, PlannerPlan> returnDict = new Dictionary<string, PlannerPlan>();

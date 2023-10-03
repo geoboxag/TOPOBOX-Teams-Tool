@@ -1,7 +1,9 @@
 ﻿using Azure.Identity;
 using Microsoft.Graph;
+using Microsoft.Graph.Core;
 using Microsoft.Graph.Auth;
 using Microsoft.Identity.Client;
+using Microsoft.Kiota.Abstractions.Authentication;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
 {
@@ -119,10 +121,19 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         /// <returns></returns>
         private GraphServiceClient CreateServiceClient(ClientCredentialProvider clientCredentialProvider)
         {
+            var options = new ClientCertificateCredentialOptions
+            {
+                AuthorityHost = AzureAuthorityHosts.AzurePublicCloud,
+            };
+            var clientCertCredential = new ClientCertificateCredential(
+                clientCredentialProvider.ClientApplication.AppConfig.TenantId, clientCredentialProvider.ClientApplication.AppConfig.ClientId, clientCredentialProvider.ClientApplication.AppConfig.ClientCredentialCertificate, options);
 
             try
             {
-                return new GraphServiceClient(clientCredentialProvider);
+                ClientCredentialProvider authProvider = new ClientCredentialProvider(clientCredentialProvider.ClientApplication);
+                //return new GraphServiceClient(clientCredentialProvider);
+                //ClientCredentialProvider authProvider = new ClientCredentialProvider(confidentialClientApplication);
+                return new GraphServiceClient((Microsoft.Kiota.Abstractions.IRequestAdapter)clientCertCredential, clientCredentialProvider.Scope);
             }
             catch
             {

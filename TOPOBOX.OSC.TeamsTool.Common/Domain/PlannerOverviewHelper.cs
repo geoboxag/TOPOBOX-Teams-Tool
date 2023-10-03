@@ -7,7 +7,7 @@ using TOPOBOX.OSC.TeamsTool.Common.GraphHelper;
 using TOPOBOX.OSC.TeamsTool.Common.Html.PlannerOverview;
 using TOPOBOX.OSC.TeamsTool.Common.IO;
 using TOPOBOX.OSC.TeamsTool.Common.Mapper;
-using Graph = Microsoft.Graph;
+using Graph = Microsoft.Graph.Models;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Domain
 {
@@ -88,7 +88,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
         internal List<PlannerConfiguration> CollectData()
         {
             GraphPlannerPlanHelper plannerHelper = new GraphPlannerPlanHelper(connectorHelper.GraphServiceClient);
-            var planners = plannerHelper.GetPlanners();
+            var planners = plannerHelper.GetPlannersAsync().Result;
             return MapPlannerAndBuckets(planners);
         }
 
@@ -99,8 +99,8 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
         internal List<PlannerConfiguration> CollectMyData()
         {
             GraphPlannerPlanHelper plannerHelper = new GraphPlannerPlanHelper(connectorHelper.GraphServiceClient);
-            var planners = plannerHelper.GetMyPlanners();
-            var plannerConfigurations = MapPlannerAndBuckets(planners);
+            var planners = plannerHelper.GetMyPlannersAsync().Result;
+            List<PlannerConfiguration> plannerConfigurations = MapPlannerAndBuckets(planners);
             return plannerConfigurations.OrderBy(p => p.Planner.Name).ToList();
         }
 

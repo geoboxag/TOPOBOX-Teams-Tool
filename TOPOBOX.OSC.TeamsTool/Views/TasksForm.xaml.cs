@@ -53,5 +53,10 @@ namespace TOPOBOX.OSC.TeamsTool.Views
                 tasksViewModel.AddChecklistEntry();
             }
         }
+
+        private void ChecklistView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

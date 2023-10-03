@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
-using Graph = Microsoft.Graph;
+using Graph = Microsoft.Graph.Models;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
 {
@@ -10,7 +10,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
     public sealed class ChatMessageMapper : BaseObjectMapper
     {
 # pragma warning disable CS1591
-        public static ChatMessage MapFrom(Graph.ChatMessage graphChatMessage)
+        public static ChatMessage MapFrom(Microsoft.Graph.Models.ChatMessage graphChatMessage)
         {
             return new ChatMessage()
             {
@@ -33,7 +33,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             };
         }
 
-        public static List<ChatMessage> MapFrom(IEnumerable<Graph.ChatMessage> graphChatMessages)
+        public static List<ChatMessage> MapFrom(IEnumerable<Microsoft.Graph.Models.ChatMessage> graphChatMessages)
         {
             List<ChatMessage> chatMessages = new List<ChatMessage>();
 
@@ -45,9 +45,9 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             return chatMessages;
         }
 
-        public static Graph.ChatMessage MapTo(ChatMessage chatMessage)
+        public static Microsoft.Graph.Models.ChatMessage MapTo(ChatMessage chatMessage)
         {
-            return new Graph.ChatMessage()
+            return new Microsoft.Graph.Models.ChatMessage()
             {
                 Id = chatMessage.Id,
                 ReplyToId = chatMessage.ReplyToId,
@@ -62,15 +62,15 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
                 From = UserMapper.MapToChatMessageFromIdentitySet(chatMessage.User),
                 Body = ItemBodyMapper.MapTo(chatMessage.MessageBody),
                 ChannelIdentity = ChannelIdentityMapper.MapTo(chatMessage.ChannelIdentity),
-                Mentions = MentionMapper.MapTo(chatMessage.Mentions),
+                Mentions = (List<Microsoft.Graph.Models.ChatMessageMention>)MentionMapper.MapTo(chatMessage.Mentions),
                 Attachments = ChatMessageAttachmentsMapper.MapTo(chatMessage.Attachments),
                 Replies = MapToCollectionPage(chatMessage.MessageReplies)
             };
         }
 
-        public static List<Graph.ChatMessage> MapTo(List<ChatMessage> chatMessages)
+        public static List<Microsoft.Graph.Models.ChatMessage> MapTo(List<ChatMessage> chatMessages)
         {
-            List<Graph.ChatMessage> graphChatMessages = new List<Graph.ChatMessage>();
+            List<Microsoft.Graph.Models.ChatMessage> graphChatMessages = new List<Microsoft.Graph.Models.ChatMessage>();
 
             foreach (var chatMessage in chatMessages)
             {
@@ -80,15 +80,19 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             return graphChatMessages;
         }
 
-        private static Graph.IChatMessageRepliesCollectionPage MapToCollectionPage(List<ChatMessage> messageReplies)
+        private static List<Microsoft.Graph.Models.ChatMessage> MapToCollectionPage(List<ChatMessage> messageReplies)
+        //private static Microsoft.Graph.Models.IChatMessageRepliesCollectionPage MapToCollectionPage(List<ChatMessage> messageReplies)
         {
-            var collPages = new Graph.ChatMessageRepliesCollectionPage();
+            //var collPages = new Microsoft.Graph.Models.ChatCollectionResponse();
+            var e = new List<Microsoft.Graph.Models.ChatMessage>();
+            //var collPages = new Microsoft.Graph.Models.MessageCollectionResponse();
+            //var collPages = new Microsoft.Graph.Models.ChatMessageRepliesCollectionPage();
             foreach (var messageReply in messageReplies)
             {
-                collPages.Add(MapTo(messageReply));
+                e.Add(MapTo(messageReply));
             }
 
-            return collPages;
+            return e;
         }
 
 #pragma warning restore CS1591

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using Microsoft.Graph.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,12 +30,13 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         /// <returns></returns>
         public Dictionary<string, Group> GetGroups(string resourceProvisioningOptionsSearchPattern = "[]") // when Empty Array, it's a group
         {                                                                                          // when Array Contains "Team", it's a Team
-            var graphRequest = graphClient.Groups.Request();
-
+            var graphRequest = graphClient.Groups.ToGetRequestInformation();
+            var result = graphClient.Groups.GetAsync();
             var task = new Task<Dictionary<string, Group>>(gR =>
             {
-                var request = gR as GraphServiceGroupsCollectionRequest;
-                var answer = request.GetAsync().Result;
+                //var request = gR as GraphServiceGroupsCollectionRequest;
+                //var answer = request.GetAsync().Result;
+                var answer = result.Result.Value;
 
                 if (answer.Any())
                 {

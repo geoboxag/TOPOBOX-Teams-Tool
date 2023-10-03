@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using TOPOBOX.OSC.TeamsTool.Common.DAL;
-using Graph = Microsoft.Graph;
+using Graph = Microsoft.Graph.Models;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
 {
@@ -26,7 +26,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             return mentions;
         }
 
-        public static IEnumerable<Graph.ChatMessageMention> MapTo(List<Mention> mentions)
+        public static IEnumerable<Microsoft.Graph.Models.ChatMessageMention> MapTo(List<Mention> mentions)
         {
             List<Graph.ChatMessageMention> chatMessageMentions = new List<Graph.ChatMessageMention>();
             foreach (var mention in mentions)

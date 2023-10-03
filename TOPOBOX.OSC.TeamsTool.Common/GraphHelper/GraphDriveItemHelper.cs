@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using Microsoft.Graph.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,12 +28,12 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         /// <returns>dictionary with driveItemId and Graph.DriveItem Objects</returns>
         public Dictionary<string, DriveItem> GetDriveItems(string userId)
         {
-            var graphRequest = graphClient.Users[userId].Drive.Root.Children.Request();
-
+            var graphRequest = graphClient.Users[userId].Drive.ToGetRequestInformation();
+            //var graphRequest = graphClient.Users[userId].Drive.Root.Children.Request();
             var task = new Task<Dictionary<string, DriveItem>>(gR =>
             {
-                var request = gR as DriveItemChildrenCollectionRequest;
-                var answer = request.GetAsync().Result;
+                var request = graphClient.Users[userId].Drive;
+                var answer = request.GetAsync().Result.Items;
 
                 if (answer.Any())
                 {

@@ -122,7 +122,7 @@
             <ListView x:Name="ChecklistView" 
                      Margin="5,0,5,0" 
                      Height="140"                      
-                     ItemsSource="{Binding ChecklistEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                     ItemsSource="{Binding ChecklistEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ChecklistView_SelectionChanged" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using Microsoft.Graph.Models;
 using System.Threading.Tasks;
 
 namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
@@ -25,12 +26,12 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         /// <returns>dictionary with bucketID and Graph.PlannerBucket Objects</returns>
         public PlannerTask SendPlannerTask(PlannerTask plannerTask)
         {
-            var graphRequest = graphClient.Planner.Tasks.Request();
+            var graphRequest = graphClient.Planner.Tasks.ToGetRequestInformation();
 
-            var task = new Task<PlannerTask>(gR =>
+            var task = new Task<PlannerTask>( gR =>
             {
-                var request = gR as PlannerTasksCollectionRequest;
-                var answer = request.AddAsync(plannerTask).Result;
+                var request = graphClient.Planner.Tasks.PostAsync(plannerTask);
+                var answer = request.Result;
 
                 if (answer != null)
                 {

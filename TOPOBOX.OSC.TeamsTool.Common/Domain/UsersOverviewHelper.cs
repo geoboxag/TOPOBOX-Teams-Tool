@@ -121,13 +121,13 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
         /// <param name="users"></param>
         /// <param name="teamGroups"></param>
         /// <returns></returns>
-        private List<UserOverview> MapUsersAndTeams(Dictionary<string, Graph.User> users, Dictionary<string, Graph.Group> teamGroups)
+        private List<UserOverview> MapUsersAndTeams(Dictionary<string, Graph.Models.User> users, Dictionary<string, Graph.Models.Group> teamGroups)
         {
             List<UserOverview> userOverviews = new List<UserOverview>();
 
-            Dictionary<string, List<Graph.AadUserConversationMember>> teamsAndMembers = GetTeamsAndTheirMembers(teamGroups);
+            Dictionary<string, List<Graph.Models.AadUserConversationMember>> teamsAndMembers = GetTeamsAndTheirMembers(teamGroups);
 
-            foreach (KeyValuePair<string, Graph.User> currentUser in users)
+            foreach (KeyValuePair<string, Graph.Models.User> currentUser in users)
             {
                 User user = UserMapper.MapFrom(currentUser.Value);
                 UserOverview userOverview = new UserOverview(user);
@@ -138,7 +138,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
                     {
                         if (member.UserId.Equals(user.Id))
                         {
-                            teamGroups.TryGetValue(teamAndMember.Key, out Graph.Group teamFromTeamGroups);
+                            teamGroups.TryGetValue(teamAndMember.Key, out Graph.Models.Group teamFromTeamGroups);
                             if(teamFromTeamGroups is null)
                             {
                                 userOverviews.Add(userOverview);
@@ -160,18 +160,18 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
         }
 
 
-        private Dictionary<string, List<Graph.AadUserConversationMember>> GetTeamsAndTheirMembers(Dictionary<string, Graph.Group> teamGroups)
+        private Dictionary<string, List<Graph.Models.AadUserConversationMember>> GetTeamsAndTheirMembers(Dictionary<string, Graph.Models.Group> teamGroups)
         {
-            Dictionary<string, List<Graph.AadUserConversationMember>> teamsAndMembers =
-                new Dictionary<string, List<Graph.AadUserConversationMember>>();
+            Dictionary<string, List<Graph.Models.AadUserConversationMember>> teamsAndMembers =
+                new Dictionary<string, List<Graph.Models.AadUserConversationMember>>();
 
             GraphUserConversationMemberHelper userConversationMemberHelper = new GraphUserConversationMemberHelper(connectorHelper.GraphServiceClient);
 
-            foreach (KeyValuePair<string, Graph.Group> teamGroup in teamGroups)
+            foreach (KeyValuePair<string, Graph.Models.Group> teamGroup in teamGroups)
             {
                 var members = userConversationMemberHelper.GetTeamMembers(teamGroup.Key);
 
-                List<Graph.AadUserConversationMember> aadUsers = new List<Graph.AadUserConversationMember>();
+                List<Graph.Models.AadUserConversationMember> aadUsers = new List<Graph.Models.AadUserConversationMember>();
                 foreach (var member in members)
                 {
                     aadUsers.Add(member.Value);

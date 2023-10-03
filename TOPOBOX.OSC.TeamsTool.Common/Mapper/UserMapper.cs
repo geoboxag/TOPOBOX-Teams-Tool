@@ -10,7 +10,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
     public sealed class UserMapper : BaseObjectMapper
     {
 # pragma warning disable CS1591
-        public static User MapFrom(Graph.User graphUser)
+        public static User MapFrom(Graph.Models.User graphUser)
         {
             var user = new User();
             user.Id = graphUser.Id;
@@ -28,7 +28,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             return user;
         }
 
-        public static User MapFrom(Graph.IdentitySet graphIdentitySet)
+        public static User MapFrom(Graph.Models.IdentitySet graphIdentitySet)
         {
             object userIdentityType = string.Empty;
             if (graphIdentitySet.AdditionalData != null && graphIdentitySet.AdditionalData.Any())
@@ -45,7 +45,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             };
         }
 
-        public static User MapFrom(Graph.Identity graphIdentity)
+        public static User MapFrom(Graph.Models.Identity graphIdentity)
         {
             object userIdentityType = string.Empty;
             if (graphIdentity.AdditionalData != null && graphIdentity.AdditionalData.Any())
@@ -62,9 +62,9 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             };
         }
         
-        public static Graph.User MapTo(User user)
+        public static Graph.Models.User MapTo(User user)
         {
-            var graphUser = new Graph.User();
+            var graphUser = new Graph.Models.User();
             graphUser.Id = user.Id;
             graphUser.DisplayName = user.DisplayName;
             graphUser.Surname = user.Surname;
@@ -73,30 +73,30 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
 
             if (user.BusinessPhones != null && user.BusinessPhones.Any())
             {
-                graphUser.BusinessPhones = user.BusinessPhones;
+                graphUser.BusinessPhones = (System.Collections.Generic.List<string>)user.BusinessPhones;
             }
 
             return graphUser;
         }
 
-        public static Graph.Identity MapToIdentity(User user)
+        public static Graph.Models.Identity MapToIdentity(User user)
         {
-            var graphIdentity = new Graph.Identity();
+            var graphIdentity = new Graph.Models.Identity();
             graphIdentity.Id = user.Id;
             graphIdentity.DisplayName = user.DisplayName;
             return graphIdentity;
         }
 
-        public static Graph.ChatMessageFromIdentitySet MapToChatMessageFromIdentitySet(User user)
+        public static Graph.Models.ChatMessageFromIdentitySet MapToChatMessageFromIdentitySet(User user)
         {
-            var chatMessageFromIdentitySet = new Graph.ChatMessageFromIdentitySet();
+            var chatMessageFromIdentitySet = new Graph.Models.ChatMessageFromIdentitySet();
             chatMessageFromIdentitySet.User = MapToIdentity(user);
             return chatMessageFromIdentitySet;
         }
 
-        public static Graph.ChatMessageMentionedIdentitySet MapToChatMessageMentionedIdentitySet(User user)
+        public static Graph.Models.ChatMessageMentionedIdentitySet MapToChatMessageMentionedIdentitySet(User user)
         {
-            var chatMessageMentionedIdentitySet = new Graph.ChatMessageMentionedIdentitySet();
+            var chatMessageMentionedIdentitySet = new Graph.Models.ChatMessageMentionedIdentitySet();
             chatMessageMentionedIdentitySet.User = MapToIdentity(user);
             return chatMessageMentionedIdentitySet;
         }
