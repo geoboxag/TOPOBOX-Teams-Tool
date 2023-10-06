@@ -38,15 +38,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
                 Dictionary<string, AadUserConversationMember> returnDict = new Dictionary<string, AadUserConversationMember>();
                 try
                 {
-                    //var result = graphClient.Teams[teamId].Members.GetAsync();
                     var result = graphClient.Teams[teamId].Members.GetAsync(
-                    //    (requestConfiguration) =>
-                    //{
-                    //    requestConfiguration.QueryParameters.Filter = "endswith(mail,'a@contoso.com')";
-                        //requestConfiguration.QueryParameters.Orderby = new string[] { "userPrincipalName" };
-                        //requestConfiguration.QueryParameters.Count = true;
-                        //requestConfiguration.Headers.Add("ConsistencyLevel", "eventual");
-                    //}
                 );
             var answer = result.Result.Value;
 

@@ -41,21 +41,19 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
         {
             List<ChecklistItem> checklistItems = new List<ChecklistItem>();
 
-            //foreach (var graphChecklistItem in graphPlannerChecklistItems.AdditionalData)
-            //{
-            //    ChecklistItem checklistItem = new ChecklistItem();
-            //checklistItem.Title = graphChecklistItem.Value.Title;
-            //    checklistItem.IsChecked = graphChecklistItem.Value.IsChecked ?? false;
-            //}
-
+            foreach (var graphChecklistItem in graphPlannerChecklistItems.AdditionalData) {
+                ChecklistItem checklistItem = new ChecklistItem();
+                checklistItem.Title = graphChecklistItem.Value.GetType().GetProperty("Title").GetValue(graphChecklistItem.Value).ToString();
+                bool myBool = false;
+                bool.TryParse(graphChecklistItem.Value.GetType().GetProperty("IsChecked").GetValue(graphChecklistItem.Value).ToString(),out myBool);
+                checklistItem.IsChecked = myBool;
+            }
             return checklistItems;
         }
 
         private static Graph.Models.PlannerChecklistItems MapTo(List<ChecklistItem> checklistItems)
         {
             Graph.Models.PlannerChecklistItems plannerChecklistItems = new Graph.Models.PlannerChecklistItems();
-            //TODO: figure out what why
-            //List<ChecklistItem> ChecklistList = new List<ChecklistItem>();
          
             foreach (var checklistItem in checklistItems)
             {

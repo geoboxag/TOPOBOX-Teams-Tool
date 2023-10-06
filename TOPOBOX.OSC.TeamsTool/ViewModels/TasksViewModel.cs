@@ -12,6 +12,7 @@ using TOPOBOX.OSC.TeamsTool.Common.IO;
 using Directory = System.IO.Directory;
 using PlannerTask = TOPOBOX.OSC.TeamsTool.Common.DAL.PlannerTask;
 using Microsoft.Graph.Models;
+//using System.Xml.Serialization;
 
 namespace TOPOBOX.OSC.TeamsTool.ViewModels
 {
@@ -406,6 +407,60 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
             SelectedUserOverview = null;
         }
+         internal void CreatePredefinedPlannerTaskFromXml(string path)
+        {
+            PlannerTask plannerTask = new PlannerTask();
+            try
+            {
+                 plannerTask = XmlSerializer.ReadXml<PlannerTask>(path, logger);
+
+                if (plannerTask != null)
+                {
+                    plannerTask.Id = System.Guid.NewGuid().ToString();
+                    plannerTask.BucketId = selectedBucket.Id;
+                    plannerTask.Title = plannerTask.Title.Replace("({$userInput$})", title);
+                    plannerTask.TaskDescription = description;
+
+                    //predefinedPlannerTask.Add(Path.GetFileName(path), plannerTasks);
+                }
+                else
+                {
+                    logger?.WriteWarning(Common.Properties.Resources.NoEntriesInListFoundMessage);
+                }
+            }
+            catch
+            {
+                logger?.WriteWarning(string.Format(Common.Properties.Resources.ReadFromFileErrorMessage, path));
+            }
+            GraphPlannerTaskHelper graphPlannerTaskHelper =
+                   new GraphPlannerTaskHelper(mainViewModel.GraphConnectorHelper.GraphServiceClient);
+
+            var plannerTaskGraph = PlannerTaskMapper.MapTo(plannerTask);
+            plannerTaskGraph.PlanId = selectedPlannerConfiguration.Planner.Id;
+            plannerTaskGraph.Details.PreviewType = GetPlannerPreviewType();
+            plannerTaskGraph.OdataType = "Microsoft.Graph.PlannerTask";
+
+            if (AssignedUsers != null && AssignedUsers.Any())
+            {
+                plannerTaskGraph.Assignments = GetPlannerAssignments(AssignedUsers);
+            }
+            var result = graphPlannerTaskHelper.SendPlannerTask(plannerTaskGraph);
+
+            if (result != null && result.Title == plannerTask.Title)
+            {
+                logger?.WriteInformation(string.Format(Properties.Resources.CreatedPlannerTaskMessage,
+                    plannerTask.Title,
+                    SelectedBucket.Name));
+            }
+            else
+            {
+                logger?.WriteWarning(string.Format(Properties.Resources.NotCreatedPlannerTaskMessage,
+                    plannerTask.Title,
+                    SelectedBucket.Name));
+            }
+
+        }
+
 
         internal void CreatePredefinedPlannerTask()
         {

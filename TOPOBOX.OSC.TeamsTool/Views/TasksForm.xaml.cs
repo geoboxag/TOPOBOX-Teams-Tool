@@ -44,6 +44,11 @@ namespace TOPOBOX.OSC.TeamsTool.Views
         {
             tasksViewModel.CreatePredefinedPlannerTask();
         }
+        private void CreatePredefinedTaskFromXmlButton_Click(object sender, RoutedEventArgs e)
+        {
+            var path = "C:\\ProgramData\\TOPOBOX\\CHECKLISTE Rechnungskontrolle.xml";
+            tasksViewModel.CreatePredefinedPlannerTaskFromXml(path);
+        }
 
 
         private void ChecklistInputTxtBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

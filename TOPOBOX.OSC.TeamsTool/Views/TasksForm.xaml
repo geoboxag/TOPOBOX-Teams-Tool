@@ -142,6 +142,12 @@
                     Height="30"
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"/>
+                <Button x:Name="CreateTaskButton_Copy" 
+                    Content="Aufgabe erfassen XML" 
+                    Click="CreatePredefinedTaskFromXmlButton_Click" 
+                    Margin="5,40,5,-30" 
+                    Height="30" 
+                    Grid.Column="0"/>
             </Grid>
 
         </StackPanel>

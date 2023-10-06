@@ -27,7 +27,6 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         public PlannerTask SendPlannerTask(PlannerTask plannerTask)
         {
             var graphRequest = graphClient.Planner.Tasks.ToGetRequestInformation();
-
             var task = new Task<PlannerTask>( gR =>
             {
                 var request = graphClient.Planner.Tasks.PostAsync(plannerTask);
@@ -44,5 +43,6 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
             task.Start();
             return task.Result;
         }
+        
     }
 }
