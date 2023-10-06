@@ -91,6 +91,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
             var users = userHelper.GetUsers();
             GraphTeamsHelper teamsHelper = new GraphTeamsHelper(connectorHelper.GraphServiceClient);
             var teamGroups = teamsHelper.GetTeamsFromGroups();
+            
             var teamsOverviews = MapTeamsAndMembers(teamGroups, users);
             return teamsOverviews.OrderBy(t => t.Team.Name).ToList();
         }
@@ -131,7 +132,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
                 Team team = TeamMapper.MapFrom(teamGroup.Value);
                 TeamOverview teamOverview = new TeamOverview(team);
 
-                var members = userConversationMemberHelper.GetTeamMembers(team.Id);
+                var members = userConversationMemberHelper.GetTeamMembers(team.Id).Result;
 
                 foreach(var member in members)
                 {

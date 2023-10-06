@@ -29,7 +29,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         /// </summary>
         /// <param name="teamId"></param>
         /// <returns>dictionary with userID and Graph.AadUserConversationMember Objects</returns>
-        public Dictionary<string, AadUserConversationMember> GetTeamMembers(string teamId)
+        public async Task<Dictionary<string, AadUserConversationMember>> GetTeamMembers(string teamId)
         {
             var graphRequest = graphClient.Teams[teamId].Members.ToGetRequestInformation();
             //var answer = graphRequest.GetAsync().Result;
@@ -38,8 +38,17 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
                 Dictionary<string, AadUserConversationMember> returnDict = new Dictionary<string, AadUserConversationMember>();
                 try
                 {
-                    var result = graphClient.Teams[teamId].Members.GetAsync();
-                    var answer = result.Result.Value;
+                    //var result = graphClient.Teams[teamId].Members.GetAsync();
+                    var result = graphClient.Teams[teamId].Members.GetAsync(
+                    //    (requestConfiguration) =>
+                    //{
+                    //    requestConfiguration.QueryParameters.Filter = "endswith(mail,'a@contoso.com')";
+                        //requestConfiguration.QueryParameters.Orderby = new string[] { "userPrincipalName" };
+                        //requestConfiguration.QueryParameters.Count = true;
+                        //requestConfiguration.Headers.Add("ConsistencyLevel", "eventual");
+                    //}
+                );
+            var answer = result.Result.Value;
 
                     if (answer.Any())
                     {

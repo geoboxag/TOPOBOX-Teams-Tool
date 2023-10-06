@@ -296,9 +296,9 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
         internal void LoadData()
         {
             LoadTeams();
+            LoadUsers();
             LoadPlanners();
             LoadChannels();
-            LoadUsers();
             SetSelectedTeamToDefault();
             LoadPredefinedPlannerTasks();
         }
@@ -311,6 +311,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             List<TeamOverview> teamsOverviews = new List<TeamOverview>();
             teamsOverviews.Add(new TeamOverview(new Common.DAL.Team()));
             teamsOverviews.AddRange(teamsOverviewHelper.CollectDataFromConfigFile());
+            teamsOverviews.AddRange(teamsOverviewHelper.CollectData());
 
             TeamOverviews = teamsOverviews;
         }
@@ -326,6 +327,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
                 Planner = new Common.DAL.Planner()
             });
             plannersConfigurations.AddRange(plannerOverviewHelper.CollectMyData());
+            plannersConfigurations.AddRange(plannerOverviewHelper.CollectData());
 
             PlannerConfigurations = plannersConfigurations;
         }
@@ -473,7 +475,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
              foreach (var userOverview in userOverviews)
              {
                 //assignments.GetFieldDeserializers().Add(userOverview.User.Id);
-             }
+            }
 
             return assignments;
         }
@@ -501,6 +503,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             List<UserOverview> userOverviews = new List<UserOverview>();
             userOverviews.Add(null);
             userOverviews.AddRange(usersOverviewHelper.CollectDataFromConfigFile());
+            userOverviews.AddRange(usersOverviewHelper.CollectData());
 
             UserOverviews = userOverviews;
         }

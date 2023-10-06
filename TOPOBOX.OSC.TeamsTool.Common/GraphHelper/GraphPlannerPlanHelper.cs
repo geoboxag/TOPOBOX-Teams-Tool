@@ -20,30 +20,32 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         public GraphPlannerPlanHelper(GraphServiceClient graphServiceClient)
         {
             graphClient = graphServiceClient;
+
         }
 
         /// <summary>
         /// Get all planners
         /// </summary>
         /// <returns>dictionary with plannerID and Graph.Planner Objects</returns>
-        public async Task<Dictionary<string, PlannerPlan>> GetPlannersAsync()
+        public async Task<Dictionary<string, PlannerPlan>> GetPlanners()
         {
             var graphRequest = graphClient.Planner.Plans.ToGetRequestInformation();
-            var request = await graphClient.Planner.Plans.GetAsync();
             var task = new Task<Dictionary<string, PlannerPlan>>(gR =>
             {
-                //var request = gR as PlannerPlansCollectionRequest;
-                //var answer = request.GetAsync().Result;
-                var answer = request.Value;
-
-                if (answer.Any())
+                var groups = graphClient.Groups.GetAsync().Result.Value;
+                foreach (var group in groups)
                 {
-                    Dictionary<string, PlannerPlan> returnDict = new Dictionary<string, PlannerPlan>();
-                    foreach (var plannerPlan in answer)
+                    var request = graphClient.Groups[group.Id].Planner.Plans.GetAsync();
+                    var answer = request.Result.Value;
+                    if (answer.Any())
                     {
-                        returnDict.Add(plannerPlan.Id, plannerPlan);
+                        Dictionary<string, PlannerPlan> returnDict = new Dictionary<string, PlannerPlan>();
+                        foreach (var plannerPlan in answer)
+                        {
+                            returnDict.Add(plannerPlan.Id, plannerPlan);
+                        }
+                        return returnDict;
                     }
-                    return returnDict;
                 }
 
                 return new Dictionary<string, PlannerPlan>();
@@ -58,15 +60,17 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         /// Get all my planners
         /// </summary>
         /// <returns>dictionary with plannerID and Graph.Planner Objects</returns>
-        public async Task<Dictionary<string, PlannerPlan>> GetMyPlannersAsync()
+        public async Task<Dictionary<string, PlannerPlan>> GetMyPlanners()
         {
             var graphRequest = graphClient.Me.Planner.Plans.ToGetRequestInformation();
 
-            var request = await graphClient.Me.Planner.Plans.GetAsync();
-            var task = new Task<Dictionary<string, PlannerPlan>>( gR =>
+            var task = new Task<Dictionary<string, PlannerPlan>>(gR =>
             {
+                var request = graphClient.Me.Planner.Plans.GetAsync();
+                //var request = graphClient.Users["{user-id}"].Planner.Tasks.GetAsync();
+
                 //var answer = request.GetAsync().Result;
-                var answer = request.Value;
+                var answer = request.Result.Value;
                 if (answer.Any())
                 {
                     Dictionary<string, PlannerPlan> returnDict = new Dictionary<string, PlannerPlan>();

@@ -169,7 +169,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
 
             foreach (KeyValuePair<string, Graph.Models.Group> teamGroup in teamGroups)
             {
-                var members = userConversationMemberHelper.GetTeamMembers(teamGroup.Key);
+                var members = userConversationMemberHelper.GetTeamMembers(teamGroup.Key).Result;
 
                 List<Graph.Models.AadUserConversationMember> aadUsers = new List<Graph.Models.AadUserConversationMember>();
                 foreach (var member in members)

@@ -12,7 +12,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
     public sealed class GraphUserHelper
     {
         private GraphServiceClient graphClient;
-
+        public User registeredUser;
         /// <summary>
         /// Construtcor
         /// </summary>
@@ -20,6 +20,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         public GraphUserHelper(GraphServiceClient graphServiceClient)
         {
             graphClient = graphServiceClient;
+
         }
 
         /// <summary>

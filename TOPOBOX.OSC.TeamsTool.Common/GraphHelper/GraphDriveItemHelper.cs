@@ -20,6 +20,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         public GraphDriveItemHelper(GraphServiceClient graphServiceClient)
         {
             graphClient = graphServiceClient;
+            
         }
 
         /// <summary>

@@ -240,6 +240,7 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
             List<TeamOverview> teamsOverviews = new List<TeamOverview>();
             teamsOverviews.Add(null);
             teamsOverviews.AddRange(teamsOverviewHelper.CollectDataFromConfigFile());
+            teamsOverviews.AddRange(teamsOverviewHelper.CollectData());
 
             return teamsOverviews;
         }

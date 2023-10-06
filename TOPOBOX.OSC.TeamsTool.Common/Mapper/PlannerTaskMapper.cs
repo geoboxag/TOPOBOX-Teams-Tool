@@ -41,10 +41,10 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
         {
             List<ChecklistItem> checklistItems = new List<ChecklistItem>();
 
-            //foreach(var graphChecklistItem in graphPlannerChecklistItems)
+            //foreach (var graphChecklistItem in graphPlannerChecklistItems.AdditionalData)
             //{
             //    ChecklistItem checklistItem = new ChecklistItem();
-            //    checklistItem.Title = graphChecklistItem.Value.Title;
+            //checklistItem.Title = graphChecklistItem.Value.Title;
             //    checklistItem.IsChecked = graphChecklistItem.Value.IsChecked ?? false;
             //}
 
@@ -56,17 +56,19 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Mapper
             Graph.Models.PlannerChecklistItems plannerChecklistItems = new Graph.Models.PlannerChecklistItems();
             //TODO: figure out what why
             //List<ChecklistItem> ChecklistList = new List<ChecklistItem>();
-            //foreach (var checklistItem in checklistItems)
-            //{
-            //    if (!string.IsNullOrEmpty(checklistItem.Title))
-            //    {
-            //        var item = new ChecklistItem() { Title = checklistItem.Title };
-            //        plannerChecklistItems.GetFieldDeserializers().Add(item.Title) ;
-            //        ChecklistList.Add(checklistItem);
-            //        //plannerChecklistItems.(checklistItem.Title);
-            //        ChecklistList.Add(item);
-            //    }
-            //}
+         
+            foreach (var checklistItem in checklistItems)
+            {
+                if (!string.IsNullOrEmpty(checklistItem.Title))
+                {
+                    plannerChecklistItems.AdditionalData.Add(System.Guid.NewGuid().ToString(), new
+                    {
+                        OdataType = "microsoft.graph.plannerChecklistItem",
+                        Title = checklistItem.Title,
+                        IsChecked = checklistItem.IsChecked,
+                    });
+                }
+            }
 
             return plannerChecklistItems;
         }
