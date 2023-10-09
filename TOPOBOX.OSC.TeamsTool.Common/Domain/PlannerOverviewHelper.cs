@@ -88,8 +88,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
         internal List<PlannerConfiguration> CollectData()
         {
             GraphPlannerPlanHelper plannerHelper = new GraphPlannerPlanHelper(connectorHelper.GraphServiceClient);
-            //var planners = plannerHelper.GetPlanners().Result;
-            var planners = plannerHelper.GetMyPlanners().Result;
+            var planners = plannerHelper.GetPlanners().Result;
             return MapPlannerAndBuckets(planners);
         }
 
@@ -100,7 +99,6 @@ namespace TOPOBOX.OSC.TeamsTool.Common.Domain
         internal List<PlannerConfiguration> CollectMyData()
         {
             GraphPlannerPlanHelper plannerHelper = new GraphPlannerPlanHelper(connectorHelper.GraphServiceClient);
-            //var planners = plannerHelper.GetMyPlanners().Result;
             var planners = plannerHelper.GetMyPlanners().Result;
             List<PlannerConfiguration> plannerConfigurations = MapPlannerAndBuckets(planners);
             return plannerConfigurations.OrderBy(p => p.Planner.Name).ToList();

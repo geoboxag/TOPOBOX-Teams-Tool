@@ -32,7 +32,6 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
         public async Task<Dictionary<string, AadUserConversationMember>> GetTeamMembers(string teamId)
         {
             var graphRequest = graphClient.Teams[teamId].Members.ToGetRequestInformation();
-            //var answer = graphRequest.GetAsync().Result;
             var task = new Task<Dictionary<string, AadUserConversationMember>>(gR =>
             {
                 Dictionary<string, AadUserConversationMember> returnDict = new Dictionary<string, AadUserConversationMember>();

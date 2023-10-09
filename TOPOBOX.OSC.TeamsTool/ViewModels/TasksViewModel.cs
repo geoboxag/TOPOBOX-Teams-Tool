@@ -525,11 +525,10 @@ namespace TOPOBOX.OSC.TeamsTool.ViewModels
 
         private PlannerAssignments GetPlannerAssignments(IEnumerable<Common.DAL.UserOverview> userOverviews)
         {
-            //TODO: figure out what why
             var assignments = new PlannerAssignments();
              foreach (var userOverview in userOverviews)
              {
-                //assignments.GetFieldDeserializers().Add(userOverview.User.Id);
+                //assignments.AdditionalData.Add(userOverview.User.Id,userOverview);
             }
 
             return assignments;

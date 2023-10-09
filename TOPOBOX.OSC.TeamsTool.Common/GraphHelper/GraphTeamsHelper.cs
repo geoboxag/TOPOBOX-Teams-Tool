@@ -34,9 +34,7 @@ namespace TOPOBOX.OSC.TeamsTool.Common.GraphHelper
             var task = new Task<Dictionary<string, Group>>(gR =>
             {
             var result = graphClient.Groups.GetAsync();
-                //var request = gR as GraphServiceGroupsCollectionRequest;
-                //var answer = request.GetAsync().Result;
-                var answer = result.Result.Value;
+            var answer = result.Result.Value;
 
                 if (answer.Any())
                 {
